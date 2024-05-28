@@ -1,1 +1,56 @@
-<p>cadastro works!</p>
+<section>
+  <div class="container-login">
+    <img class="logo" src="/assets/imgs/logo.svg" alt="" />
+    <form>
+      <h2>Vamos criar sua conta</h2>
+      <div class="form-container">
+        <label for="email">Email</label>
+        <input
+          formControlName="email"
+          type="text"
+          placeholder="Digite o seu email"
+        />
+      </div>
+      <div class="form-container">
+        <label for="password">Senha</label>
+        <input
+          formControlName="password"
+          type="password"
+          placeholder="Digite a sua senha"
+        />
+      </div>
+      <div class="form-container">
+        <label for="password">Senha</label>
+        <input
+          formControlName="password"
+          type="password"
+          placeholder="Digite a sua senha"
+        />
+      </div>
+      <div class="form-container">
+        <label for="password">Você quer se canditar como</label>
+        <div class="container-checkboxes">
+          <div>
+            <input type="checkbox" name="" id="" />
+            <label for="empresa-input">Empresa</label>
+          </div>
+          <div>
+            <input
+              type="checkbox"
+              name="restaurante-input"
+              id="restaurante-input"
+            />
+            <label for="restaurante-input">Restaurante</label>
+          </div>
+        </div>
+      </div>
+      <button class="btn-entrar" type="submit" [routerLink]="['/login']">
+        Entrar
+      </button>
+      <button [routerLink]="['/cadastro']" class="btn-cadastrar" type="button">
+        Cadastrar
+      </button>
+      <p class="texto-esqueceu-senha">Esqueci a senha</p>
+    </form>
+  </div>
+</section>
