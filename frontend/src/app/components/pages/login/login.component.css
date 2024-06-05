@@ -3,7 +3,6 @@ main {
   display: flex;
   flex-direction: column;
   background-color: #1d1d1d;
-  padding: 2rem 1rem;
   row-gap: 2rem;
 }
 

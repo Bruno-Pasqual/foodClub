@@ -1,11 +1,12 @@
 <section>
   <div class="container-login">
     <img class="logo" src="/assets/imgs/logo.svg" alt="" />
-    <form>
+    <form [formGroup]="cadastroForm" (ngSubmit)="onSubmit($event)">
       <h2>Vamos criar sua conta</h2>
       <div class="form-container">
         <label for="email">Email</label>
         <input
+          id="email"
           formControlName="email"
           type="text"
           placeholder="Digite o seu email"
@@ -14,43 +15,45 @@
       <div class="form-container">
         <label for="password">Senha</label>
         <input
+          id="password"
           formControlName="password"
           type="password"
           placeholder="Digite a sua senha"
         />
       </div>
       <div class="form-container">
-        <label for="password">Senha</label>
-        <input
-          formControlName="password"
-          type="password"
-          placeholder="Digite a sua senha"
-        />
-      </div>
-      <div class="form-container">
-        <label for="password">Você quer se canditar como</label>
+        <label for="tipoCadastro">Você quer se candidatar como</label>
         <div class="container-checkboxes">
           <div>
-            <input type="checkbox" name="" id="" />
+            <input
+              type="radio"
+              id="empresa-input"
+              name="tipoUsuario"
+              (change)="updateTipoCadastro('Empresa')"
+            />
             <label for="empresa-input">Empresa</label>
           </div>
           <div>
             <input
-              type="checkbox"
-              name="restaurante-input"
+              type="radio"
               id="restaurante-input"
+              name="tipoUsuario"
+              (change)="updateTipoCadastro('Restaurante')"
             />
             <label for="restaurante-input">Restaurante</label>
           </div>
         </div>
       </div>
-      <button class="btn-entrar" type="submit" [routerLink]="['/login']">
+      <h1 *ngIf="tipoCadastro">{{ tipoCadastro }}</h1>
+      <div *ngIf="tipoCadastro === 'Restaurante'">
+        <h1>Empresa</h1>
+      </div>
+      <button class="btn-entrar" type="button" [routerLink]="['/login']">
         Entrar
       </button>
-      <button [routerLink]="['/cadastro']" class="btn-cadastrar" type="button">
-        Cadastrar
-      </button>
+      <button class="btn-cadastrar" type="submit">Cadastrar</button>
       <p class="texto-esqueceu-senha">Esqueci a senha</p>
+      <div class="container-info-restaurante"></div>
     </form>
   </div>
 </section>
