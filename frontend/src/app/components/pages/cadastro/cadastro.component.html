@@ -48,10 +48,10 @@
       <div *ngIf="tipoCadastro === 'Restaurante'">
         <h1>Empresa</h1>
       </div>
-      <button class="btn-entrar" type="button" [routerLink]="['/login']">
-        Entrar
+      <button class="btn-entrar" type="submit"  >
+        Cadastrar
       </button>
-      <button class="btn-cadastrar" type="submit">Cadastrar</button>
+      <button class="btn-cadastrar" type="button" [routerLink]="['/login']" >Retornar para o login</button>
       <p class="texto-esqueceu-senha">Esqueci a senha</p>
       <div class="container-info-restaurante"></div>
     </form>
