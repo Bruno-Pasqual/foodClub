@@ -14,7 +14,7 @@ export class CadastroComponent {
     this.cadastroForm = this.fb.group({
       email: [''],
       password: [''],
-      tipoUsuario: [''], // Adicionado controle para tipoUsuario
+      tipoUsuario: [''],
     });
   }
 
@@ -25,5 +25,9 @@ export class CadastroComponent {
 
   updateTipoCadastro(tipo: string): void {
     this.tipoCadastro = tipo;
+  }
+
+  updateEmail(email: string): void {
+    this.cadastroForm.patchValue({ email: email });
   }
 }

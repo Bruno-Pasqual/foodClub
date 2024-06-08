@@ -40,7 +40,21 @@
           </div>
         </div>
       </div>
-      <h1 *ngIf="tipoCadastro">{{ tipoCadastro }}</h1>
+      <p class="container-title" *ngIf="tipoCadastro">{{ tipoCadastro }}</p>
+      <div *ngIf="tipoCadastro === 'Empresa'">
+        <app-generic-input
+          labelText="Nome da empresa"
+          placeholderText="Digite o nome da sua empresa"
+          typeOfInput="text"
+        >
+        </app-generic-input>
+        <app-generic-input
+          labelText="CNPJ"
+          placeholderText="Digite o CNPJ da sua empresa"
+          typeOfInput="text"
+        >
+        </app-generic-input>
+      </div>
       <div *ngIf="tipoCadastro === 'Restaurante'">
         <app-generic-input
           labelText="Nome do restaurante"
@@ -49,7 +63,7 @@
         <app-generic-input
           labelText="CNPJ"
           placeholderText="Digite o CNPJ do seu restaurante"
-          typeOfInput="text"
+          typeOfInput=""
         >
         </app-generic-input>
       </div>
