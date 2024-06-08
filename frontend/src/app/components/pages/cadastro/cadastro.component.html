@@ -3,26 +3,22 @@
     <img class="logo" src="/assets/imgs/logo.svg" alt="" />
     <form [formGroup]="cadastroForm" (ngSubmit)="onSubmit($event)">
       <h2>Vamos criar sua conta</h2>
+      <app-generic-input
+        labelText="Email"
+        placeholderText="Ex: sara@gmail.com"
+      ></app-generic-input>
+      <app-generic-input
+        typeOfInput="password"
+        labelText="Digite sua senha"
+        placeholderText="Digite a sua senha"
+      ></app-generic-input>
+      <app-generic-input
+        typeOfInput="password"
+        labelText="Confirme a sua senha"
+        placeholderText="Digite a sua senha"
+      ></app-generic-input>
       <div class="form-container">
-        <label for="email">Email</label>
-        <input
-          id="email"
-          formControlName="email"
-          type="text"
-          placeholder="Digite o seu email"
-        />
-      </div>
-      <div class="form-container">
-        <label for="password">Senha</label>
-        <input
-          id="password"
-          formControlName="password"
-          type="password"
-          placeholder="Digite a sua senha"
-        />
-      </div>
-      <div class="form-container">
-        <label for="tipoCadastro">Você quer se candidatar como</label>
+        <label for="tipoCadastro">Você quer se cadastrar como</label>
         <div class="container-checkboxes">
           <div>
             <input
@@ -46,12 +42,21 @@
       </div>
       <h1 *ngIf="tipoCadastro">{{ tipoCadastro }}</h1>
       <div *ngIf="tipoCadastro === 'Restaurante'">
-        <h1>Empresa</h1>
+        <app-generic-input
+          labelText="Nome do restaurante"
+          placeholderText="Digite o nome do seu restaurante"
+        ></app-generic-input>
+        <app-generic-input
+          labelText="CNPJ"
+          placeholderText="Digite o CNPJ do seu restaurante"
+          typeOfInput="text"
+        >
+        </app-generic-input>
       </div>
-      <button class="btn-entrar" type="submit"  >
-        Cadastrar
+      <button class="btn-entrar" type="submit">Cadastrar</button>
+      <button class="btn-cadastrar" type="button" [routerLink]="['/login']">
+        Retornar para o login
       </button>
-      <button class="btn-cadastrar" type="button" [routerLink]="['/login']" >Retornar para o login</button>
       <p class="texto-esqueceu-senha">Esqueci a senha</p>
       <div class="container-info-restaurante"></div>
     </form>
