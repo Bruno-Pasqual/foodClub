@@ -7,6 +7,7 @@ import { HomeComponent } from '../components/pages/home/home.component';
 import { HeaderComponent } from '../components/header/header.component';
 import { RouterModule } from '@angular/router';
 import { ComofuncionaComponent } from '../components/comofunciona/comofunciona.component';
+import { CardComofuncionaComponent } from '../components/card-comofunciona/card-comofunciona.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { ComofuncionaComponent } from '../components/comofunciona/comofunciona.c
     HomeComponent,
     HeaderComponent,
     ComofuncionaComponent,
+    CardComofuncionaComponent,
   ],
   imports: [
     CommonModule,
