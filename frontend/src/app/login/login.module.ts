@@ -6,6 +6,7 @@ import { CadastroComponent } from '../components/pages/cadastro/cadastro.compone
 import { HomeComponent } from '../components/pages/home/home.component';
 import { HeaderComponent } from '../components/header/header.component';
 import { RouterModule } from '@angular/router';
+import { ComofuncionaComponent } from '../components/comofunciona/comofunciona.component';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { RouterModule } from '@angular/router';
     CadastroComponent,
     HomeComponent,
     HeaderComponent,
+    ComofuncionaComponent,
   ],
   imports: [
     CommonModule,
