@@ -10,7 +10,7 @@ main{
     line-height: normal;
 }
 .comoFunciona img{
-    content: url(../../../assets/imgs/vetor-comofunciona.svg);
+    content: url(../../../assets/imgs/vetor2-comofunciona.svg);
     position: absolute;
     z-index: 1;
     width: 100%;
@@ -28,26 +28,20 @@ main{
 }
 @media (max-width: 768px){
     .comoFunciona img{
-        content: url(../../../assets/imgs/vetor2-comofunciona.svg);
-        position: absolute;
-        z-index: 1;
-        width: 100%;
-    }
-}
-@media (min-width: 375px){
-    .comoFunciona img{
         content: url(../../../assets/imgs/vetor3-comofunciona.svg);
-        position: absolute;
-        z-index: 1;
-        width: 100%;
+        margin-top: 10%;
+    }
+    .comoFunciona .content{
+        padding: 25% 5%;
     }
 }
+
 @media (min-width: 1180px) {
     .card-wrap{
         justify-content: space-between;
     }
     .comoFunciona img{
-        
+        content: url(../../../assets/imgs/vetor-comofunciona.svg);
         position: absolute;
         z-index: 1;
         width: 100%;
