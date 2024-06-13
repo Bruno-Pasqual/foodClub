@@ -1,6 +1,6 @@
 .card{
-    width: 272px;
-    height: 297px;
+    width: 252px;
+    height: 277px;
     flex-shrink: 0;
     border-radius: 30px;
     border: 10px solid #BB3301;
@@ -18,13 +18,13 @@
     flex-direction: column;
     height: fit-content;
     justify-content: space-between;
-    min-height: 30rem;
+    min-height: 28rem;
 }
 .card-text p{
     color: #FFF;
-    width: 265px;
-    text-align: center;
-    font-size: 14px;
+    width: 235px;
+    text-align: justify;
+    font-size: 12px;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
