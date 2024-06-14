@@ -1,6 +1,7 @@
 .pagina-inicial {
     width: 95%;
-    height: 95vh;;
+    height: 95vh;
+    max-width: 375px;
     background:white;
     position:absolute;
     top:50%;
