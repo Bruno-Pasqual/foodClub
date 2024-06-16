@@ -1,5 +1,14 @@
+<!-- pagina-inicial.component.html -->
 <div class="main">
   <header></header>
-  <!-- Temporário -->
-  <app-navigation-bar></app-navigation-bar>
+
+  <div *ngIf="paginaAtual == 'home'">Home</div>
+  <div *ngIf="paginaAtual == 'pedido'">Pedido</div>
+  <div *ngIf="paginaAtual == 'historico'">Historico</div>
+  <div *ngIf="paginaAtual == 'empregado'">empregado</div>
+  <!-- Utilize [ ] para passar o valor da variável -->
+  <app-navigation-bar
+    [paginaAtual]="paginaAtual"
+    (paginaAtualChange)="paginaAtual = $event"
+  ></app-navigation-bar>
 </div>

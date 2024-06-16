@@ -1,7 +1,6 @@
 .main {
-  width: 95vw;
-  min-height: 95vh;
-  height: auto;
+  width: 360px;
+  height: 90vh;
   background: white;
   position: absolute;
   transform: translate(-50%, -50%);

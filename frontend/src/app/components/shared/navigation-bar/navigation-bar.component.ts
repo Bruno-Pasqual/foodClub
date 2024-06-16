@@ -1,10 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-navigation-bar',
   templateUrl: './navigation-bar.component.html',
-  styleUrl: './navigation-bar.component.css'
+  styleUrls: ['./navigation-bar.component.css'],
 })
 export class NavigationBarComponent {
+  @Input() paginaAtual: string;
+  @Output() paginaAtualChange = new EventEmitter<string>();
 
+  constructor() {
+    this.paginaAtual = '';
+  }
+
+  updatePaginaAtiva(paginaAtual: string) {
+    this.paginaAtual = paginaAtual;
+    this.paginaAtualChange.emit(this.paginaAtual);
+  }
 }

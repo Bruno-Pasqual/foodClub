@@ -13,6 +13,7 @@
 
 body {
   height: 100vh;
-  background-image: url("https://img.freepik.com/premium-vector/seamless-background-food-drink-icons-vector-illustration_257845-3131.jpg?w=826");
+  /* background-image: url("https://img.freepik.com/premium-vector/seamless-background-food-drink-icons-vector-illustration_257845-3131.jpg?w=826"); */
+  background: #1d1d1d;
   position: relative;
 }

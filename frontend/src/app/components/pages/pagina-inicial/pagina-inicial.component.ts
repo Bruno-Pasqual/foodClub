@@ -5,4 +5,6 @@ import { Component } from '@angular/core';
   templateUrl: './pagina-inicial.component.html',
   styleUrl: './pagina-inicial.component.css',
 })
-export class PaginaInicialComponent {}
+export class PaginaInicialComponent {
+  paginaAtual: string = 'home';
+}

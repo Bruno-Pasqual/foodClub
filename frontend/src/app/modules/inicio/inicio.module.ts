@@ -6,6 +6,6 @@ import { PaginaInicialComponent } from '../../components/pages/pagina-inicial/pa
 @NgModule({
   declarations: [NavigationBarComponent, PaginaInicialComponent],
   imports: [CommonModule],
-  exports: [],
+  exports: [NavigationBarComponent, PaginaInicialComponent],
 })
 export class InicioModule {}
