@@ -1,0 +1,49 @@
+footer{
+    background-color: #BB3301;
+    height: 20rem;
+    width: 100%;
+    position: absolute;
+    z-index: 2;
+    margin-top: 40%;
+    padding: 5% 10% 2% 10%;
+    color: #fff;
+}
+footer .footer-content{
+    display: flex;
+    width: 100%;
+}
+.footer-content .logo-text{
+    display: flex;
+    flex-direction: column;
+    padding-right: 10%;
+}
+.footer-content .logo-text p{
+    width: 80%;
+    
+}
+.footer-content .logo-text img{
+    width: 5%;
+}
+.footer-content .logo-text .logo{
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 400;
+    gap: 1%;
+    color: #fff;
+}
+p{
+    font-size: 14px;
+    color: #ffffffba;
+}
+.contact-icons{
+    display: flex;
+    width: 49%;
+}
+.contact-icons .contact{
+    width: 10rem;
+}
+.contact-icons .icons{
+    width: 10rem;
+    justify-content: flex-end;
+}

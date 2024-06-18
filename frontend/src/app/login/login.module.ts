@@ -8,6 +8,8 @@ import { HeaderComponent } from '../components/header/header.component';
 import { RouterModule } from '@angular/router';
 import { ComofuncionaComponent } from '../components/comofunciona/comofunciona.component';
 import { CardComofuncionaComponent } from '../components/card-comofunciona/card-comofunciona.component';
+import { OpinioesComponent } from '../components/opinioes/opinioes.component';
+import { FooterComponent } from '../components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,8 @@ import { CardComofuncionaComponent } from '../components/card-comofunciona/card-
     HeaderComponent,
     ComofuncionaComponent,
     CardComofuncionaComponent,
+    OpinioesComponent,
+    FooterComponent,
   ],
   imports: [
     CommonModule,
