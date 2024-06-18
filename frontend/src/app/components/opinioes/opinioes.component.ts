@@ -88,7 +88,7 @@ export class OpinioesComponent implements OnInit{
 
   getEventX(event: TouchEvent | MouseEvent): number {
     if (event instanceof TouchEvent) {
-      return event.touches[3].clientX;
+      return event.touches[0].clientX;
     } else {
       return event.clientX;
     }
