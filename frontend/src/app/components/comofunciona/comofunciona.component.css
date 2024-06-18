@@ -28,8 +28,15 @@ main{
     flex-wrap: wrap;
 }
 
-
-@media (min-width: 375px) and (max-width: 768px){
+@media (min-width: 375px) and (max-width: 500px){
+    .comoFunciona img{
+        content: url(../../../assets/imgs/bg-red-375.svg);
+        position: absolute;
+        z-index: 1;
+        width: 100%;
+    }
+}
+@media (min-width: 500px) and (max-width: 768px){
     .comoFunciona img{
         content: url(../../../assets/imgs/bg-red-small.svg);
         position: absolute;

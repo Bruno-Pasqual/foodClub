@@ -54,12 +54,39 @@ p{
     justify-content: space-between;
     align-items: center;
 }
+
 .contact-icons .icons{
     display: flex;
     justify-content: center;
     gap: 8%;
 }
-@media (min-width:375px) and (max-width:767px){
+@media (min-width:375px) and (max-width:499px){
+    footer{
+        background-color: #BB3301;
+        height: fit-content;
+        width: 100%;
+        position: absolute;
+        margin-top: 80%;
+        z-index: 2;
+        padding: 2% 1% 2% 1%;
+        color: #fff;
+        font-size: 8px;
+    }
+    .footer-content .logo-text{
+        padding-right: 0%;
+    }
+    .footer-content .logo-text p{
+        width: 100%;
+        font-size: 10px;
+    }
+    .contact-icons .follow{
+        display: none;
+    }
+    .contact h4{
+        font-size: 20px;
+    }
+}
+@media (min-width:500px) and (max-width:767px){
     footer{
         background-color: #BB3301;
         height: 20rem;
@@ -67,6 +94,7 @@ p{
         position: absolute;
         z-index: 2;
         margin-top: 80%;
+        bottom: 0;
         padding: 5% 10% 2% 10%;
         color: #fff;
     }
