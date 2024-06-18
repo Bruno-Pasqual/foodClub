@@ -21,33 +21,33 @@ export class OpinioesComponent implements OnInit{
   opinioes: IOpiniao[] = [
     {
       imagem: '../../../assets/imgs/foto-empresa.svg',
-      texto: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.',
-      nome: 'João Silva - 1'
+      texto: 'Descobrimos na Plataforma FoodClub a solução perfeita para alimentação dos nossos colaboradores. Eficiência e variedade que superam expectativas!',
+      nome: 'InovaTech'
     },
     {
       imagem: '../../../assets/imgs/foto-empresa.svg',
-      texto: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.',
-      nome: 'João Silva - 2'
+      texto: 'A Plataforma FoodClub revolucionou o nosso almoço corporativo. Agilidade e qualidade que se traduzem em maior produtividade e satisfação.',
+      nome: 'EcoEnergia Renovável '
     },
     {
       imagem: '../../../assets/imgs/foto-empresa.svg',
-      texto: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.',
-      nome: 'João Silva - 3'
+      texto: 'A Plataforma FoodClub entende de negócios e de paladar. A combinação de praticidade com sabor é o que toda empresa precisa.',
+      nome: 'ModaCorp Vestuário'
     },
     {
       imagem: '../../../assets/imgs/foto-empresa.svg',
-      texto: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.',
-      nome: 'João Silva - 4'
+      texto: 'Com a Plataforma FoodClub, cada refeição é uma experiência única. A pontualidade e a diversidade do serviço nos impressionam a cada entrega.',
+      nome: 'ConstruBem Engenharia'
     },
     {
       imagem: '../../../assets/imgs/foto-empresa.svg',
-      texto: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.',
-      nome: 'João Silva - 5'
+      texto: 'A Plataforma FoodClub nos oferece uma variedade incrível de opções para as refeições dos nossos criativos. Conforto e sabor que inspiram!',
+      nome: 'ArteViva Decorações'
     },
     {
       imagem: '../../../assets/imgs/foto-empresa.svg',
-      texto: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.',
-      nome: 'João Silva - 6'
+      texto: 'Com a Plataforma FoodClub, temos acesso a refeições saudáveis que acompanham a filosofia da nossa empresa. Qualidade e bem-estar em cada prato!',
+      nome: 'BioSaúde'
     },
     // ...
   ];
