@@ -9,3 +9,4 @@ import { PaginaInicialComponent } from '../../components/pages/pagina-inicial/pa
   exports: [NavigationBarComponent, PaginaInicialComponent],
 })
 export class InicioModule {}
+//ignorar
