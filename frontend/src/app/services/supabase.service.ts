@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { Observable, from } from 'rxjs';
-import { map } from 'rxjs/operators'; // Importe 'map' do rxjs/operators
+import { map } from 'rxjs/operators';
 import { User } from '../models/Usuario';
 
 @Injectable({
@@ -9,15 +9,15 @@ import { User } from '../models/Usuario';
 })
 export class SupabaseService {
   private supabaseUrl = 'https://krjrlepfeiwkiydkjypo.supabase.co';
-  private supabaseKey =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtyanJsZXBmZWl3a2l5ZGtqeXBvIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcxMTMyMjE1MiwiZXhwIjoyMDI2ODk4MTUyfQ.dHHr5RQ7nyKdeyNFSssFZWkV0EqzesUAjqRK0AZC-7I';
+  private supabaseKey = 'YOUR_SUPABASE_KEY';
   public supabase: SupabaseClient;
 
   constructor() {
+    console.log('SupabaseService is being initialized');
     this.supabase = createClient(this.supabaseUrl, this.supabaseKey);
+    console.log('Supabase client created');
   }
 
-  // Método para buscar usuários
   fetchUsuarios(): Observable<User[]> {
     return from(
       this.supabase
@@ -36,10 +36,38 @@ export class SupabaseService {
         .single()
         .then(({ data, error }) => {
           if (error) {
+            console.error('Error fetching user by email:', error);
             return null;
           }
           return data;
         })
+    );
+  }
+
+  createUser(
+    email: string,
+    password: string,
+    tipoUsuario: string
+  ): Observable<any> {
+    const createUserPromise = this.supabase
+      .from('tusuario')
+      .insert([
+        {
+          email_usuario: email,
+          tipo_usuario: tipoUsuario,
+          senha_usuario: password,
+        },
+      ])
+      .select();
+
+    return from(createUserPromise).pipe(
+      map(({ data, error }) => {
+        if (error) {
+          console.error('Error creating user:', error);
+          throw new Error(error.message);
+        }
+        return data;
+      })
     );
   }
 
@@ -52,7 +80,5 @@ export class SupabaseService {
         return false;
       })
     );
-
-    //
   }
 }

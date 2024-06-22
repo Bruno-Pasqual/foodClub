@@ -3,28 +3,46 @@
     <img class="logo" src="/assets/imgs/logo.svg" alt="" />
     <form [formGroup]="cadastroForm" (ngSubmit)="onSubmit($event)">
       <h2>Vamos criar sua conta</h2>
-      <app-generic-input
-        labelText="Email"
-        placeholderText="Ex: sara@gmail.com"
-      ></app-generic-input>
-      <app-generic-input
-        typeOfInput="password"
-        labelText="Digite sua senha"
-        placeholderText="Digite a sua senha"
-      ></app-generic-input>
-      <app-generic-input
-        typeOfInput="password"
-        labelText="Confirme a sua senha"
-        placeholderText="Digite a sua senha"
-      ></app-generic-input>
+
+      <!-- Campo de Email -->
       <div class="form-container">
-        <label for="tipoCadastro">Você quer se cadastrar como</label>
+        <label for="email">Email</label>
+        <input
+          formControlName="email"
+          type="email"
+          placeholder="Ex: sara@gmail.com"
+        />
+      </div>
+
+      <!-- Campo de Senha -->
+      <div class="form-container">
+        <label for="password">Digite sua senha</label>
+        <input
+          formControlName="password"
+          type="password"
+          placeholder="Digite a sua senha"
+        />
+      </div>
+
+      <!-- Campo de Confirmação de Senha -->
+      <div class="form-container">
+        <label for="confirmPassword">Confirme a sua senha</label>
+        <input
+          formControlName="confirmPassword"
+          type="password"
+          placeholder="Digite a sua senha novamente"
+        />
+      </div>
+
+      <!-- Seleção de Tipo de Usuário -->
+      <div class="form-container">
+        <label for="tipoUsuario">Você quer se cadastrar como</label>
         <div class="container-checkboxes">
           <div>
             <input
               type="radio"
               id="empresa-input"
-              name="tipoUsuario"
+              value="empresa"
               formControlName="tipoUsuario"
             />
             <label for="empresa-input">Empresa</label>
@@ -33,32 +51,41 @@
             <input
               type="radio"
               id="restaurante-input"
-              name="tipoUsuario"
+              value="restaurante"
+              formControlName="tipoUsuario"
               (change)="updateTipoCadastro('Restaurante')"
             />
             <label for="restaurante-input">Restaurante</label>
           </div>
         </div>
       </div>
-      <h1 *ngIf="tipoCadastro">{{ tipoCadastro }}</h1>
+
+      <!-- Seção específica para Restaurante -->
       <div *ngIf="tipoCadastro === 'Restaurante'">
-        <app-generic-input
-          labelText="Nome do restaurante"
-          placeholderText="Digite o nome do seu restaurante"
-        ></app-generic-input>
-        <app-generic-input
-          labelText="CNPJ"
-          placeholderText="Digite o CNPJ do seu restaurante"
-          typeOfInput="text"
-        >
-        </app-generic-input>
+        <div class="form-container">
+          <label for="nomeRestaurante">Nome do restaurante</label>
+          <input
+            formControlName="tipoUsuario"
+            type="text"
+            placeholder="Digite o nome do seu restaurante"
+          />
+        </div>
+        <div class="form-container">
+          <label for="cnpj">CNPJ</label>
+          <input
+            formControlName="tipoUsuario"
+            type="text"
+            placeholder="Digite o CNPJ do seu restaurante"
+          />
+        </div>
       </div>
+
+      <!-- Botões de Ação -->
       <button class="btn-entrar" type="submit">Cadastrar</button>
       <button class="btn-cadastrar" type="button" [routerLink]="['/login']">
         Retornar para o login
       </button>
       <p class="texto-esqueceu-senha">Esqueci a senha</p>
-      <div class="container-info-restaurante"></div>
     </form>
   </div>
 </section>
