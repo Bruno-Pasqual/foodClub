@@ -7,6 +7,10 @@ import { HomeComponent } from '../components/pages/home/home.component';
 import { HeaderComponent } from '../components/header/header.component';
 import { RouterModule } from '@angular/router';
 import { GenericInputComponent } from '../components/shared/generic-input/generic-input.component';
+import { ComofuncionaComponent } from '../components/comofunciona/comofunciona.component';
+import { CardComofuncionaComponent } from '../components/card-comofunciona/card-comofunciona.component';
+import { OpinioesComponent } from '../components/opinioes/opinioes.component';
+import { FooterComponent } from '../components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +18,10 @@ import { GenericInputComponent } from '../components/shared/generic-input/generi
     CadastroComponent,
     HomeComponent,
     HeaderComponent,
+    ComofuncionaComponent,
+    CardComofuncionaComponent,
+    OpinioesComponent,
+    FooterComponent,
     GenericInputComponent,
   ],
   imports: [

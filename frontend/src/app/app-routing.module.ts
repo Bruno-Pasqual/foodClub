@@ -17,10 +17,11 @@ const routes: Routes = [
   {
     path: 'cadastro',
     component: CadastroComponent,
-  },{
-    path: 'inicial',
-    component: PaginaInicialComponent
-  }
+  },
+  {
+    path: 'inicio',
+    component: PaginaInicialComponent,
+  },
 ];
 
 @NgModule({

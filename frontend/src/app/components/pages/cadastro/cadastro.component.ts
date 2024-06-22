@@ -21,6 +21,7 @@ export class CadastroComponent {
   onSubmit(event: Event): void {
     event.preventDefault(); // Evita o comportamento padrão de envio do formulário
     alert('Funciona ');
+    console.log(this.cadastroForm.value);
   }
 
   updateTipoCadastro(tipo: string): void {
