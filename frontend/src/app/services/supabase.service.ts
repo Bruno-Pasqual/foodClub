@@ -9,14 +9,17 @@ import { User } from '../models/Usuario';
 })
 export class SupabaseService {
   private supabaseUrl = 'https://krjrlepfeiwkiydkjypo.supabase.co';
-  private supabaseKey = 'YOUR_SUPABASE_KEY';
+  private supabaseKey =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtyanJsZXBmZWl3a2l5ZGtqeXBvIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcxMTMyMjE1MiwiZXhwIjoyMDI2ODk4MTUyfQ.dHHr5RQ7nyKdeyNFSssFZWkV0EqzesUAjqRK0AZC-7I';
   public supabase: SupabaseClient;
-
+  //
   constructor() {
     console.log('SupabaseService is being initialized');
     this.supabase = createClient(this.supabaseUrl, this.supabaseKey);
     console.log('Supabase client created');
   }
+
+  //#region "User Methods"
 
   fetchUsuarios(): Observable<User[]> {
     return from(
@@ -78,6 +81,46 @@ export class SupabaseService {
           return res.senha_usuario === password;
         }
         return false;
+      })
+    );
+  }
+
+  //#endregion
+
+  //#region Empresa
+
+  createCompany(
+    nome: string,
+    cnpj: string,
+    cep: string,
+    numero: number,
+    idUsuario: number,
+    imageAddress: string,
+    typeCompany: string
+  ): Observable<any> {
+    console.log('tipo' + typeCompany);
+
+    const createUserPromise = this.supabase
+      .from(`${typeCompany == 'empresa' ? 'tempresa' : 'trestaurante'}`)
+      .insert([
+        {
+          nome: nome,
+          cnpj: cnpj,
+          cep: cep,
+          numero: numero,
+          id_usuario: idUsuario,
+          image: imageAddress,
+        },
+      ])
+      .select();
+
+    return from(createUserPromise).pipe(
+      map(({ data, error }) => {
+        if (error) {
+          console.error('Error creating company:', error);
+          throw new Error(error.message);
+        }
+        return data;
       })
     );
   }

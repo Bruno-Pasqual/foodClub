@@ -89,7 +89,6 @@ button {
     flex-direction: row-reverse;
     justify-content: space-around;
     max-width: 1000px;
-    height: 600px;
   }
 
   form {

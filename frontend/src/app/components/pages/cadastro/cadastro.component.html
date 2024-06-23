@@ -1,4 +1,4 @@
-<section>
+<section class="body">
   <div class="container-login">
     <img class="logo" src="/assets/imgs/logo.svg" alt="" />
     <form [formGroup]="cadastroForm" (ngSubmit)="onSubmit($event)">
@@ -44,6 +44,7 @@
               id="empresa-input"
               value="empresa"
               formControlName="tipoUsuario"
+              (change)="updateTipoCadastro('Empresa')"
             />
             <label for="empresa-input">Empresa</label>
           </div>
@@ -60,22 +61,50 @@
         </div>
       </div>
 
-      <!-- Seção específica para Restaurante -->
-      <div *ngIf="tipoCadastro === 'Restaurante'">
+      <!-- Form Empresa/Restaurante -->
+      <div *ngIf="tipoCadastro != ''">
         <div class="form-container">
-          <label for="nomeRestaurante">Nome do restaurante</label>
+          <label for="nome">{{
+            tipoCadastro == "Empresa"
+              ? "Nome da empresa"
+              : "Nome do restaurante"
+          }}</label>
           <input
-            formControlName="tipoUsuario"
+            formControlName="nome"
             type="text"
-            placeholder="Digite o nome do seu restaurante"
+            placeholder="{{
+              tipoCadastro == 'Empresa'
+                ? 'Digite o nome da sua empresa'
+                : 'Digite o nome do seu restaurante'
+            }}"
           />
         </div>
         <div class="form-container">
           <label for="cnpj">CNPJ</label>
           <input
-            formControlName="tipoUsuario"
+            formControlName="cnpj"
+            type="number"
+            placeholder="{{ 'Digite o CNPJ' }}"
+          />
+        </div>
+        <div class="form-container">
+          <label for="cnpj">CEP</label>
+          <input
+            formControlName="cep"
+            type="number"
+            placeholder="Digite o CEP"
+          />
+        </div>
+        <div class="form-container">
+          <label for="numero">Número</label>
+          <input formControlName="numero" type="number" placeholder="Número" />
+        </div>
+        <div class="form-container">
+          <label for="numero">Logo da empresa</label>
+          <input
+            formControlName="imagem"
             type="text"
-            placeholder="Digite o CNPJ do seu restaurante"
+            placeholder="Digite o endereço da imagem para o logo"
           />
         </div>
       </div>

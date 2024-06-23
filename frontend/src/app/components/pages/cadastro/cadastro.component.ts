@@ -17,26 +17,69 @@ export class CadastroComponent {
       password: ['', [Validators.required]],
       confirmPassword: ['', [Validators.required]],
       tipoUsuario: ['', [Validators.required]],
+      // empresa
+      nome: ['', [Validators.required]],
+      cnpj: ['', [Validators.required]],
+      cep: ['', [Validators.required]],
+      numero: ['', [Validators.required]],
+      imagem: ['', [Validators.required]],
+      // Restaurante
     });
   }
 
   onSubmit(event: Event): void {
-    const { email, password, confirmPassword, tipoUsuario } =
-      this.cadastroForm.value;
+    event.preventDefault();
+    const {
+      email,
+      password,
+      confirmPassword,
+      tipoUsuario,
+      nome,
+      cnpj,
+      cep,
+      numero,
+      imagem,
+    } = this.cadastroForm.value;
 
     if (this.cadastroForm.invalid || password != confirmPassword) {
       alert('Algo deu errado, verifique os campos e tente novamente');
     } else {
-      event.preventDefault();
       this.supaService
         .createUser(email, password, tipoUsuario)
         .subscribe((res) => {
-          console.log(res);
+          const id_usuario: number = res[0].id_usuario;
+          this.createCompany(
+            nome,
+            cnpj,
+            cep,
+            numero,
+            id_usuario,
+            imagem,
+            tipoUsuario
+          );
         });
     }
   }
 
   updateTipoCadastro(tipo: string): void {
     this.tipoCadastro = tipo;
+  }
+
+  createCompany(
+    nome: string,
+    cnpj: string,
+    cep: string,
+    numero: number,
+    id_usuario: number,
+    imagem: string,
+    tipoUsuario: string
+  ) {
+    console.log(tipoUsuario);
+
+    this.supaService
+      .createCompany(nome, cnpj, cep, numero, id_usuario, imagem, tipoUsuario)
+      .subscribe((res) => {
+        console.log(res);
+      });
   }
 }

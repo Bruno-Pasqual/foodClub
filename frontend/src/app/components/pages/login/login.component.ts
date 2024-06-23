@@ -1,46 +1,54 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SupabaseService } from '../../../services/supabase.service';
+import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-cadastro',
-  templateUrl: './cadastro.component.html',
-  styleUrls: ['./cadastro.component.css'],
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css'],
 })
-export class CadastroComponent {
-  cadastroForm: FormGroup;
-  tipoCadastro: string = '';
+export class LoginComponent {
+  loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private supaService: SupabaseService) {
-    this.cadastroForm = this.fb.group({
+  constructor(
+    private fb: FormBuilder,
+    private supaService: SupabaseService,
+    private router: Router
+  ) {
+    this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]],
-      confirmPassword: ['', [Validators.required]],
-      tipoUsuario: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(5)]],
+    });
+  }
+
+  ngOnInit() {
+    // this.checkInputs();
+    this.supaService.fetchUsuarios().subscribe((res) => {
+      // console.log(res);
     });
   }
 
   onSubmit(event: Event): void {
-    const { email, password, confirmPassword, tipoUsuario } =
-      this.cadastroForm.value;
+    event.preventDefault(); // Evita o comportamento padrão de envio do formulário
 
-    if (this.cadastroForm.invalid || password !== confirmPassword) {
-      alert('Algo deu errado, verifique os campos e tente novamente');
+    // this.checkInputs()
+    if (this.loginForm.valid) {
+      const { email, password } = this.loginForm.value;
+      this.checkInputs(email, password);
     } else {
-      event.preventDefault();
-      this.supaService.createUser(email, password, tipoUsuario).subscribe(
-        (res) => {
-          console.log('User created:', res);
-        },
-        (error) => {
-          console.error('Error creating user:', error);
-          alert('Algo deu errado ao criar o usuário');
-        }
-      );
+      alert('Verifique os campos email e senha');
     }
   }
 
-  updateTipoCadastro(tipo: string): void {
-    this.tipoCadastro = tipo;
+  checkInputs(email: string, password: string): void {
+    this.supaService.confirmLoggin(email, password).subscribe((res) => {
+      const logginAllowed: boolean = res;
+
+      if (logginAllowed) {
+        this.router.navigateByUrl('inicio');
+      }
+    });
   }
 }

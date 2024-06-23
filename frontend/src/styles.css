@@ -1,9 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap");
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 * {
   margin: 0;
   padding: 0;
@@ -13,6 +9,5 @@
 
 body {
   height: 100vh;
-  background-color: white;
   position: relative;
 }
