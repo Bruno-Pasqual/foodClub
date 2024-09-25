@@ -7,11 +7,24 @@ import NotFoundPage from "./pages/NotFoundPage";
 
 const router = createBrowserRouter([
 	{ path: "/", element: <InitialPage />, errorElement: <NotFoundPage /> },
-	{ path: "", element: "" },
+
+	{ path: "/orders", element: <InitialPage /> },
+	{
+		path: "/favorites",
+		element: <InitialPage />,
+	},
+	{
+		path: "/employees",
+		element: <InitialPage />,
+	},
+	{ path: "/profile", element: "" },
 ]);
 
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>
-		<RouterProvider router={router} />
+		<main>
+			<div>Navbar</div>
+			<RouterProvider router={router} />
+		</main>
 	</StrictMode>
 );
