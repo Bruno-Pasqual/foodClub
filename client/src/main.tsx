@@ -2,22 +2,18 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
-import InitialPage from "./pages/InitialPage";
-import NotFoundPage from "./pages/NotFoundPage";
+import InitialPage from "./pages/all/InitialPage";
+import NotFoundPage from "./pages/all/NotFoundPage";
+import Login from "./pages/all/Login";
 
 const router = createBrowserRouter([
-	{ path: "/", element: <InitialPage />, errorElement: <NotFoundPage /> },
-
-	{ path: "/orders", element: <InitialPage /> },
 	{
-		path: "/favorites",
+		path: "/",
 		element: <InitialPage />,
+		errorElement: <NotFoundPage />,
 	},
-	{
-		path: "/employees",
-		element: <InitialPage />,
-	},
-	{ path: "/profile", element: "" },
+	{ path: "/login", element: <Login /> },
+	{ path: "/login", element: <Login /> },
 ]);
 
 createRoot(document.getElementById("root")!).render(
