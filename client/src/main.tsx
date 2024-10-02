@@ -13,7 +13,7 @@ const router = createBrowserRouter([
 		errorElement: <NotFoundPage />,
 	},
 	{ path: "/login", element: <Login /> },
-	{ path: "/login", element: <Login /> },
+	{ path: "/cadastro", element: <Login /> },
 ]);
 
 createRoot(document.getElementById("root")!).render(
