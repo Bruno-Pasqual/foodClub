@@ -1,23 +1,39 @@
+import { TextField } from "@mui/material";
+
 interface GenericInputProps {
 	name: string;
 	placeholder: string;
 	type: string;
 	labelText: string;
+	minlength?: number;
 }
 
 const GenericInput = (props: GenericInputProps) => {
 	return (
-		<div className="form-row">
-			<label htmlFor={props.name}>{props.labelText}</label>
-			<input
-				type={props.type}
-				placeholder={props.placeholder} // Ajuste no placeholder
-				name={props.name} // O 'name' precisa ser passado corretamente
-				id={props.name} // Para garantir a relação com o label
-				minLength={10}
-				required
-			/>
-		</div>
+		<TextField
+			name={props.name}
+			id={props.name}
+			label={props.labelText}
+			required
+			type={props.type}
+			variant="outlined"
+			sx={{
+				"& .MuiInputBase-input": { color: "gray" }, // Cor do texto
+				"& .MuiFormLabel-root": { color: "gray" }, // Cor do label normal
+				"& .MuiFormLabel-root.Mui-focused": { color: "black" }, // Cor do label em foco
+				"& .MuiOutlinedInput-root": {
+					"& fieldset": {
+						borderColor: "black", // Cor da borda no estado normal
+					},
+					"&:hover fieldset": {
+						borderColor: "black", // Cor da borda no hover
+					},
+					"&.Mui-focused fieldset": {
+						borderColor: "black", // Cor da borda no estado focado
+					},
+				},
+			}}
+		/>
 	);
 };
 

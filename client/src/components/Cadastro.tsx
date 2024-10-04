@@ -1,10 +1,21 @@
+import {
+	Button,
+	FormControl,
+	FormControlLabel,
+	FormLabel,
+	Radio,
+	RadioGroup,
+} from "@mui/material";
 import GenericInput from "./GenericInput";
+import { FormEvent } from "react";
 
-type Props = { name: string };
+const Cadastro = () => {
+	function handleSubmit(event: FormEvent<HTMLFormElement>): void {
+		event.preventDefault();
+	}
 
-const Cadastro = (props: Props) => {
 	return (
-		<form action="">
+		<form onSubmit={handleSubmit}>
 			<h1>Vamos criar sua conta</h1>
 			<GenericInput
 				type="email"
@@ -25,19 +36,29 @@ const Cadastro = (props: Props) => {
 				name="password2"
 			/>
 			<div>
-				<p>Você quer se cadastrar como ?</p>
 				<div>
-					<div>
-						<input
-							type="radio"
-							name="empresa-chk"
-							id="empresa-chk"
-							value={"empresa"}
-						/>
-						<label htmlFor="empresa-chk">Empresa</label>
-					</div>
+					<FormControl>
+						<FormLabel id="demo-row-radio-buttons-group-label">
+							Você quer se cadastrar como
+						</FormLabel>
+						<RadioGroup
+							row
+							aria-labelledby="demo-row-radio-buttons-group-label"
+							name="row-radio-buttons-group"
+						>
+							<FormControlLabel
+								value="restaurante"
+								control={<Radio />}
+								label="Restaurante"
+							/>
+							<FormControlLabel value="empresa" control={<Radio />} label="Empresa" />
+						</RadioGroup>
+					</FormControl>
 				</div>
 			</div>
+			<Button variant="contained" color="error">
+				Continuar
+			</Button>
 		</form>
 	);
 };

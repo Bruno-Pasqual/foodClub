@@ -1,6 +1,8 @@
 import React from "react";
 import GenericInput from "./GenericInput";
 import "./LoginForm.css";
+import { NavLink } from "react-router-dom";
+import { Button } from "@mui/material";
 
 const LoginForm = () => {
 	function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
@@ -37,10 +39,13 @@ const LoginForm = () => {
 				type="password"
 				labelText="Senha"
 			/>
-			<button className="submit-btn" type="submit">
+			<Button variant="outlined" color="error" type="submit">
 				Entrar
-			</button>
-			<span>Ainda não tem uma conta? Faça o cadastro</span>
+			</Button>
+
+			<span>
+				Ainda não tem uma conta? <NavLink to={"/cadastro"}>Cadastro</NavLink>
+			</span>
 		</form>
 	);
 };

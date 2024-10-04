@@ -5,6 +5,7 @@ import "./index.css";
 import InitialPage from "./pages/all/InitialPage";
 import NotFoundPage from "./pages/all/NotFoundPage";
 import Login from "./pages/all/Login";
+import Cadastro from "./components/Cadastro";
 
 const router = createBrowserRouter([
 	{
@@ -13,7 +14,7 @@ const router = createBrowserRouter([
 		errorElement: <NotFoundPage />,
 	},
 	{ path: "/login", element: <Login /> },
-	{ path: "/cadastro", element: <Login /> },
+	{ path: "/cadastro", element: <Cadastro /> },
 ]);
 
 createRoot(document.getElementById("root")!).render(
