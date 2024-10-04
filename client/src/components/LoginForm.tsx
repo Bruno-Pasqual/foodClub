@@ -39,7 +39,7 @@ const LoginForm = () => {
 				type="password"
 				labelText="Senha"
 			/>
-			<Button variant="outlined" color="error" type="submit">
+			<Button variant="outlined" color="primary" type="submit">
 				Entrar
 			</Button>
 

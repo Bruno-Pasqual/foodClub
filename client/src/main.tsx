@@ -5,7 +5,10 @@ import "./index.css";
 import InitialPage from "./pages/all/InitialPage";
 import NotFoundPage from "./pages/all/NotFoundPage";
 import Login from "./pages/all/Login";
-import Cadastro from "./components/Cadastro";
+import Register from "./pages/all/Register";
+import { ThemeProvider } from "@emotion/react";
+import { theme } from "./theme/theme";
+import { CssBaseline } from "@mui/material";
 
 const router = createBrowserRouter([
 	{
@@ -14,14 +17,16 @@ const router = createBrowserRouter([
 		errorElement: <NotFoundPage />,
 	},
 	{ path: "/login", element: <Login /> },
-	{ path: "/cadastro", element: <Cadastro /> },
+	{ path: "/cadastro", element: <Register /> },
 ]);
 
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>
-		<main>
-			{/* <div>Navbar</div> */}
-			<RouterProvider router={router} />
-		</main>
+		<ThemeProvider theme={theme}>
+			<CssBaseline />
+			<main>
+				<RouterProvider router={router} />
+			</main>
+		</ThemeProvider>
 	</StrictMode>
 );

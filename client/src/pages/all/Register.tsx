@@ -6,12 +6,24 @@ import {
 	Radio,
 	RadioGroup,
 } from "@mui/material";
-import GenericInput from "./GenericInput";
+import GenericInput from "../../components/GenericInput";
 import { FormEvent } from "react";
+import { NavLink } from "react-router-dom";
 
-const Cadastro = () => {
+const Register = () => {
 	function handleSubmit(event: FormEvent<HTMLFormElement>): void {
 		event.preventDefault();
+
+		const formData = new FormData(event.currentTarget);
+
+		const data = {
+			email: formData.get("email"),
+			password1: formData.get("password1"),
+			password2: formData.get("password2"),
+			role: formData.get("row-radio-buttons-group"),
+		};
+
+		console.log(data);
 	}
 
 	return (
@@ -56,11 +68,14 @@ const Cadastro = () => {
 					</FormControl>
 				</div>
 			</div>
-			<Button variant="contained" color="error">
+			<Button variant="contained" color="primary" type="submit">
 				Continuar
 			</Button>
+			<span>
+				Já tem uma conta? <NavLink to={"/login"}> Entrar</NavLink>
+			</span>
 		</form>
 	);
 };
 
-export default Cadastro;
+export default Register;
