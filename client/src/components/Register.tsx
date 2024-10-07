@@ -127,17 +127,17 @@ const Register = () => {
 				{step >= 2 && (
 					<>
 					
-						<div className="container" >
-							<Button id="return" onClick={handleStep} startIcon={<ArrowBack />} >Voltar</Button>
-							<div className={`step-2-container ${isAnimating ? 'hidden' : 'visible'}`} >
-								
-								{role === 'restaurante' ? (
-									<RestaurantRegister data={data} />
-								) : (
-									<CompanyRegister data={data} />
-								)}
-							</div>
+					<div className="container" >
+						<Button id="return" onClick={handleStep} startIcon={<ArrowBack />} >Voltar</Button>
+						<div className={`step-2-container ${isAnimating ? 'hidden' : 'visible'}`} >
+							
+							{role === 'restaurante' ? (
+								<RestaurantRegister data={data} />
+							) : (
+								<CompanyRegister data={data} />
+							)}
 						</div>
+					</div>
 					</>
     		)}
 		</>

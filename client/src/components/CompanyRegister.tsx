@@ -2,12 +2,14 @@ import { FormEvent } from "react";
 import GenericInput from "./GenericInput";
 import { Button } from "@mui/material";
 
-// Definindo a interface para as props do componente
 interface CompanyRegisterProps {
   data: object; // Use o tipo FormData para data
 }
 
 const CompanyRegister = ({data}:CompanyRegisterProps) =>{
+
+  
+  
   function handleSubmit(event: FormEvent<HTMLFormElement>): void {
 		event.preventDefault();
 
@@ -23,8 +25,10 @@ const CompanyRegister = ({data}:CompanyRegisterProps) =>{
 		console.log('Company -> Button Clicked')
 		console.log(CompanyData);
 	}
+
+  
   return (
-    <>
+    <div>
       <form onSubmit={handleSubmit} >
         <h1>Empresa</h1>
         <GenericInput
@@ -56,7 +60,7 @@ const CompanyRegister = ({data}:CompanyRegisterProps) =>{
                   Cadastrar
         </Button>
       </form>
-    </>
+    </div>
   )
 }
 
