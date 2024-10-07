@@ -3,35 +3,34 @@ import GenericInput from "./GenericInput";
 import { Button } from "@mui/material";
 
 // Definindo a interface para as props do componente
-interface RestaurantRegisterProps {
+interface CompanyRegisterProps {
   data: object; // Use o tipo FormData para data
 }
 
-const RestaurantRegister = ({data}:RestaurantRegisterProps) =>{
+const CompanyRegister = ({data}:CompanyRegisterProps) =>{
   function handleSubmit(event: FormEvent<HTMLFormElement>): void {
 		event.preventDefault();
 
 		const formData = new FormData(event.currentTarget);
 
-		const restaurantData = {
+		const CompanyData = {
       ...data,
 			name: formData.get("name"),
 			cnpj: formData.get("cnpj"),
 			cep: formData.get("cep"),
 			number: formData.get("number"),
 		};
-		console.log('Restaurant -> Button Clicked')
-		console.log(restaurantData);
+		console.log('Company -> Button Clicked')
+		console.log(CompanyData);
 	}
   return (
-    <div>
-    
+    <>
       <form onSubmit={handleSubmit} >
-        <h1>Restaurante</h1>
+        <h1>Empresa</h1>
         <GenericInput
           type="text"
-          placeholder="Nome do seu restaurante"
-          labelText="Nome do seu restaurante"
+          placeholder="Nome do seu Empresa"
+          labelText="Nome do seu Empresa"
           name="name"
         />
         <GenericInput
@@ -57,8 +56,8 @@ const RestaurantRegister = ({data}:RestaurantRegisterProps) =>{
                   Cadastrar
         </Button>
       </form>
-  </div>
+    </>
   )
 }
 
-export default  RestaurantRegister;
+export default  CompanyRegister;

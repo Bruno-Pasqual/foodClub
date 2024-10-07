@@ -7,10 +7,12 @@ import {
 	RadioGroup,
 } from "@mui/material";
 import GenericInput from "./GenericInput";
-import { FormEvent, useState } from "react";
+import React, { FormEvent, useState } from "react";
 import { NavLink } from "react-router-dom";
 import "./Register.css";
 import RestaurantRegister from "./RestaurantRegister";
+import CompanyRegister from "./CompanyRegister";
+import ArrowBack from '@mui/icons-material/ArrowBack'; // Importando o ícone
 
 interface FormData {
   email: string;
@@ -20,21 +22,32 @@ interface FormData {
 }
 
 
-
 const Register = () => {
 
 	const [ step, setStep ] = useState<number>(1);
 	const [ role, setRole ] = useState<string>('restaurante');
-	const [ data, setData ] = useState({}); // novo estado para armazenar os dados do formulário
+	const [ data, setData ] = useState({});
+	const [ isAnimating, setIsAnimating ] = useState<boolean>(false);
 
 
 	function handleStep(){
-		if(step === 1){
-			setStep(step + 1);
+		if(step  === 1){
+				setIsAnimating(true);
+			setTimeout(() => {
+				setStep(prevStep => prevStep + 1);
+				setIsAnimating(false);
+			}, 500);
+		}else{
+			setIsAnimating(true);
+			setTimeout(() => {
+				setStep(prevStep => prevStep - 1);
+				setIsAnimating(false);
+			}, 500);
 		}
-		else if(step <= 2){
-			setStep(step - 1);
-		}
+	}
+
+	function  handleRoleChange(event: React.ChangeEvent<HTMLInputElement>) {
+		setRole(event.target.value);
 	}
 
 	function handleSubmit(event: FormEvent<HTMLFormElement>): void {
@@ -53,93 +66,80 @@ const Register = () => {
 		handleStep();
 	}
 
-	function  handleRoleChange(event: React.ChangeEvent<HTMLInputElement>) {
-		setRole(event.target.value);
-	}
-
 	return (
 		<>
-			{ step === 1 && (
-				<form onSubmit={handleSubmit}>
-						<div className="basic-info-container">
-							<h1>Vamos criar sua conta</h1>
-							<GenericInput
-								type="email"
-								placeholder="Ex: sara@gmail.com"
-								labelText="Email"
-								name="email"
-							/>
-							<GenericInput
-								type="password"
-								placeholder="Digite a sua senha"
-								labelText="Digite a sua senha"
-								name="password1"
-							/>
-							<GenericInput
-								type="password"
-								placeholder="Digite a sua senha novamente"
-								labelText="Confirme a sua senha"
-								name="password2"
-							/>
-							<div>
+				{ step === 1 && (
+				<div className={`step-1-container ${isAnimating ? 'hidden' : 'visible'}`}>
+					<form onSubmit={handleSubmit}>
+							<div className="basic-info-container">
+								<h1>Vamos criar sua conta</h1>
+								<GenericInput
+									type="email"
+									placeholder="Ex: sara@gmail.com"
+									labelText="Email"
+									name="email"
+								/>
+								<GenericInput
+									type="password"
+									placeholder="Digite a sua senha"
+									labelText="Digite a sua senha"
+									name="password1"
+								/>
+								<GenericInput
+									type="password"
+									placeholder="Digite a sua senha novamente"
+									labelText="Confirme a sua senha"
+									name="password2"
+								/>
 								<div>
-									<FormControl>
-										<FormLabel id="demo-row-radio-buttons-group-label">
-											Você quer se cadastrar como
-										</FormLabel>
-										<RadioGroup
-											row
-											aria-labelledby="demo-row-radio-buttons-group-label"
-											name="row-radio-buttons-group"
-											onChange={handleRoleChange}
-										>
-											<FormControlLabel
-												value="restaurante"
-												control={<Radio />}
-												label="Restaurante"
-											/>
-											<FormControlLabel value="empresa" control={<Radio />} label="Empresa" />
-										</RadioGroup>
-									</FormControl>
+									<div>
+										<FormControl>
+											<FormLabel id="demo-row-radio-buttons-group-label">
+												Você quer se cadastrar como
+											</FormLabel>
+											<RadioGroup
+												row
+												aria-labelledby="demo-row-radio-buttons-group-label"
+												name="row-radio-buttons-group"
+												onChange={handleRoleChange}
+											>
+												<FormControlLabel
+													value="restaurante"
+													control={<Radio />}
+													label="Restaurante"
+												/>
+												<FormControlLabel value="empresa" control={<Radio />} label="Empresa" />
+											</RadioGroup>
+										</FormControl>
+									</div>
 								</div>
+								<Button variant="contained" color="primary"type="submit" >
+									Continuar
+								</Button>
 							</div>
-							<Button variant="contained" color="primary"type="submit" >
-								Continuar
-							</Button>
+							<span>
+							Já tem uma conta? <NavLink to={"/login"}> Entrar</NavLink>
+							</span>
+					</form>
+				</div>
+				) }
+
+				{step >= 2 && (
+					<>
+					
+						<div className="container" >
+							<Button id="return" onClick={handleStep} startIcon={<ArrowBack />} >Voltar</Button>
+							<div className={`step-2-container ${isAnimating ? 'hidden' : 'visible'}`} >
+								
+								{role === 'restaurante' ? (
+									<RestaurantRegister data={data} />
+								) : (
+									<CompanyRegister data={data} />
+								)}
+							</div>
 						</div>
-						<span>
-						Já tem uma conta? <NavLink to={"/login"}> Entrar</NavLink>
-						</span>
-				</form>
-			) }
-
-			{ step === 2 && role === 'restaurante' &&(
-				<>
-					<Button  onClick={handleStep} >
-					Voltar
-					</Button>
-
-					< RestaurantRegister  data={data} />
-
-					
-					
-				</>
-			)}
-
-			{ step === 2 && role === 'empresa' &&(
-				<>
-					<Button  onClick={handleStep} >
-					Voltar
-					</Button>
-					
-					<h1>Empresa</h1>
-					<form onSubmit={handleSubmit} >
-						<Button variant="contained" color="primary" type="submit">
-							Registrar
-						</Button>
-        	</form>
-				</>
-			)}
+					</>
+    		)}
 		</>
 	);
 };
