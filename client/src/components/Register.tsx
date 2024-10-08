@@ -29,6 +29,7 @@ const Register = () => {
 	const [ role, setRole ] = useState<string>('restaurante');
 	const [ data, setData ] = useState({});
 	const [ isAnimating, setIsAnimating ] = useState<boolean>(false);
+	const [error, setError] = useState<string | null>(null); // Estado para a mensagem de erro
 
 
 	function handleStep(){
@@ -54,7 +55,17 @@ const Register = () => {
 	function handleSubmit(event: FormEvent<HTMLFormElement>): void {
 		event.preventDefault();
 
+		setError(null); // Limpa a mensagem de erro ao submeter
+
 		const formData = new FormData(event.currentTarget);
+		const role = formData.get("row-radio-buttons-group") as string;
+
+		// Verifica se a role foi selecionada
+		if (!role) {
+				setError("Por favor, selecione um tipo de cadastro."); // Atualiza o estado com a mensagem de erro
+				return;
+		}
+		
 
 		const newData: FormData = {
 			email: formData.get("email") as string,
@@ -115,6 +126,7 @@ const Register = () => {
 												<FormControlLabel value="empresa" control={<Radio />} label="Empresa" />
 											</RadioGroup>
 										</FormControl>
+										{error && <p style={{ color: '#D20000' }}>{error}</p>} {/* Exibe a mensagem de erro */}
 									</div>
 								</div>
 								<Button variant="contained" color="primary"type="submit" >
@@ -145,7 +157,12 @@ const Register = () => {
 									<RestaurantRegister data={data} />
 								</>
 							) : (
-								<CompanyRegister data={data} />
+								<>
+									<div className="logo">
+										<img src={logo} alt="logo da empresa" />
+									</div>
+									<CompanyRegister data={data} />
+								</>
 							)}
 						</div>
 					</div>
