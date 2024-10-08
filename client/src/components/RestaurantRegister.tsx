@@ -2,6 +2,7 @@ import { FormEvent, useState } from "react";
 import GenericInput from "./GenericInput";
 import { Button } from "@mui/material";
 import { formatCNPJ } from "../utils/isValidCNPJ";
+import { formatCEP } from "../utils/isValidCEP";
 
 // Definindo a interface para as props do componente
 interface RestaurantRegisterProps {
@@ -11,6 +12,7 @@ interface RestaurantRegisterProps {
 const RestaurantRegister = ({data}:RestaurantRegisterProps) =>{
   const [error, setError] = useState<string | null>(null);
   const [formattedCNPJ, setFormattedCNPJ] = useState<string>("");
+  const [formattedCEP, setFormattedCEP] = useState<string>("");
 
 
   function handleSubmit(event: FormEvent<HTMLFormElement>): void {
@@ -23,6 +25,12 @@ const RestaurantRegister = ({data}:RestaurantRegisterProps) =>{
     // Valida o CNPJ
     {/* if (!isValidCNPJ(cnpj)) {
       setError("CNPJ inválido.");
+      return;
+    } */}
+
+    // Valida o CEP
+    {/* if (!isValidCEP(cep)) {
+      setError("CEP inválido.");
       return;
     } */}
 
@@ -41,6 +49,12 @@ const RestaurantRegister = ({data}:RestaurantRegisterProps) =>{
   function handleCNPJChange(event: React.ChangeEvent<HTMLInputElement>){
     const value = event.target.value;
     setFormattedCNPJ(formatCNPJ(value));
+  };
+
+  // Função para lidar com a mudança no campo do CEP
+  function handleCEPChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const value = event.target.value;
+    setFormattedCEP(formatCEP(value));
   };
 
   return (
@@ -69,6 +83,9 @@ const RestaurantRegister = ({data}:RestaurantRegisterProps) =>{
           placeholder="Digite o CEP"
           labelText="CEP"
           name="cep"
+          value={formattedCEP}
+          onChange={handleCEPChange} // Chama a nova função
+          maxLength={9}
         />
         <GenericInput
           type="number"
