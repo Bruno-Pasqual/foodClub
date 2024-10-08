@@ -75,7 +75,8 @@ const RestaurantRegister = ({data}:RestaurantRegisterProps) =>{
           name="cnpj"
           value={formattedCNPJ}
           onChange={handleCNPJChange}
-          error={!!error} // Passa o estado de erro
+          error={!!error}
+          minLength={18}
           maxLength={18}
         />
         <GenericInput
@@ -84,7 +85,8 @@ const RestaurantRegister = ({data}:RestaurantRegisterProps) =>{
           labelText="CEP"
           name="cep"
           value={formattedCEP}
-          onChange={handleCEPChange} // Chama a nova função
+          onChange={handleCEPChange}
+          minLength={9}
           maxLength={9}
         />
         <GenericInput
