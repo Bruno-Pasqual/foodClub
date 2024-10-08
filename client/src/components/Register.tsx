@@ -29,7 +29,7 @@ const Register = () => {
 	const [ role, setRole ] = useState<string>('restaurante');
 	const [ data, setData ] = useState({});
 	const [ isAnimating, setIsAnimating ] = useState<boolean>(false);
-	const [error, setError] = useState<string | null>(null); // Estado para a mensagem de erro
+	const [error, setError] = useState<string | null>(null);
 
 
 	function handleStep(){
@@ -62,8 +62,16 @@ const Register = () => {
 
 		// Verifica se a role foi selecionada
 		if (!role) {
-				setError("Por favor, selecione um tipo de cadastro."); // Atualiza o estado com a mensagem de erro
+				setError("Por favor, selecione um tipo de cadastro.");
 				return;
+		}
+
+		const password1 = formData.get("password1") as string;
+		const password2 = formData.get("password2") as string;
+
+		if(password1 !==  password2){
+			setError("As senhas não conferem.");
+			return;
 		}
 		
 
@@ -74,7 +82,7 @@ const Register = () => {
 			role: formData.get("row-radio-buttons-group") as string,
 		};
 		
-		setData(newData); // armazena os dados do formulário no estado
+		setData(newData);
 		handleStep();
 	}
 
@@ -95,17 +103,20 @@ const Register = () => {
 									required
 								/>
 								<GenericInput
+									minLength={6}
 									type="password"
 									placeholder="Digite a sua senha"
 									labelText="Digite a sua senha"
 									name="password1"
 								/>
 								<GenericInput
+									minLength={6}
 									type="password"
 									placeholder="Digite a sua senha novamente"
 									labelText="Confirme a sua senha"
 									name="password2"
 								/>
+								
 								<div>
 									<div>
 										<FormControl>

@@ -1,6 +1,7 @@
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import GenericInput from "./GenericInput";
 import { Button } from "@mui/material";
+import { formatCNPJ } from "../utils/isValidCNPJ";
 
 // Definindo a interface para as props do componente
 interface RestaurantRegisterProps {
@@ -8,10 +9,22 @@ interface RestaurantRegisterProps {
 }
 
 const RestaurantRegister = ({data}:RestaurantRegisterProps) =>{
+  const [error, setError] = useState<string | null>(null);
+  const [formattedCNPJ, setFormattedCNPJ] = useState<string>("");
+
+
   function handleSubmit(event: FormEvent<HTMLFormElement>): void {
 		event.preventDefault();
+    setError(null)
 
 		const formData = new FormData(event.currentTarget);
+    //const cnpj = formData.get("cnpj") as string;
+
+    // Valida o CNPJ
+    {/* if (!isValidCNPJ(cnpj)) {
+      setError("CNPJ inválido.");
+      return;
+    } */}
 
 		const restaurantData = {
       ...data,
@@ -23,6 +36,13 @@ const RestaurantRegister = ({data}:RestaurantRegisterProps) =>{
 		console.log('Restaurant -> Button Clicked')
 		console.log(restaurantData);
 	}
+
+   // Função para lidar com a mudança no campo do CNPJ
+  function handleCNPJChange(event: React.ChangeEvent<HTMLInputElement>){
+    const value = event.target.value;
+    setFormattedCNPJ(formatCNPJ(value));
+  };
+
   return (
     <div>
     
@@ -36,9 +56,13 @@ const RestaurantRegister = ({data}:RestaurantRegisterProps) =>{
         />
         <GenericInput
           type="text"
-          placeholder="CNPJ"
+          placeholder="Ex: 12.345.678/0001-95"
           labelText="Digite o CNPJ"
           name="cnpj"
+          value={formattedCNPJ}
+          onChange={handleCNPJChange}
+          error={!!error} // Passa o estado de erro
+          maxLength={18}
         />
         <GenericInput
           type="text"

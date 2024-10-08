@@ -81,8 +81,12 @@ form {
 .step-2-container .logo img {
   height: 400px;
 }
-
-@media (max-width: 600px) {
+@media (max-width: 800px){
+  .step-1-container,.step-2-container{
+    height: auto;
+  }
+}
+@media (max-width: 430px) {
   form {
     width: 264px;
   }

@@ -5,7 +5,8 @@ interface GenericInputProps {
 	placeholder: string;
 	type: string;
 	labelText: string;
-	minlength?: number;
+	minLength?: number;
+	maxLength?:number;
 	error?: boolean; // Para controlar a exibição de erro
   helperText?: string; // Mensagem de ajuda ou erro
   value?: string; // Para controlar o valor do campo
@@ -25,6 +26,12 @@ const GenericInput = (props: GenericInputProps) => {
       helperText={props.helperText} // Mensagem de ajuda ou erro
       value={props.value} // Controlando o valor
       onChange={props.onChange} // Capturando mudanças
+			slotProps={{
+        htmlInput: {
+          minLength: props.minLength, // Passa minLength aqui
+					maxLength: props.maxLength,
+        },
+      }}
 			sx={{
 				"& .MuiInputBase-input": { color: "gray" }, // Cor do texto
 				"& .MuiFormLabel-root": { color: "gray" }, // Cor do label normal

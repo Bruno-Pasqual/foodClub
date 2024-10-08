@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import GenericInput from "./GenericInput";
+import { validateEmail } from "../utils/validateEmail";
 
 interface EmailInputProps {
   name: string;
@@ -16,10 +17,7 @@ const EmailInput: React.FC<EmailInputProps> = ({
   const [email, setEmail] = useState<string>("");
   const [error, setError] = useState<string>("");
 
-  const validateEmail = (email: string) => {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(email);
-  };
+  
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
