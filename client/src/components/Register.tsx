@@ -8,11 +8,11 @@ import {
 } from "@mui/material";
 import GenericInput from "./GenericInput";
 import React, { FormEvent, useState } from "react";
-import { NavLink } from "react-router-dom";
 import "./Register.css";
 import RestaurantRegister from "./RestaurantRegister";
 import CompanyRegister from "./CompanyRegister";
-import ArrowBack from '@mui/icons-material/ArrowBack'; // Importando o ícone
+import ArrowBack from '@mui/icons-material/ArrowBack'; 
+import logo from '../assets/Logo.svg'
 
 interface FormData {
   email: string;
@@ -70,6 +70,9 @@ const Register = () => {
 		<>
 				{ step === 1 && (
 				<div className={`step-1-container ${isAnimating ? 'hidden' : 'visible'}`}>
+					<div className="logo">
+						<img src={logo} alt="logo da empresa" />
+					</div>
 					<form onSubmit={handleSubmit}>
 							<div className="basic-info-container">
 								<h1>Vamos criar sua conta</h1>
@@ -117,10 +120,12 @@ const Register = () => {
 									Continuar
 								</Button>
 							</div>
-							<span>
-							Já tem uma conta? <NavLink to={"/login"}> Entrar</NavLink>
-							</span>
+							<Button href="/login" id="btn-login" variant="contained" color="inherit" >
+								Retornar para login
+							</Button>
+							
 					</form>
+
 				</div>
 				) }
 
@@ -132,7 +137,12 @@ const Register = () => {
 						<div className={`step-2-container ${isAnimating ? 'hidden' : 'visible'}`} >
 							
 							{role === 'restaurante' ? (
-								<RestaurantRegister data={data} />
+								<>
+									<div className="logo">
+										<img src={logo} alt="logo da empresa" />
+									</div>
+									<RestaurantRegister data={data} />
+								</>
 							) : (
 								<CompanyRegister data={data} />
 							)}

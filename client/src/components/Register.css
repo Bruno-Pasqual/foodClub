@@ -1,28 +1,21 @@
 body{
-  overflow: hidden;
+  min-height: auto;
 }
 form {
-  width: 100%;
-  max-width: 400px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); 
-  border-radius: 8px;
-  padding: 1rem;
+  position: relative;
 }
 
 .container {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  height: 100vh;
-  max-height: 500px;
+  height: auto;
   width: 100%;
-  max-width: 400px;
+  max-width: 1000px;
   margin: 5rem auto;
 }
 
-.container.visible{
-  transition: transform 0.5s ease, opacity 0.5s ease-out;
-}
+
 
 .step-1-container{
   margin: 5rem auto;
@@ -30,18 +23,36 @@ form {
 
 .step-1-container, .step-2-container {
   display: flex;
-  justify-content: center;
-  transition: transform 0.5s ease, opacity 0.5s ease-out;
+  flex-wrap: wrap;
+  flex-direction: row-reverse;
+  justify-content: space-around;
+  align-items: center;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 3px 6px 5px #0000000e;
+  padding: 2rem 1rem;
   width: 100%;
+  max-width: 1000px;
+  height: 600px;
+  transition: transform 0.5s ease, opacity 0.5s ease-out;
+}
+.step-1-container.visible, .step-2-container.visible{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row-reverse;
+  justify-content: space-around;
+  align-items: center;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 3px 6px 5px #0000000e;
+  padding: 2rem 1rem;
+  width: 100%;
+  max-width: 1000px;
+  height: 600px;
 }
 
 .step-2-container.visible{
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
   transition: transform 0.5s ease, opacity 0.5s ease-out;
-  width: 100%;
-  position: relative;
 }
 
 .step-2-container #return {
@@ -69,4 +80,32 @@ form {
   opacity: 1;
 }
 
+#btn-login{
+  border: 1px solid #bb3301;
+  margin-top: .5rem;
+  background: #fff;
+  color: #bb3301;
+  font-weight: bold;
+}
 
+.step-1-container .logo img, .step-2-container .logo img{
+  height: 400px;
+}
+
+@media (max-width:600px){
+  .step-1-container.visible, .step-2-container.visible{
+    height: auto;
+  }
+  .step-1-container .logo, .step-2-container .logo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .step-1-container .logo img, .step-2-container .logo img{
+    height: 200px;
+  }
+  .basic-info-container h1{
+    font-size: 24px;
+  }
+  
+}
