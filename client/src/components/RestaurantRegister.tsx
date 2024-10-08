@@ -13,6 +13,8 @@ const RestaurantRegister = ({data}:RestaurantRegisterProps) =>{
   const [error, setError] = useState<string | null>(null);
   const [formattedCNPJ, setFormattedCNPJ] = useState<string>("");
   const [formattedCEP, setFormattedCEP] = useState<string>("");
+  const [addressNumber, setAddressNumber] = useState<string>("");
+
 
 
   function handleSubmit(event: FormEvent<HTMLFormElement>): void {
@@ -57,6 +59,24 @@ const RestaurantRegister = ({data}:RestaurantRegisterProps) =>{
     setFormattedCEP(formatCEP(value));
   };
 
+  /// Função para lidar com a mudança no número do endereço
+  function handleAddressNumberChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const value = event.target.value;
+    const numberValue = parseInt(value, 10);
+
+    // Verifica se é um número válido
+    if (value === "" || (numberValue > 0 && Number.isInteger(numberValue))) {
+      setAddressNumber(value); // Atualiza o número se for válido
+      setError(null); // Limpa a mensagem de erro
+    } else {
+      setError("Número do endereço deve ser um número inteiro positivo."); // Exibe erro se não for válido
+    }
+  }
+  
+
+  
+
+
   return (
     <div>
     
@@ -94,6 +114,9 @@ const RestaurantRegister = ({data}:RestaurantRegisterProps) =>{
           placeholder="Número"
           labelText="Número"
           name="number"
+          value={addressNumber}
+          onChange={handleAddressNumberChange}
+          error={!!error}
         />
 
         <Button variant="contained" color="primary"type="submit" >
