@@ -27,6 +27,8 @@ const Register = () => {
 
 	const [ step, setStep ] = useState<number>(1);
 	const [ role, setRole ] = useState<string>('restaurante');
+	const [password1, setPassword1] = useState<string>("");
+	const [password2, setPassword2] = useState<string>("");
 	const [ data, setData ] = useState({});
 	const [ isAnimating, setIsAnimating ] = useState<boolean>(false);
 	const [error, setError] = useState<string | null>(null);
@@ -51,6 +53,14 @@ const Register = () => {
 	function  handleRoleChange(event: React.ChangeEvent<HTMLInputElement>) {
 		setRole(event.target.value);
 	}
+
+	function handlePasswordChange(setPassword: React.Dispatch<React.SetStateAction<string>>) {
+		return (event: React.ChangeEvent<HTMLInputElement>) => {
+			const value = event.target.value.replace(/\s/g, ''); // Remove espaços
+			setPassword(value);
+		};
+	}
+	
 
 	function handleSubmit(event: FormEvent<HTMLFormElement>): void {
 		event.preventDefault();
@@ -108,6 +118,8 @@ const Register = () => {
 									placeholder="Digite a sua senha"
 									labelText="Digite a sua senha"
 									name="password1"
+									value={password1}
+  								onChange={handlePasswordChange(setPassword1)}
 								/>
 								<GenericInput
 									minLength={6}
@@ -115,6 +127,8 @@ const Register = () => {
 									placeholder="Digite a sua senha novamente"
 									labelText="Confirme a sua senha"
 									name="password2"
+									value={password2}
+									onChange={handlePasswordChange(setPassword2)}
 								/>
 								
 								<div>
