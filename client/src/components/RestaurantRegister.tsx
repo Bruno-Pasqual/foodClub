@@ -24,7 +24,7 @@ const RestaurantRegister = ({data}:RestaurantRegisterProps) =>{
 		console.log(restaurantData);
 	}
   return (
-    <>
+    <div>
     
       <form onSubmit={handleSubmit} >
         <h1>Restaurante</h1>
@@ -57,7 +57,7 @@ const RestaurantRegister = ({data}:RestaurantRegisterProps) =>{
                   Cadastrar
         </Button>
       </form>
-  </>
+  </div>
   )
 }
 

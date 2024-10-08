@@ -13,6 +13,7 @@ import RestaurantRegister from "./RestaurantRegister";
 import CompanyRegister from "./CompanyRegister";
 import ArrowBack from '@mui/icons-material/ArrowBack'; 
 import logo from '../assets/Logo.svg'
+import EmailInput from "./EmailInput";
 
 interface FormData {
   email: string;
@@ -76,11 +77,11 @@ const Register = () => {
 					<form onSubmit={handleSubmit}>
 							<div className="basic-info-container">
 								<h1>Vamos criar sua conta</h1>
-								<GenericInput
-									type="email"
+								<EmailInput
+									name="email"
 									placeholder="Ex: sara@gmail.com"
 									labelText="Email"
-									name="email"
+									required
 								/>
 								<GenericInput
 									type="password"

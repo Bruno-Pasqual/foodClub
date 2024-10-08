@@ -6,6 +6,10 @@ interface GenericInputProps {
 	type: string;
 	labelText: string;
 	minlength?: number;
+	error?: boolean; // Para controlar a exibição de erro
+  helperText?: string; // Mensagem de ajuda ou erro
+  value?: string; // Para controlar o valor do campo
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void; // Para controle de mudanças
 }
 
 const GenericInput = (props: GenericInputProps) => {
@@ -17,6 +21,10 @@ const GenericInput = (props: GenericInputProps) => {
 			required
 			type={props.type}
 			variant="outlined"
+			error={props.error} // Controle de erro
+      helperText={props.helperText} // Mensagem de ajuda ou erro
+      value={props.value} // Controlando o valor
+      onChange={props.onChange} // Capturando mudanças
 			sx={{
 				"& .MuiInputBase-input": { color: "gray" }, // Cor do texto
 				"& .MuiFormLabel-root": { color: "gray" }, // Cor do label normal
@@ -31,6 +39,18 @@ const GenericInput = (props: GenericInputProps) => {
 					"&.Mui-focused fieldset": {
 						borderColor: "black", // Cor da borda no estado focado
 					},
+					"&.Mui-error .MuiInputBase-input": {
+          	color: "#D20000", // Cor do texto em erro
+					},
+					"&.Mui-error .MuiFormLabel-root": {
+						color: "#D20000", // Cor do label em erro
+					},
+					"& .MuiFormHelperText-root": {
+						color: "#D20000", // Cor da mensagem de erro
+					},
+					"&.Mui-error fieldset": {
+          	borderColor: "#D20000", // Cor da borda em erro
+        	},
 				},
 			}}
 		/>
