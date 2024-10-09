@@ -12,12 +12,14 @@ const InitialPage = () => {
 				"Nosso papel é simplificar a alimentação corporativa para empresas de todos os tamanhos. Oferecemos uma plataforma intuitiva onde empresas podem selecionar refeições deliciosas de uma variedade de restaurantes locais, garantindo que seus funcionários tenham opções saborosas e saudáveis todos os dias.",
 			altText:
 				"Ícone de usuário em frente a um prédio, representando uma empresa ou escritório.",
+			title: "Empresas",
 		},
 		{
 			iconAddress: "src/assets/how-it-work-chef-icon.png",
 			Text:
 				"Junte-se a nós para expandir seu alcance e aumentar sua base de clientes! Ao se cadastrar em nossa plataforma, seu restaurante terá a oportunidade de fornecer refeições saborosas para empresas locais, alcançando um novo público e aumentando suas vendas. Aumente sua visibilidade e torne-se a escolha preferida para alimentação corporativa na região.",
 			altText: "Ícone de chefe de cozinha usando chapéu e uniforme.",
+			title: "Restaurantes",
 		},
 		{
 			iconAddress: "src/assets/how-it-work-employees-icon.png",
@@ -25,6 +27,7 @@ const InitialPage = () => {
 				"Somos o elo entre empresas que buscam fornecer refeições para seus funcionários e restaurantes que desejam expandir seus negócios. Nossa plataforma oferece uma interface eficiente para que empresas escolham entre uma variedade de opções de cardápio de restaurantes locais, garantindo uma experiência gastronômica de qualidade para seus funcionários, enquanto os restaurantes aumentam suas vendas e visibilidade.",
 			altText:
 				"Ícone de grupo de pessoas com uma maleta, simbolizando funcionários ou equipe de trabalho.",
+			title: "Colaboradores",
 		},
 		{
 			iconAddress: "src/assets/how-it-work-transportation-icon.png",
@@ -32,6 +35,7 @@ const InitialPage = () => {
 				"Contamos com uma rede de transporte confiável e eficiente para entregar as refeições diretamente do restaurante até a empresa. Com parceiros como Uber Flash, 99 Entrega, e uma equipe de motoboys e carros próprios, garantimos que as refeições cheguem frescas e pontualmente, proporcionando uma experiência de entrega impecável para nossos clientes.",
 			altText:
 				"Ícone de um caminhão com uma seta apontando para a direita, representando transporte ou entrega.",
+			title: "Entregadores",
 		},
 	];
 
@@ -62,12 +66,13 @@ const InitialPage = () => {
 			<div className="">
 				<Container maxWidth={"lg"} className="how-it-work-container entire-page">
 					<h2>Como funciona ?</h2>
-					{howItWorkCardsInfo.map(({ iconAddress, Text, altText }) => (
+					{howItWorkCardsInfo.map(({ iconAddress, Text, altText, title }) => (
 						<HowItWorkCard
 							key={nanoid()}
 							iconAddress={iconAddress}
 							text={Text}
 							altText={altText}
+							title={title}
 						/>
 					))}
 				</Container>

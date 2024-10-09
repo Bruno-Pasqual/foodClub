@@ -1,6 +1,7 @@
 type Props = {
 	iconAddress: string;
 	text: string;
+	title: string;
 	altText: string;
 };
 
@@ -12,7 +13,10 @@ export const HowItWorkCard = (props: Props) => {
 				alt={props.altText}
 				className="how-it-work-card-img"
 			/>
-			<p>{props.text}</p>
+			<div className="text-container">
+				<p className="title">{props.title}</p>
+				<p>{props.text}</p>
+			</div>
 		</div>
 	);
 };
