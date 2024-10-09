@@ -159,7 +159,7 @@ const Register = () => {
 								</Button>
 							</div>
 							<Button href="/login" id="btn-login" variant="contained" color="inherit" >
-								Retornar para login
+								Retornar para o login
 							</Button>
 							
 					</form>
