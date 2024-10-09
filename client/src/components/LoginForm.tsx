@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 
 import "./LoginForm.css";
-import { NavLink } from "react-router-dom";
 import { Button } from "@mui/material";
 import GenericInput from "./GenericInput";
+import EmailInput from "./EmailInput";
+import logo from '../assets/Logo.svg'
 
 const LoginForm = () => {
+	const [password, setPassword] = useState<string>("");
+
+	function handlePasswordChange(setPassword: React.Dispatch<React.SetStateAction<string>>) {
+		return (event: React.ChangeEvent<HTMLInputElement>) => {
+			const value = event.target.value.replace(/\s/g, ''); // Remove espaços
+			setPassword(value);
+		};
+	}
 	function handleSubmit(event: React.FormEvent<HTMLFormElement>): void {
 		event.preventDefault();
 
@@ -20,28 +29,37 @@ const LoginForm = () => {
 	}
 
 	return (
-		<form onSubmit={handleSubmit} className="form-principal">
-			<h1>Entrar</h1>
-			<GenericInput
-				name="email"
-				placeholder="Digite o seu email"
-				type="email"
-				labelText="Nome"
-			/>
-			<GenericInput
-				name="password"
-				placeholder="Senha"
-				type="password"
-				labelText="Senha"
-			/>
-			<Button variant="contained" color="primary" type="submit">
-				Entrar
-			</Button>
+		<div id="loginForm">
+			<div className="logo">
+				<img src={logo} alt="logo da empresa" />
+			</div>
+			<form onSubmit={handleSubmit} className="form-principal">
+				<h1>Entrar</h1>
+				<EmailInput
+					name="email"
+					placeholder="Ex: sara@gmail.com"
+					labelText="Email"
+					required
+				/>
+				<GenericInput
+					minLength={6}
+					type="password"
+					placeholder="Digite a sua senha"
+					labelText="Digite a sua senha"
+					name="password"
+					value={password}
+					onChange={handlePasswordChange(setPassword)}
+									/>
+				<Button variant="contained" color="primary" type="submit">
+					Entrar
+				</Button>
 
-			<span>
-				Ainda não tem uma conta? <NavLink to={"/cadastro"}>Cadastro</NavLink>
-			</span>
-		</form>
+				<Button href="/cadastro" id="btn-cadastro" variant="contained" color="inherit" >
+					Cadastrar
+				</Button>
+				<span>Esqueci a senha</span>
+			</form>
+		</div>
 	);
 };
 
