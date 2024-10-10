@@ -5,6 +5,7 @@ body {
 form {
   position: relative;
   width: 400px;
+  row-gap: 0rem;
 }
 
 .container {
@@ -24,6 +25,7 @@ form {
   flex-direction: row-reverse;
   justify-content: space-around;
   align-items: center;
+  gap: 2rem;
   background: #fff;
   border-radius: 8px;
   box-shadow: 3px 6px 5px #0000000e;
@@ -79,7 +81,7 @@ form {
 
 .step-1-container .logo img,
 .step-2-container .logo img {
-  height: 400px;
+  max-height: 300px;
 }
 @media (max-width: 800px){
   .step-1-container,.step-2-container{
