@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import "./InitialPage.css";
 import { HowItWorkCard } from "../../components/HowItWorkCard";
 import { nanoid } from "nanoid";
+import { OpinionAppCard } from "../../components/OpinionAppCard";
 
 const InitialPage = () => {
 	const howItWorkCardsInfo = [
@@ -77,7 +78,9 @@ const InitialPage = () => {
 					))}
 				</Container>
 			</div>
-			<Container className="users-ratings-container"></Container>
+			<Container className="users-ratings-container">
+				<OpinionAppCard userName="Ana Julia" img="https://th.bing.com/th/id/R.aaf7161be143e2daabf5262c93d0af94?rik=bSe5mW7L7M%2bBzA&pid=ImgRaw&r=0" imgAlt="Mulher loira com cabelos longo e está com os braços cruzados" comment="O app vem ajudando bastante no nosso dia a dia na empresa, agora ninguém fica sem marmita por ter esquecido de pedir " rating={5} /> 
+			</Container>
 			<Container className="container"></Container>
 		</main>
 	);

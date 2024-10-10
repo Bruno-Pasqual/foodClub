@@ -1,3 +1,22 @@
+.users-ratings-container .user-name {
+	font-weight: 700;
+	color:#bb3301;
+}
+
+.users-ratings-container {
+	max-width: 300px;
+	height: 100px;
+	text-align: center;
+}
+
+.users-ratings-container img {
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+
 .hero {
 	min-height: 100vh;
 	display: flex;
