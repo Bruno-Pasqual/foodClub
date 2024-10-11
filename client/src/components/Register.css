@@ -5,7 +5,6 @@ body {
 form {
   position: relative;
   width: 400px;
-  row-gap: 0rem;
 }
 
 .container {
@@ -73,7 +72,6 @@ form {
 
 #btn-login {
   border: 1px solid #bb3301;
-  margin-top: 0.5rem;
   background: #fff;
   color: #bb3301;
   font-weight: bold;
