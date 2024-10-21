@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import "./InitialPage.css";
 import { HowItWorkCard } from "../../components/HowItWorkCard";
 import { nanoid } from "nanoid";
+import { RatingCard } from "../../components/RatingCard";
 
 const InitialPage = () => {
 	const howItWorkCardsInfo = [
@@ -63,22 +64,90 @@ const InitialPage = () => {
 					</div>
 				</div>
 			</Container>
-			<div className="">
-				<Container maxWidth={"lg"} className="how-it-work-container entire-page">
-					<h2>Como funciona ?</h2>
-					{howItWorkCardsInfo.map(({ iconAddress, Text, altText, title }) => (
-						<HowItWorkCard
-							key={nanoid()}
-							iconAddress={iconAddress}
-							text={Text}
-							altText={altText}
-							title={title}
-						/>
-					))}
-				</Container>
-			</div>
-			<Container className="users-ratings-container"></Container>
-			<Container className="container"></Container>
+
+			<Container maxWidth={"xl"} className="how-it-work-container">
+				<h2>Como funciona ?</h2>
+				{howItWorkCardsInfo.map(({ iconAddress, Text, altText, title }) => (
+					<HowItWorkCard
+						key={nanoid()}
+						iconAddress={iconAddress}
+						text={Text}
+						altText={altText}
+						title={title}
+					/>
+				))}
+			</Container>
+
+			<Container maxWidth={"xl"} className="users-ratings-container ">
+				<h2>Veja o que nossos clientes dizem</h2>
+				<div className="rating-cards-container">
+					<RatingCard
+						starsNumber={4}
+						userName="Letícia Almeida"
+						text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel soluta praesentium eos, iure qui temporibus tempora. Provident optio rerum sequi?"
+					/>
+					<RatingCard
+						starsNumber={4}
+						userName="Letícia Almeida"
+						text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel soluta praesentium eos, iure qui temporibus tempora. Provident optio rerum sequi?"
+					/>
+					<RatingCard
+						starsNumber={4}
+						userName="Letícia Almeida"
+						text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel soluta praesentium eos, iure qui temporibus tempora. Provident optio rerum sequi?"
+					/>
+					<RatingCard
+						starsNumber={4}
+						userName="Letícia Almeida"
+						text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel soluta praesentium eos, iure qui temporibus tempora. Provident optio rerum sequi?"
+					/>
+					<RatingCard
+						starsNumber={4}
+						userName="Letícia Almeida"
+						text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel soluta praesentium eos, iure qui temporibus tempora. Provident optio rerum sequi?"
+					/>
+					<RatingCard
+						starsNumber={4}
+						userName="Letícia Almeida"
+						text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel soluta praesentium eos, iure qui temporibus tempora. Provident optio rerum sequi?"
+					/>
+					<RatingCard
+						starsNumber={4}
+						userName="Letícia Almeida"
+						text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel soluta praesentium eos, iure qui temporibus tempora. Provident optio rerum sequi?"
+					/>
+					<RatingCard
+						starsNumber={4}
+						userName="Letícia Almeida"
+						text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel soluta praesentium eos, iure qui temporibus tempora. Provident optio rerum sequi?"
+					/>
+					<RatingCard
+						starsNumber={4}
+						userName="Letícia Almeida"
+						text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel soluta praesentium eos, iure qui temporibus tempora. Provident optio rerum sequi?"
+					/>
+					<RatingCard
+						starsNumber={4}
+						userName="Letícia Almeida"
+						text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel soluta praesentium eos, iure qui temporibus tempora. Provident optio rerum sequi?"
+					/>
+					<RatingCard
+						starsNumber={4}
+						userName="Letícia Almeida"
+						text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel soluta praesentium eos, iure qui temporibus tempora. Provident optio rerum sequi?"
+					/>
+					<RatingCard
+						starsNumber={4}
+						userName="Letícia Almeida"
+						text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel soluta praesentium eos, iure qui temporibus tempora. Provident optio rerum sequi?"
+					/>
+				</div>
+			</Container>
+
+			<Container
+				style={{ maxWidth: "100%" }}
+				className="footer-container"
+			></Container>
 		</main>
 	);
 };
