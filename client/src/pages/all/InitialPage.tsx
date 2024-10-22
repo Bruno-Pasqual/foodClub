@@ -1,4 +1,4 @@
-import { Button, Container } from "@mui/material";
+import { Box, Button, Container } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import "./InitialPage.css";
 import { HowItWorkCard } from "../../components/HowItWorkCard";
@@ -43,7 +43,7 @@ const InitialPage = () => {
 	// mostra a introdução da ideia da aplicação, deve conter a opção de ir para o login/cadastro
 	return (
 		<main>
-			<Container maxWidth="lg" className="hero">
+			<div className="hero">
 				<img
 					src="src/assets/Logo.svg"
 					alt="Logotipo da empresa com um chapéu de chef e uma gravata borboleta sobre um paletó, simbolizando serviços de culinária e hospitalidade."
@@ -63,7 +63,7 @@ const InitialPage = () => {
 						</NavLink>
 					</div>
 				</div>
-			</Container>
+			</div>
 
 			<Container maxWidth={"xl"} className="how-it-work-container">
 				<h2>Como funciona ?</h2>
@@ -144,10 +144,9 @@ const InitialPage = () => {
 				</div>
 			</Container>
 
-			<Container
-				style={{ maxWidth: "100%" }}
-				className="footer-container"
-			></Container>
+			<Box sx={{ padding: 0, margin: 0 }} className="footer-container">
+				{/* seu conteúdo aqui */}
+			</Box>
 		</main>
 	);
 };
