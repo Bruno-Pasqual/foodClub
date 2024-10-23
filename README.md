@@ -35,5 +35,5 @@ Criar uma plataforma que facilite a comunicação entre restaurantes e empresas,
 |  | Alinne Martins Cardoso | [![GitHub Badge](https://img.shields.io/badge/-Alinne-100000?style=for-the-badge&logo=github&logoColor=white&link=https://github.com/alinnecardoso)](https://github.com/alinnecardoso) |
 |  | Bruno Henrique Pasqual | [![GitHub Badge](https://img.shields.io/badge/-Bruno-100000?style=for-the-badge&logo=github&logoColor=white&link=https://github.com/Bruno-Pasqual)](https://github.com/Bruno-Pasqual) |
 | | Maycon Sanches B. de Moura | [![GitHub Badge](https://img.shields.io/badge/-Maycon-100000?style=for-the-badge&logo=github&logoColor=white&link=https://github.com/MayconBasilio)](https://github.com/MayconBasilio) |
-| | Pietro Adrian R. Da Silva | [![GitHub Badge](https://img.shields.io/badge/-Pietro-100000?style=for-the-badge&logo=github&logoColor=white&link=https://github.com/pietro-adrian)](https://github.com/pietro-adrian) |
+| | Pietro Adrian R. Da Silva | [![GitHub Badge](https://img.shields.io/badge/-Pietro-100000?style=for-the-badge&logo=github&logoColor=white&link=https://github.com/zarataraz)](https://github.com/zarataraz) |
 | | Rafael Martins Cardoso | [![GitHub Badge](https://img.shields.io/badge/-Rafael-100000?style=for-the-badge&logo=github&logoColor=white&link=https://github.com/rafacardoso17)](https://github.com/rafacardoso17) |
