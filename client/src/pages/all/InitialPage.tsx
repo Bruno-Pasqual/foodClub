@@ -4,6 +4,7 @@ import "./InitialPage.css";
 import { HowItWorkCard } from "../../components/HowItWorkCard";
 import { nanoid } from "nanoid";
 import { RatingCard } from "../../components/RatingCard";
+import InfinityScroll from "../../components/InfinityScroll";
 
 const InitialPage = () => {
 	const howItWorkCardsInfo = [
@@ -134,9 +135,7 @@ const ratings = 	[
 
 			<Container maxWidth={"xl"} className="users-ratings-container ">
 				<h2>Veja o que nossos clientes dizem</h2>
-				<div className="rating-cards-container">
-				
-				</div>
+				<InfinityScroll  />
 			</Container>
 
 			<Box sx={{ padding: 0, margin: 0 }} className="footer-container">
