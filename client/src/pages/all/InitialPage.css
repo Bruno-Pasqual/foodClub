@@ -4,7 +4,7 @@
 }
 
 .users-ratings-container {
-	max-width: 300px;
+	width: 90vw;
 	height: 100px;
 	text-align: center;
 }

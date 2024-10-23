@@ -40,6 +40,60 @@ const InitialPage = () => {
 		},
 	];
 
+const ratings = 	[
+		{
+		  "nome": "João Silva",
+		  "avaliacao": "Desde que começamos a usar o aplicativo na empresa, pedir almoço ficou muito mais prático! A variedade de restaurantes e a rapidez na entrega são pontos fortes. Ótima solução!",
+		  "estrelas": 5
+		},
+		{
+		  "nome": "Ana Pereira",
+		  "avaliacao": "O app facilitou demais nosso dia a dia na empresa. Agora, conseguimos pedir comida de qualidade sem complicações, e os pedidos chegam sempre no horário. Super recomendo!",
+		  "estrelas": 5
+		},
+		{
+		  "nome": "Carlos Oliveira",
+		  "avaliacao": "Antes, pedir almoço para a equipe era um desafio, mas agora com o aplicativo ficou tudo organizado. A interface é fácil de usar e temos acesso a ótimas opções de restaurantes.",
+		  "estrelas": 4
+		},
+		{
+		  "nome": "Mariana Costa",
+		  "avaliacao": "Nossa empresa tem usado o app há alguns meses e a experiência tem sido excelente! Mais opções, facilidade nos pedidos e entrega rápida. Nossos funcionários adoram!",
+		  "estrelas": 5
+		},
+		{
+		  "nome": "Pedro Mendes",
+		  "avaliacao": "Com o app, conseguimos centralizar todos os pedidos de almoço da equipe em uma única plataforma. Super prático e com opções de restaurantes para todos os gostos. Melhorou bastante nossa rotina.",
+		  "estrelas": 4
+		},
+		{
+		  "nome": "Beatriz Souza",
+		  "avaliacao": "Esse aplicativo transformou a forma como pedimos almoço na empresa. A variedade de restaurantes é incrível, e o sistema é super intuitivo. Os funcionários estão muito satisfeitos!",
+		  "estrelas": 5
+		},
+		{
+		  "nome": "Lucas Alves",
+		  "avaliacao": "Melhorou muito nossa logística de pedidos. Agora todo mundo consegue fazer seus pedidos de forma rápida e eficiente, sem precisar se preocupar com problemas de entrega ou falta de opções.",
+		  "estrelas": 4
+		},
+		{
+		  "nome": "Fernanda Lima",
+		  "avaliacao": "Aplicativo excelente! Nos ajudou a otimizar os pedidos de almoço e ainda oferece um ótimo suporte. As entregas são pontuais e os restaurantes parceiros são ótimos. Muito satisfeitos!",
+		  "estrelas": 5
+		},
+		{
+		  "nome": "Rodrigo Santos",
+		  "avaliacao": "Com a integração do app na nossa empresa, pedir almoço virou uma tarefa simples e rápida. A entrega é sempre dentro do prazo e a qualidade dos restaurantes é muito boa!",
+		  "estrelas": 4
+		},
+		{
+		  "nome": "Cláudia Ribeiro",
+		  "avaliacao": "Nossa equipe adorou o app! Conseguimos fazer pedidos com mais eficiência e sem problemas. A qualidade dos restaurantes é ótima e o processo todo ficou bem mais organizado.",
+		  "estrelas": 5
+		}
+	  ]
+	  
+
 	// mostra a introdução da ideia da aplicação, deve conter a opção de ir para o login/cadastro
 	return (
 		<main>
@@ -81,66 +135,7 @@ const InitialPage = () => {
 			<Container maxWidth={"xl"} className="users-ratings-container ">
 				<h2>Veja o que nossos clientes dizem</h2>
 				<div className="rating-cards-container">
-					<RatingCard
-						starsNumber={4}
-						userName="Letícia Almeida"
-						text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel soluta praesentium eos, iure qui temporibus tempora. Provident optio rerum sequi?"
-					/>
-					<RatingCard
-						starsNumber={4}
-						userName="Letícia Almeida"
-						text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel soluta praesentium eos, iure qui temporibus tempora. Provident optio rerum sequi?"
-					/>
-					<RatingCard
-						starsNumber={4}
-						userName="Letícia Almeida"
-						text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel soluta praesentium eos, iure qui temporibus tempora. Provident optio rerum sequi?"
-					/>
-					<RatingCard
-						starsNumber={4}
-						userName="Letícia Almeida"
-						text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel soluta praesentium eos, iure qui temporibus tempora. Provident optio rerum sequi?"
-					/>
-					<RatingCard
-						starsNumber={4}
-						userName="Letícia Almeida"
-						text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel soluta praesentium eos, iure qui temporibus tempora. Provident optio rerum sequi?"
-					/>
-					<RatingCard
-						starsNumber={4}
-						userName="Letícia Almeida"
-						text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel soluta praesentium eos, iure qui temporibus tempora. Provident optio rerum sequi?"
-					/>
-					<RatingCard
-						starsNumber={4}
-						userName="Letícia Almeida"
-						text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel soluta praesentium eos, iure qui temporibus tempora. Provident optio rerum sequi?"
-					/>
-					<RatingCard
-						starsNumber={4}
-						userName="Letícia Almeida"
-						text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel soluta praesentium eos, iure qui temporibus tempora. Provident optio rerum sequi?"
-					/>
-					<RatingCard
-						starsNumber={4}
-						userName="Letícia Almeida"
-						text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel soluta praesentium eos, iure qui temporibus tempora. Provident optio rerum sequi?"
-					/>
-					<RatingCard
-						starsNumber={4}
-						userName="Letícia Almeida"
-						text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel soluta praesentium eos, iure qui temporibus tempora. Provident optio rerum sequi?"
-					/>
-					<RatingCard
-						starsNumber={4}
-						userName="Letícia Almeida"
-						text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel soluta praesentium eos, iure qui temporibus tempora. Provident optio rerum sequi?"
-					/>
-					<RatingCard
-						starsNumber={4}
-						userName="Letícia Almeida"
-						text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel soluta praesentium eos, iure qui temporibus tempora. Provident optio rerum sequi?"
-					/>
+				
 				</div>
 			</Container>
 
