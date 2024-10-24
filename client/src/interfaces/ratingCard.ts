@@ -1,5 +1,6 @@
 export interface iRatingCard {
-	stars: number;
-	text: string;
+	position: number;
 	userName: string;
+	text: string;
+	stars: number;
 }

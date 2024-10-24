@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import "./InitialPage.css";
 import { HowItWorkCard } from "../../components/HowItWorkCard";
 import { nanoid } from "nanoid";
-import InfinityScroll from "../../components/InfinityScroll";
+import InfiniteSlider from "../../components/infiniteSlider/InfiniteSlider";
 
 const InitialPage = () => {
 	const howItWorkCardsInfo = [
@@ -143,15 +143,17 @@ const InitialPage = () => {
 
 			<Container maxWidth={"xl"} className="users-ratings-container ">
 				<h2>Veja o que nossos clientes dizem</h2>
-				<InfinityScroll
+				<InfiniteSlider
 					cards={ratings}
-					orientation="horizontal"
-					animationSeconds={30}
+					animationDuration={40}
+					cardHeight={200}
+					cardWidth={300}
 				/>
-				<InfinityScroll
+				<InfiniteSlider
 					cards={ratings}
-					orientation="horizontal"
-					animationSeconds={30}
+					animationDuration={40}
+					cardHeight={200}
+					cardWidth={300}
 				/>
 			</Container>
 

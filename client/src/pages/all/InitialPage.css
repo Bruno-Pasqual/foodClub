@@ -1,8 +1,3 @@
-.users-ratings-container .user-name {
-	font-weight: 700;
-	color: #bb3301;
-}
-
 .users-ratings-container {
 	width: 90vw;
 	height: 100px;
@@ -10,6 +5,7 @@
 	display: flex;
 	flex-direction: column;
 	row-gap: 2rem;
+	text-align: left;
 }
 
 .users-ratings-container img {
