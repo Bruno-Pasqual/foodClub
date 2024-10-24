@@ -141,7 +141,7 @@ const InitialPage = () => {
 				))}
 			</Container>
 
-			<Container maxWidth={"xl"} className="users-ratings-container ">
+			<Container maxWidth={"xl"} className="users-ratings-container">
 				<h2>Veja o que nossos clientes dizem</h2>
 				<InfiniteSlider
 					cards={ratings}

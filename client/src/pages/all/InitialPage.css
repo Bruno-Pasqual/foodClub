@@ -8,13 +8,6 @@
 	text-align: left;
 }
 
-.users-ratings-container img {
-	width: 50px;
-	height: 50px;
-	border-radius: 50%;
-	object-fit: cover;
-}
-
 .footer-container {
 	max-width: 100vw;
 	height: 50vh;
@@ -35,10 +28,8 @@ main {
 }
 
 .users-ratings-container h2 {
-	margin: 0 2rem 4rem 0;
-}
-
-.rating-card {
+	margin: 0 2rem 6rem 0;
+	font-size: 2rem;
 }
 
 .rating-cards-container {
