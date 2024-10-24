@@ -1,13 +1,15 @@
 import express from "express";
-import empresaController from "../controllers/empresaController.js";
+import cadastroController from "../controllers/cadastroController.js";
+
 
 const routes = express.Router();
 
-routes.get("/Registro", empresaController.listarempresa);
-routes.get("/Registro/:id", empresaController.listarempresaPorId);
-routes.post("/Registro", empresaController.cadastrar);
-routes.put("/Registro/:id", empresaController.atualizarempresa);
-routes.delete("/Registro/:id", empresaController.excluirempresa);
+routes.get("/cadastro", cadastroController.listarcadastro);
+routes.get("/cadastro/:id", cadastroController.listarcadastroPorId);
+routes.post("/cadastro", cadastroController.adicionarCadastro);
+routes.put("/cadastro/:id", cadastroController.atualizarcadastro);
+routes.delete("/cadastro/:id", cadastroController.excluircadastro);
+routes.put("/cadastro/prato/:id", cadastroController.adicionapratoRestaurante);
 
 
 export default routes

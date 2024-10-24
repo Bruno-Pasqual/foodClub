@@ -3,9 +3,9 @@ import mongoose from "mongoose";
 const pratoSchema = new mongoose.Schema({
     id:{type: mongoose.Schema.Types.ObjectId},
     nome_do_prato:{type:String, required:true},
-    igredientes:{type:Array, required:true},
-},{versionKey: false});
+    ingredientes:{type:Array, required:true},
+    },{versionKey: false});
 
-const Registro = mongoose.model("Registro", cadastroSchema);
+const prato = mongoose.model("pratos", pratoSchema);
 
-export default Registro
+export {prato, pratoSchema}
