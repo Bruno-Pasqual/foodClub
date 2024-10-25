@@ -1,20 +1,20 @@
 body {
-  min-height: auto;
+	min-height: auto;
 }
 
 form {
-  position: relative;
-  width: 400px;
+	position: relative;
+	width: 400px;
 }
 
 .container {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  height: auto;
-  width: 100%;
-  max-width: 1000px;
-  margin: 5rem auto;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	height: auto;
+	width: 100%;
+	max-width: 1000px;
+	margin: 5rem auto;
 }
 
 .step-1-container,
@@ -36,38 +36,38 @@ form {
 }
 
 .step-1-container {
-  margin: 5rem auto;
+	margin: 5rem auto;
 }
 
 .step-1-container.visible,
 .step-2-container.visible {
-  display: flex;
+	display: flex;
 }
 
 .step-2-container #return {
-  display: flex;
-  justify-content: flex-start;
-  width: fit-content;
+	display: flex;
+	justify-content: flex-start;
+	width: fit-content;
 }
 
 .step-2-container #return:hover {
-  font-weight: bold;
+	font-weight: bold;
 }
 
 .basic-info-container {
-  display: flex;
-  flex-direction: column;
-  row-gap: 1rem;
+	display: flex;
+	flex-direction: column;
+	row-gap: 1rem;
 }
 
 .hidden {
-  transform: translateX(-100%);
-  opacity: 0;
+	transform: translateX(-100%);
+	opacity: 0;
 }
 
 .visible {
-  transform: translateX(0);
-  opacity: 1;
+	transform: translateX(0);
+	opacity: 1;
 }
 
 #btn-login {
@@ -81,36 +81,37 @@ form {
 .step-2-container .logo img {
   max-height: 300px;
 }
-@media (max-width: 800px){
-  .step-1-container,.step-2-container{
-    height: auto;
-  }
+@media (max-width: 800px) {
+	.step-1-container,
+	.step-2-container {
+		height: auto;
+	}
 }
 @media (max-width: 430px) {
-  form {
-    width: 264px;
-  }
+	form {
+		width: 264px;
+	}
 
-  .step-1-container.visible,
-  .step-2-container.visible {
-    height: auto;
-  }
+	.step-1-container.visible,
+	.step-2-container.visible {
+		height: auto;
+	}
 
-  .step-1-container .logo,
-  .step-2-container .logo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+	.step-1-container .logo,
+	.step-2-container .logo {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
 
-  .step-1-container .logo img,
-  .step-2-container .logo img {
-    height: 200px;
-  }
+	.step-1-container .logo img,
+	.step-2-container .logo img {
+		height: 200px;
+	}
 
-  .basic-info-container h1 {
-    font-size: 24px;
-  }
+	.basic-info-container h1 {
+		font-size: 24px;
+	}
 }
 @media (max-width: 800px){
   .step-1-container,.step-2-container{
