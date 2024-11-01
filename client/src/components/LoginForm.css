@@ -18,9 +18,9 @@ body {
 	flex-direction: row-reverse;
 	justify-content: space-around;
 	align-items: center;
-	background: #fff;
+	background: #f6f2eb;
 	border-radius: 8px;
-	box-shadow: 3px 6px 5px #0000000e;
+	/* box-shadow: 3px 6px 5px #0000000e; */
 	padding: 2rem 1rem;
 	width: 100%;
 	max-width: 1000px;
