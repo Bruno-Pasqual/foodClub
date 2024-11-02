@@ -1,36 +1,45 @@
+import { Types } from "mongoose";
 import { UserType } from "../enums/enums";
+
+export interface IOrder {
+	userId: string;
+}
 
 export interface IUser extends Document {
 	email: string;
-	senha: string;
-	tipoUsuario: UserType;
+	password: string;
+	userType: UserType;
+	verificationToken: string;
+	verificationTokenExpireAt: Date;
+	// authenticated: boolean;??
+	//todo - Decidir se será mantido ou não
 }
 
 export interface IRestaurant extends IUser {
-	nomeRestaurante: string;
+	name: string;
 	cnpj: string;
 	cep: string;
-	numero: string;
-	pratos: IDish[];
+	number: string;
+	dishes: IDish[];
 }
 
 export interface IDish {
-	nomeDoPrato: string;
-	descricao: string;
-	preco: number;
+	name: string;
+	description: string;
+	price: number;
 }
 
-export interface IFuncionario extends IUser {
-	nome: string;
+export interface IEmployee extends IUser {
+	name: string;
 	cpf: string;
-	empresaId: string;
+	company: Types.ObjectId;
 }
 
 export interface ICompany extends IUser {
-	nome: string;
+	name: string;
 	cnpj: string;
 	cep: string;
-	numero: string;
-	restaurantesParceiros: IRestaurant[];
-	funcionariosIds: string[];
+	number: string;
+	affiliateRestaurants: Types.ObjectId[];
+	employeesId: Types.ObjectId[];
 }

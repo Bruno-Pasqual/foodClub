@@ -1,34 +1,21 @@
 import mongoose, { Collection, Schema } from "mongoose";
 import { IRestaurant } from "../interfaces/interfaces";
-import { UserType } from "../enums/enums";
-import { Usuario } from "./UsuarioSchema";
+import { User } from "./UserSchema";
 
-const baseOptions = {
-	discriminatorKey: "type",
-	Collection: "usuarios",
-};
-
-const RestauranteSchema = new Schema<IRestaurant>({
-	nomeRestaurante: { type: String, required: true },
+const RestaurantSchema = new Schema<IRestaurant>({
+	name: { type: String, required: true },
 	cnpj: { type: String, required: true },
 	cep: { type: String, required: true },
-	numero: { type: String, required: true },
-	tipoUsuario: { type: String, enum: [UserType.RESTAURANTE], required: true },
-	pratos: [
+	number: { type: String, required: true },
+	dishes: [
 		{
-			nomeDoPrato: { type: String, required: true },
-			descricao: { type: String, required: true },
-			preco: { type: Number, required: true },
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Dish",
 		},
 	],
 });
 
-/* 
-   explicação discriminator - O discriminator permite herdar a estrutura de um model,
-   de forma que seja apenas necessário declarar as partes específicas do model enquanto
-   se compartilha uma base em comum 
-*/
-export const Restaurante = Usuario.discriminator<IRestaurant>(
-	"Restaurante",
-	RestauranteSchema
+export const Restaurant = User.discriminator<IRestaurant>(
+	"Restaurant",
+	RestaurantSchema
 );

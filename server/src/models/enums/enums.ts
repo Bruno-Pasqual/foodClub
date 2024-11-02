@@ -1,5 +1,13 @@
 export enum UserType {
-	EMPRESA = "empresa",
-	RESTAURANTE = "restaurante",
-	FUNCIONARIO = "funcionario",
+	COMPANY = "company",
+	RESTAURANT = "restaurant",
+	EMPLOYEE = "employee",
+}
+
+export enum OrderStatus {
+	PENDING = "pending",
+	CONFIRMED = "confirmed",
+	PREPARING = "preparing",
+	DELIVERED = "delivered",
+	CANCELLED = "cancelled",
 }
