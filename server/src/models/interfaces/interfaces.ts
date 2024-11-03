@@ -47,13 +47,13 @@ export interface IEmployee extends IUser {
 	company: Types.ObjectId;
 	birthDate: Date;
 	weeklyOrders: {
-		monday: Types.ObjectId[];
-		tuesday: Types.ObjectId[];
-		wednesday: Types.ObjectId[];
-		thursday: Types.ObjectId[];
-		friday: Types.ObjectId[];
-		saturday: Types.ObjectId[];
-		sunday: Types.ObjectId[];
+		Monday: Types.ObjectId[];
+		Tuesday: Types.ObjectId[];
+		Wednesday: Types.ObjectId[];
+		Thursday: Types.ObjectId[];
+		Friday: Types.ObjectId[];
+		Saturday: Types.ObjectId[];
+		Sunday: Types.ObjectId[];
 	};
 }
 
@@ -64,4 +64,15 @@ export interface ICompany extends IUser {
 	number: string;
 	affiliateRestaurants: Types.ObjectId[];
 	employees: Types.ObjectId[];
+}
+
+export interface IValidations {
+	name?: string;
+	email?: string;
+	password?: string;
+	cep?: string;
+	number?: number;
+	cpf?: string;
+	price?: number;
+	description?: string;
 }
