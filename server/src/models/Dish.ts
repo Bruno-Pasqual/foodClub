@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
+import { IDish } from "./interfaces/interfaces";
 
-const Dish = new mongoose.Schema({
+const DishSchema = new mongoose.Schema({
 	name: { type: String, required: true },
 	description: { type: String, required: true },
 	price: { type: Number, required: true },
@@ -9,3 +10,5 @@ const Dish = new mongoose.Schema({
 		ref: "Restaurant",
 	},
 });
+
+export const Dish = mongoose.model<IDish>("Dish", DishSchema);

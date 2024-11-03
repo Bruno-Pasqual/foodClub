@@ -1,8 +1,8 @@
 import mongoose, { Collection, Schema } from "mongoose";
-import { IRestaurant } from "../interfaces/interfaces";
-import { User } from "./UserSchema";
+import { IRestaurant } from "./interfaces/interfaces";
+import { User } from "./User";
 
-const RestaurantSchema = new Schema<IRestaurant>({
+const RestaurantSchema = new Schema({
 	name: { type: String, required: true },
 	cnpj: { type: String, required: true },
 	cep: { type: String, required: true },
@@ -11,6 +11,12 @@ const RestaurantSchema = new Schema<IRestaurant>({
 		{
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "Dish",
+		},
+	],
+	companyOrders: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "CompanyOrder",
 		},
 	],
 });

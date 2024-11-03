@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import { IEmployee } from "./../interfaces/interfaces";
-import { User } from "./UserSchema";
+import { IEmployee } from "./interfaces/interfaces";
+import { User } from "./User";
 
 const EmployeeSchema = new mongoose.Schema({
 	name: { type: String, required: true },
@@ -12,9 +12,14 @@ const EmployeeSchema = new mongoose.Schema({
 			ref: "Order",
 		},
 	],
+	company: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "Company",
+	},
+	birthDate: { type: Date, required: true },
 });
 
-export const Restaurant = User.discriminator<IEmployee>(
-	"Restaurant",
+export const Employee = User.discriminator<IEmployee>(
+	"Employee",
 	EmployeeSchema
 );

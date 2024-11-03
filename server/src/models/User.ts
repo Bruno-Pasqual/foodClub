@@ -1,8 +1,7 @@
 import mongoose from "mongoose";
-import { UserType } from "../enums/enums";
+import { UserType } from "./enums/enums";
 
-// prof - Tirar dúvida a respeito das funcionalidades do base option
-// Recomenda-se a utilização quando é feito herança entre modelos
+// prof - base option ?
 
 const baseOptions = {
 	discriminatorKey: "type",
