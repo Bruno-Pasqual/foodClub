@@ -75,4 +75,11 @@ export interface IValidations {
 	cpf?: string;
 	price?: number;
 	description?: string;
+	userType?: UserType;
+}
+
+export interface iJSONResponse {
+	success: boolean;
+	message: string;
+	data: any;
 }

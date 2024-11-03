@@ -14,7 +14,10 @@ const UserSchema = new mongoose.Schema(
 		password: { type: String, required: true },
 		userType: { type: String, enum: Object.values(UserType), required: true },
 		verificationToken: String,
-		verificationTokenExpireAt: Date,
+		verificationTokenExpireAt: {
+			type: Date,
+			default: () => new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+		},
 	},
 	baseOptions
 );

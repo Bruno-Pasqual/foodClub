@@ -1,7 +1,7 @@
 //#region Imports
 
 import bcrypt from "bcrypt";
-import { Request, Response } from "express";
+import { Request, RequestHandler, Response } from "express";
 
 import { UserType } from "../models/enums/enums";
 import { Company } from "../models/Company";
@@ -17,17 +17,31 @@ import {
 	IEmployee,
 	IRestaurant,
 	IValidations as IFieldsValidationsDTO,
+	IUser,
 } from "../models/interfaces/interfaces";
+import { User } from "../models/User";
 
 //#endregion
 
-export const signup = async (req: Request, res: Response) => {
+export const signup = async (req: Request, res: Response): Promise<any> => {
 	const userData: IRestaurant | IEmployee | ICompany = req.body;
+
+	const userDataIsEmpty = (obj: object): boolean => {
+		return Object.keys(obj).length === 0;
+	};
+
+	if (userDataIsEmpty(userData)) {
+		return res
+			.status(400)
+			.json({ success: false, message: "User data is empty.", data: null });
+	}
 
 	const validFields = await validateFields(
 		userData as IFieldsValidationsDTO,
 		res
 	);
+
+	console.log(validFields);
 
 	if (validFields) {
 		try {
@@ -48,7 +62,7 @@ export const signup = async (req: Request, res: Response) => {
 				default:
 					return res
 						.status(400)
-						.json({ success: false, message: "User type is invalid." });
+						.json({ success: false, message: "User type is invalid.", data: null });
 			}
 
 			return res.status(201).json({
@@ -60,7 +74,7 @@ export const signup = async (req: Request, res: Response) => {
 			console.log(error);
 			return res.status(500).json({
 				success: false,
-				message: getErrorCreationMessage(userData.userType),
+				message: error,
 			});
 		}
 	}
