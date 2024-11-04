@@ -76,6 +76,7 @@ export interface IValidations {
 	price?: number;
 	description?: string;
 	userType?: UserType;
+	cnpj?: string;
 }
 
 export interface iJSONResponse {

@@ -11,7 +11,7 @@ import {
 	getErrorCreationMessage,
 	getCreationMessage as getSuccessCreationMessage,
 } from "../utils/helpers";
-import { validateFields } from "../utils/validations";
+import { validSignupFields } from "../utils/validations";
 import {
 	ICompany,
 	IEmployee,
@@ -36,7 +36,7 @@ export const signup = async (req: Request, res: Response): Promise<any> => {
 			.json({ success: false, message: "User data is empty.", data: null });
 	}
 
-	const validFields = await validateFields(
+	const validFields = await validSignupFields(
 		userData as IFieldsValidationsDTO,
 		res
 	);

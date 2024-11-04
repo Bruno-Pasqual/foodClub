@@ -21,6 +21,7 @@ export enum ErrorMessages {
 	EMPTY_CPF = "CPF é um campo obrigatório.",
 	EMPTY_PRICE = "O preço é um campo obrigatório.",
 	EMPTY_DESCRIPTION = "A descrição é um campo obrigatório.",
+	EMPTY_CNPJ = "O CNPJ é um campo obrigatório.",
 
 	TOO_SHORT_NAME = "O nome precisa ter pelo menos 3 caracteres",
 	EMAIL_NOT_VALID = "O email é inválido.",
@@ -32,4 +33,5 @@ export enum ErrorMessages {
 	INVALID_PRICE = "Preço inválido. Deve ser maior que zero.",
 
 	EMAIL_ALREADY_USED = "O email informado já está em uso.",
+	INVALID_CNPJ = "CNPJ inválido. Deve ter 14 dígitos.",
 }

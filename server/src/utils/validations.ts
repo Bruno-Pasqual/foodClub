@@ -76,7 +76,7 @@ export const validateName = (name: string | undefined, res: Response) => {
 
 //#endregion
 
-export const validateCpf = (cpf: string, res: Response) => {
+export const validateCpf = (cpf: string | undefined, res: Response) => {
 	if (!cpf) {
 		return res
 			.status(400)
@@ -90,7 +90,7 @@ export const validateCpf = (cpf: string, res: Response) => {
 	}
 };
 
-export const validateCep = (cep: string, res: Response) => {
+export const validateCep = (cep: string | undefined, res: Response) => {
 	if (!cep) {
 		return res
 			.status(400)
@@ -104,7 +104,7 @@ export const validateCep = (cep: string, res: Response) => {
 	}
 };
 
-export const validatePrice = (price: number, res: Response) => {
+export const validatePrice = (price: number | undefined, res: Response) => {
 	if (!price) {
 		return res
 			.status(400)
@@ -119,7 +119,7 @@ export const validatePrice = (price: number, res: Response) => {
 	}
 };
 
-export const validateNumber = (number: number, res: Response) => {
+export const validateNumber = (number: number | undefined, res: Response) => {
 	if (!number) {
 		return res
 			.status(400)
@@ -149,18 +149,31 @@ export const validateDescription = (description: string, res: Response) => {
 	}
 };
 
-const restaurantValidations = async (fields: IValidations, res: Response) => {
-	if (fields.name != undefined) {
-		validateName(fields.name, res);
-	} else {
-		return res.status(400).json({
-			success: false,
-			message: ErrorMessages.EMPTY_NAME,
-		});
+export const validateCNPJ = (cnpj: string | undefined, res: Response) => {
+	if (!cnpj) {
+		return res
+			.status(400)
+			.json({ success: false, message: ErrorMessages.EMPTY_CNPJ });
 	}
+
+	if (cnpj.length !== 14 || isNaN(Number(cnpj))) {
+		return res
+			.status(400)
+			.json({ success: false, message: ErrorMessages.INVALID_CNPJ });
+	}
+
+	// Regex para verificar se todos os números são iguais
+	const repeatedNumberPattern = /^(\d)\1{13}$/;
+	if (repeatedNumberPattern.test(cnpj)) {
+		return res
+			.status(400)
+			.json({ success: false, message: ErrorMessages.INVALID_CNPJ });
+	}
+
+	// Código adicional para outras validações do CNPJ, se necessário
 };
 
-export const validateFields = async (
+export const validSignupFields = async (
 	fields: IValidations,
 	res: Response
 ): Promise<boolean> => {
@@ -171,13 +184,16 @@ export const validateFields = async (
 
 	// employee
 	if (fields.userType === UserType.EMPLOYEE) {
-		if (fields.cpf) validateCpf(fields.cpf, res);
+		validateCpf(fields.cpf, res);
 	}
 
-	// Empresa
-	if (fields.cep) validateCep(fields.cep, res);
-	if (fields.number) validateNumber(fields.number, res);
-	if (fields.price) validatePrice(fields.price, res);
-	if (fields.description) validateDescription(fields.description, res);
+	if (
+		fields.userType === UserType.COMPANY ||
+		fields.userType === UserType.RESTAURANT
+	) {
+		validateCep(fields.cep, res);
+		validateNumber(fields.number, res);
+		validateCNPJ(fields.cnpj, res);
+	}
 	return true;
 };
