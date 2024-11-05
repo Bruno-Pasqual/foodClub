@@ -47,13 +47,13 @@ export interface IEmployee extends IUser {
 	company: Types.ObjectId;
 	birthDate: Date;
 	weeklyOrders: {
-		Monday: Types.ObjectId[];
-		Tuesday: Types.ObjectId[];
-		Wednesday: Types.ObjectId[];
-		Thursday: Types.ObjectId[];
-		Friday: Types.ObjectId[];
-		Saturday: Types.ObjectId[];
-		Sunday: Types.ObjectId[];
+		Monday: Types.ObjectId;
+		Tuesday: Types.ObjectId;
+		Wednesday: Types.ObjectId;
+		Thursday: Types.ObjectId;
+		Friday: Types.ObjectId;
+		Saturday: Types.ObjectId;
+		Sunday: Types.ObjectId;
 	};
 }
 
