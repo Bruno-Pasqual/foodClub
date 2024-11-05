@@ -1,47 +1,33 @@
 //#region Imports
-import { Request, RequestHandler, Response } from "express";
-
-import {
-	ICompany,
-	IEmployee,
-	IRestaurant,
-	IValidations as IFieldsValidationsDTO,
-	IUser,
-} from "../models/interfaces/interfaces";
+import { Request, Response } from "express";
+import { IRestaurant } from "../models/interfaces/interfaces";
+import { Restaurant } from "../models/Restaurant";
+import { User } from "../models/User";
+import { validateUserData } from "../utils/validations";
+import bcrypt from "bcrypt";
 
 //#endregion
 
 export const signup = async (req: Request, res: Response): Promise<any> => {
-	const userData: IRestaurant | IEmployee | ICompany = req.body;
+	const userData: IRestaurant = req.body;
 
-	const values = Object.entries(userData).map(([key, value]) => {
-		return { [key]: value };
-	});
-
-	console.log(values);
-
-	const emptyValue = values.some((value) => {
-		return value.value === undefined;
-	});
-
-	console.log("emptyValue", emptyValue);
-
-	if (emptyValue) {
-		return res.status(400).json({
-			message: "Todos os campos obrigatórios devem ser preenchidos",
-			code: 400,
-		});
+	const invalidField = await validateUserData(userData);
+	if (invalidField) {
+		return res.status(invalidField.code || 400).json(invalidField);
 	}
 
-	switch (userData.userType) {
-		case "company":
-		case "employee":
-		case "restaurant":
+	const hashedPassword = await bcrypt.hash(userData.password, 10);
+	userData.password = hashedPassword;
 
-		default:
-			return res.status(400).json({
-				message: "Tipo de usuário inválido",
-				code: 400,
-			});
+	const user = new Restaurant(userData);
+
+	try {
+		await user.save();
+		return res.status(201).json({ success: true, message: "Usuário criado." });
+	} catch (error) {
+		console.log(error);
+		return res
+			.status(500)
+			.json({ success: false, message: "Erro ao criar o usuário." });
 	}
 };

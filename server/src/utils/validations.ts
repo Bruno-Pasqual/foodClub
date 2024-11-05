@@ -1,199 +1,71 @@
-// import { Response } from "express";
-// import { IValidations } from "../models/interfaces/interfaces";
-// import { User } from "./../models/User";
-// import { ErrorMessages, UserType } from "../models/enums/enums";
+import { IRestaurant } from "../models/interfaces/interfaces";
+import { User } from "../models/User";
+import { isEmail, isValidCEP, isValidCNPJ } from "./helpers";
+import { ICompany } from "./../models/interfaces/interfaces";
 
-// //#region Common
+export const validateUserData = async (userData: IRestaurant | ICompany) => {
+	if (!userData.email) {
+		return { success: false, message: "O email é um campo obrigatório." };
+	}
 
-// export const validateEmail = async (
-// 	email: string | undefined,
-// 	res: Response
-// ) => {
-// 	const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Valida um email com formato: algo@dominio.ext
+	const emailExists = await User.findOne({ email: userData.email });
+	if (emailExists) {
+		return {
+			success: false,
+			message: "O email informado não está disponível.",
+			code: 409,
+		};
+	}
 
-// 	if (!email) {
-// 		return res
-// 			.status(400)
-// 			.json({ success: false, message: ErrorMessages.EMPTY_EMAIL });
-// 	}
+	if (isEmail(userData.email) === false) {
+		return { success: false, message: "O email é inválido." };
+	}
 
-// 	if (!regex.test(email)) {
-// 		return res
-// 			.status(400)
-// 			.json({ success: false, message: ErrorMessages.EMAIL_NOT_VALID });
-// 	}
+	if (!userData.password) {
+		return { success: false, message: "A senha é um campo obrigatório." };
+	}
 
-// 	const UserExist = await User.findOne({ email: email });
+	if (userData.password.length < 6) {
+		return {
+			success: false,
+			message: "A senha deve ter pelo menos 6 caracteres.",
+		};
+	}
 
-// 	if (UserExist) {
-// 		return res.status(409).json({
-// 			success: false,
-// 			message: ErrorMessages.EMAIL_ALREADY_USED,
-// 		});
-// 	}
-// };
+	if (!userData.name) {
+		return { success: false, message: "O nome é um campo obrigatório." };
+	}
 
-// export const validatePassword = (
-// 	password: string | undefined,
-// 	res: Response
-// ) => {
-// 	const regex =
-// 		/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+	if (userData.name.length < 3) {
+		return {
+			success: false,
+			message: "O nome deve ter pelo menos 3 caracteres.",
+		};
+	}
 
-// 	if (!password) {
-// 		return res
-// 			.status(400)
-// 			.json({ success: false, message: ErrorMessages.EMPTY_PASSWORD });
-// 	}
+	if (!userData.cnpj) {
+		return { success: false, message: "O CNPJ é um campo obrigatório." };
+	}
 
-// 	if (!regex.test(password)) {
-// 		return res
-// 			.status(400)
-// 			.json({ success: false, message: ErrorMessages.INVALID_PASSWORD });
-// 	}
-// };
+	if (isValidCNPJ(userData.cnpj) === false) {
+		return { success: false, message: "O CNPJ é inválido." };
+	}
 
-// export const validateName = (name: string | undefined, res: Response) => {
-// 	console.log("entrei");
+	if (!userData.number) {
+		return { success: false, message: "O número é um campo obrigatório." };
+	}
 
-// 	if (!name) {
-// 		return res.status(400).json({
-// 			success: false,
-// 			message: ErrorMessages.EMPTY_NAME,
-// 		});
-// 	}
-// 	if (name.length < 3) {
-// 		return res.status(400).json({
-// 			success: false,
-// 			message: ErrorMessages.TOO_SHORT_NAME,
-// 		});
-// 	}
-// };
+	if (parseInt(userData.number) <= 0) {
+		return { success: false, message: "O número deve ser maior que zero." };
+	}
 
-// //#endregion
+	if (!userData.cep) {
+		return { success: false, message: "O CEP é um campo obrigatório." };
+	}
 
-// //#region Restaurant / Company
+	if (!isValidCEP(userData.cep)) {
+		return { success: false, message: "O CEP é inválido. Deve ter 8 dígitos." };
+	}
 
-// //#endregion
-
-// export const validateCpf = (cpf: string | undefined, res: Response) => {
-// 	if (!cpf) {
-// 		return res
-// 			.status(400)
-// 			.json({ success: false, message: ErrorMessages.EMPTY_CPF });
-// 	}
-
-// 	if (cpf.length !== 11 || isNaN(Number(cpf))) {
-// 		return res
-// 			.status(400)
-// 			.json({ success: false, message: ErrorMessages.INVALID_CPF });
-// 	}
-// };
-
-// export const validateCep = (cep: string | undefined, res: Response) => {
-// 	if (!cep) {
-// 		return res
-// 			.status(400)
-// 			.json({ success: false, message: ErrorMessages.EMPTY_CEP });
-// 	}
-
-// 	if (cep.length !== 8 || isNaN(Number(cep))) {
-// 		return res
-// 			.status(400)
-// 			.json({ success: false, message: ErrorMessages.INVALID_CEP });
-// 	}
-// };
-
-// export const validatePrice = (price: number | undefined, res: Response) => {
-// 	if (!price) {
-// 		return res
-// 			.status(400)
-// 			.json({ success: false, message: ErrorMessages.EMPTY_PRICE });
-// 	}
-
-// 	if (price < 0) {
-// 		return res.status(400).json({
-// 			success: false,
-// 			message: ErrorMessages.INVALID_PRICE,
-// 		});
-// 	}
-// };
-
-// export const validateNumber = (number: number | undefined, res: Response) => {
-// 	if (!number) {
-// 		return res
-// 			.status(400)
-// 			.json({ success: false, message: ErrorMessages.EMPTY_NUMBER });
-// 	}
-
-// 	if (number <= 0) {
-// 		return res.status(400).json({
-// 			success: false,
-// 			message: "Número inválido. Deve ser maior que zero.",
-// 		});
-// 	}
-// };
-
-// export const validateDescription = (description: string, res: Response) => {
-// 	if (!description) {
-// 		return res
-// 			.status(400)
-// 			.json({ success: false, message: ErrorMessages.EMPTY_DESCRIPTION });
-// 	}
-
-// 	if (description.length < 30) {
-// 		return res.status(400).json({
-// 			success: false,
-// 			message: ErrorMessages.EMPTY_DESCRIPTION,
-// 		});
-// 	}
-// };
-
-// export const validateCNPJ = (cnpj: string | undefined, res: Response) => {
-// 	if (!cnpj) {
-// 		return res
-// 			.status(400)
-// 			.json({ success: false, message: ErrorMessages.EMPTY_CNPJ });
-// 	}
-
-// 	if (cnpj.length !== 14 || isNaN(Number(cnpj))) {
-// 		return res
-// 			.status(400)
-// 			.json({ success: false, message: ErrorMessages.INVALID_CNPJ });
-// 	}
-
-// 	// Regex para verificar se todos os números são iguais
-// 	const repeatedNumberPattern = /^(\d)\1{13}$/;
-// 	if (repeatedNumberPattern.test(cnpj)) {
-// 		return res
-// 			.status(400)
-// 			.json({ success: false, message: ErrorMessages.INVALID_CNPJ });
-// 	}
-
-// 	// Código adicional para outras validações do CNPJ, se necessário
-// };
-
-// export const validSignupFields = async (
-// 	fields: IValidations,
-// 	res: Response
-// ): Promise<boolean> => {
-// 	//Validações comuns
-// 	validateName(fields.name, res);
-// 	validateEmail(fields.email, res);
-// 	validatePassword(fields.password, res);
-
-// 	// employee
-// 	if (fields.userType === UserType.EMPLOYEE) {
-// 		validateCpf(fields.cpf, res);
-// 	}
-
-// 	if (
-// 		fields.userType === UserType.COMPANY ||
-// 		fields.userType === UserType.RESTAURANT
-// 	) {
-// 		validateCep(fields.cep, res);
-// 		validateNumber(fields.number, res);
-// 		validateCNPJ(fields.cnpj, res);
-// 	}
-// 	return true;
-// };
+	return null; // Retorna null se não houver erros
+};
