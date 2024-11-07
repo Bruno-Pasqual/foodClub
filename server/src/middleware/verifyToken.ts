@@ -1,15 +1,19 @@
-import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import {
 	ICompany,
 	IEmployee,
 	IRestaurant,
+	RequestWithUserId,
 } from "../models/interfaces/interfaces";
 
+import { Request, Response, NextFunction } from "express";
+
+// Sobrescreve o tipo `Request` para incluir `userId`
+
 export const verifyToken = async (
-	req: Request,
+	req: RequestWithUserId, // Agora você usa o tipo correto aqui
 	res: Response,
-	next: Function
+	next: NextFunction
 ) => {
 	try {
 		const token = req.cookies.fctoken;
@@ -28,6 +32,7 @@ export const verifyToken = async (
 		}
 
 		req.userId = decoded.userId;
+
 		next();
 	} catch (error) {
 		console.log("Error verifying token: ", error);

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import { IEmployee } from "./interfaces/interfaces";
 import { User } from "./User";
+import { IEmployee } from "./interfaces/interfaces";
 import { UserType } from "./enums/enums";
 
 const EmployeeSchema = new mongoose.Schema({

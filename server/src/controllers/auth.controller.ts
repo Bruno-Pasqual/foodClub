@@ -1,12 +1,12 @@
 //#region Imports
 import { Request, Response } from "express";
+import { User } from "../models/User";
 import {
 	ICompany,
 	IEmployee,
 	IRestaurant,
 } from "../models/interfaces/interfaces";
 import { Restaurant } from "../models/Restaurant";
-import { User } from "../models/User";
 import { validateEmployeeData, validateUserData } from "../utils/validations";
 import bcrypt from "bcrypt";
 import { UserType } from "../models/enums/enums";
@@ -34,6 +34,8 @@ export const login = async (req: Request, res: Response): Promise<any> => {
 				.json({ success: false, message: "Email ou senha inválido." });
 		}
 
+		console.log(user);
+
 		const isPasswordValid = await bcrypt.compare(password, user.password);
 
 		if (!isPasswordValid) {
@@ -42,9 +44,15 @@ export const login = async (req: Request, res: Response): Promise<any> => {
 				.json({ success: false, message: "Email ou senha inválido." });
 		}
 
+		generateTokenAndSetCookie(res, user._id.toString());
+		user.lastLogin = new Date();
+
+		await user.save();
+		user.password = "";
+
 		return res
 			.status(200)
-			.json({ success: true, message: "Login efetuado com sucesso." });
+			.json({ success: true, message: "Login efetuado com sucesso.", user: user });
 	} catch (error) {
 		return res.status(500).json({
 			success: false,

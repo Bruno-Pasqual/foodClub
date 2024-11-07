@@ -7,7 +7,7 @@ export const generateTokenAndSetCookie = (res: Response, userId: string) => {
 	});
 	res.cookie("fctoken", token, {
 		httpOnly: true, //Cannot be accessed from frontend
-		secure: process.env.NODE_ENV === "production",
+		secure: process.env.NODE_ENV === "production" || false,
 		sameSite: "strict",
 		maxAge: 7 * 24 * 60 * 60 * 1000,
 	});

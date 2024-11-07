@@ -1,4 +1,5 @@
 import { Types } from "mongoose";
+import { Request } from "express";
 import { OrderStatus, UserType } from "../enums/enums";
 
 export interface ICompanyOrder {
@@ -83,4 +84,8 @@ export interface iJSONResponse {
 	success: boolean;
 	message: string;
 	data: any;
+}
+
+export interface RequestWithUserId extends Request {
+	userId?: string;
 }
