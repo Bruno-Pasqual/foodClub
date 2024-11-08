@@ -10,7 +10,6 @@ import { verifyToken } from "../middleware/verifyToken";
 
 const router = express.Router();
 
-// Definindo as rotas
 router.post("/busignup", businessSignup);
 router.post("/emsignup", employeeSignup);
 router.post("/login", login);

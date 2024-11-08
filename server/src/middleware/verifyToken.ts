@@ -7,10 +7,8 @@ import {
 
 import { Request, Response, NextFunction } from "express";
 
-// Sobrescreve o tipo `Request` para incluir `userId`
-
 export const verifyToken = async (
-	req: Request, // Agora você usa o tipo correto aqui
+	req: Request,
 	res: Response,
 	next: NextFunction
 ): Promise<void> => {

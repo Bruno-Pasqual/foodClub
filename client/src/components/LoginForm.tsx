@@ -5,7 +5,7 @@ import { Button } from "@mui/material";
 import GenericInput from "./GenericInput";
 import EmailInput from "./EmailInput";
 import logo from "../assets/Logo.svg";
-import axios from "axios";
+// import axios from "axios";
 
 const LoginForm = () => {
 	const [password, setPassword] = useState<string>("");
@@ -29,11 +29,11 @@ const LoginForm = () => {
 			password: formData.get("password"),
 		};
 
-		const loged = await axios.get("http://localhost:5000/api/auth/check-auth", {
-			withCredentials: true,
-		});
+		// const response = await axios.get("http://localhost:5000/api/auth/check-auth", {
+		// 	withCredentials: true,
+		// });
 
-		console.log(loged);
+		console.log(data);
 	}
 
 	return (
