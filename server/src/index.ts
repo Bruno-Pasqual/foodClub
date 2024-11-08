@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import { connectDB } from "./db/connectDb";
 
 import authRoutes from "./routes/auth.routes";
@@ -15,6 +16,7 @@ app.use(
 		credentials: true,
 	})
 );
+app.use(cookieParser());
 
 const PORT = process.env.PORT || 3000;
 

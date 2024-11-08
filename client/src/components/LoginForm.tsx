@@ -29,12 +29,11 @@ const LoginForm = () => {
 			password: formData.get("password"),
 		};
 
-		const loged = await axios.post("http://localhost:5000/api/auth/login", data, {
+		const loged = await axios.get("http://localhost:5000/api/auth/check-auth", {
 			withCredentials: true,
 		});
-		console.log(loged);
 
-		//aqui deve ser feita a chamada do axios
+		console.log(loged);
 	}
 
 	return (

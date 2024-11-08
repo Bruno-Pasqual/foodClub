@@ -1,5 +1,8 @@
 //#region Imports
 import { Request, Response } from "express";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+
 import { User } from "../models/User";
 import {
 	ICompany,
@@ -8,7 +11,6 @@ import {
 } from "../models/interfaces/interfaces";
 import { Restaurant } from "../models/Restaurant";
 import { validateEmployeeData, validateUserData } from "../utils/validations";
-import bcrypt from "bcrypt";
 import { UserType } from "../models/enums/enums";
 import { Company } from "../models/Company";
 import { Employee } from "../models/Employee";
@@ -16,6 +18,11 @@ import { initialUSerToken as setInitialUserToken } from "../middleware/verifyTok
 import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie";
 
 //#endregion
+
+export const logout = async (req: Request, res: Response): Promise<any> => {
+	res.clearCookie("fctoken");
+	return res.status(200).json({ success: true, message: "Logout efetuado." });
+};
 
 export const login = async (req: Request, res: Response): Promise<any> => {
 	const { email, password } = req.body;
@@ -132,4 +139,30 @@ export const businessSignup = async (
 			} + error`,
 		});
 	}
+};
+
+export const checkAuth = async (req: Request, res: Response) => {
+	const token = req.cookies.fctoken;
+
+	if (!token) {
+		res.status(401).json({ message: "Unauthorized - no token provided" });
+		return;
+	}
+
+	const decoded = jwt.verify(
+		token as string,
+		process.env.JWT_SECRET as string
+	) as jwt.JwtPayload;
+
+	const user = await User.findById(decoded.userId);
+
+	if (!user) {
+		res.status(401).json({ message: "Unauthorized - invalid token" });
+		return;
+	}
+
+	user.password = "";
+
+	res.status(200).json({ message: "Authorized", user });
+	return;
 };

@@ -3,7 +3,6 @@ import {
 	ICompany,
 	IEmployee,
 	IRestaurant,
-	RequestWithUserId,
 } from "../models/interfaces/interfaces";
 
 import { Request, Response, NextFunction } from "express";
@@ -11,15 +10,17 @@ import { Request, Response, NextFunction } from "express";
 // Sobrescreve o tipo `Request` para incluir `userId`
 
 export const verifyToken = async (
-	req: RequestWithUserId, // Agora você usa o tipo correto aqui
+	req: Request, // Agora você usa o tipo correto aqui
 	res: Response,
 	next: NextFunction
-) => {
+): Promise<void> => {
 	try {
+		console.log(req.cookies);
 		const token = req.cookies.fctoken;
 
 		if (!token) {
-			return res.status(401).json({ message: "Unauthorized - no token provided" });
+			res.status(401).json({ message: "Unauthorized - no token provided" });
+			return;
 		}
 
 		const decoded = jwt.verify(
@@ -28,15 +29,15 @@ export const verifyToken = async (
 		) as jwt.JwtPayload;
 
 		if (!decoded || typeof decoded.userId !== "string") {
-			return res.status(401).json({ message: "Unauthorized - invalid token" });
+			res.status(401).json({ message: "Unauthorized - invalid token" });
+			return;
 		}
-
-		req.userId = decoded.userId;
 
 		next();
 	} catch (error) {
 		console.log("Error verifying token: ", error);
-		return res.status(500).json({ message: "Error verifying token" });
+		res.status(500).json({ message: "Error verifying token" });
+		return;
 	}
 };
 
