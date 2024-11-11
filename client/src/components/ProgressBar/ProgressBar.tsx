@@ -1,3 +1,3 @@
 const ProgressBar = (props: Props) => {
-	return <div>ProgressBar</div>;
+	return <div className="progress-bar"></div>;
 };
