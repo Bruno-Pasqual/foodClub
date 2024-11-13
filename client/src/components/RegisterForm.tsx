@@ -99,7 +99,7 @@ const RegisterForm = ({ screenSize }:IProps) =>{
       <>
           {step === 1 && (
               <div className={`step-1-container ${isAnimating ? "hidden" : "visible"}`}>
-                  { screenSize >= 1200 && (
+                  { screenSize >= 800 && (
                       <div className="logo">
                           <img src={logo} alt="logo da empresa" />
                       </div>
