@@ -1,6 +1,10 @@
 import { Button, FormControlLabel, FormLabel, Radio, RadioGroup } from "@mui/material"
 import { FormEvent, useEffect, useState } from "react";
-import imagemFundo from '../assets/imagem-fundo.jpg'
+import './RegisterStepOne.css'
+import imagemFundo from '../../../assets/imagem-fundo.jpg'
+import imgColaborador from '../../../assets/colaborador.png';
+import imgEmpresa from '../../../assets/empresa.png';
+import imgRestaurante from '../../../assets/restaurante.png';
 
 interface IProps{
   screenSize:number;
@@ -12,7 +16,7 @@ interface FormData {
 
 export const RegisterStepOne = ({screenSize}:IProps) => {
   const [error, setError] = useState<string | null>(null);
-  const [role, setRole] = useState<string>("restaurante");
+  const [role, setRole] = useState<string>("");
   const [, setData] = useState({});
   const [step, setStep] = useState<number>(1);
   const [isAnimating, setIsAnimating] = useState<boolean>(false);
@@ -64,9 +68,10 @@ export const RegisterStepOne = ({screenSize}:IProps) => {
 }
   return (
     <div className={`step-1-container ${isAnimating ? "hidden" : "visible"}`}>
-      <form onSubmit={handleSubmit} >
+      <form  id="formChooseRole" onSubmit={handleSubmit} >
           <FormLabel id="demo-row-radio-buttons-group-label">
-              Você quer se cadastrar como
+              <h1>Você quer se cadastrar como</h1>
+              <span>Escolha o tipo desejado</span>
           </FormLabel>
           <RadioGroup
               row
@@ -74,16 +79,47 @@ export const RegisterStepOne = ({screenSize}:IProps) => {
               name="row-radio-buttons-group"
               onChange={handleRoleChange}
           >
-              <FormControlLabel
-                  value="restaurante"
-                  control={<Radio />}
-                  label="Restaurante"
+            <FormControlLabel
+                  value="colaborador"
+                  control={<Radio 
+                    icon={<img src={imgColaborador} alt="Icone representando o colaborador não selecionado" />}
+                    checkedIcon={<img src={imgColaborador} alt="Icone representando o colaborador selecionado" style={
+                      {
+                        filter: "brightness(0.5)",
+                        transform: "scale(1.2)",
+                      }
+                    }/>}
+                  />}
+                  label="Colaborador"
               />
-              <FormControlLabel
+
+            <FormControlLabel
                   value="empresa"
-                  control={<Radio />}
+                  control={<Radio 
+                    icon={<img src={imgEmpresa} alt="Icone representando o colaborador não selecionado" />}
+                    checkedIcon={<img src={imgEmpresa} alt="Icone representando o colaborador selecionado" style={
+                      {
+                        filter: "brightness(0.5)",
+                        transform: "scale(1.2)",
+                      }
+                    }/>}
+                  />}
                   label="Empresa"
               />
+              <FormControlLabel
+                  value="restaurante"
+                  control={<Radio 
+                    icon={<img src={imgRestaurante} alt="Icone representando o colaborador não selecionado" />}
+                    checkedIcon={<img src={imgRestaurante} alt="Icone representando o colaborador selecionado" style={
+                      {
+                        filter: "brightness(0.5)",
+                        transform: "scale(1.2)",
+                      }
+                    }/>}
+                  />}
+                  label="Restaurante"
+              />
+              
           </RadioGroup>
 
           <Button variant="contained" color="primary" type="submit">

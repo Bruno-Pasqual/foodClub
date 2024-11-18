@@ -1,8 +1,8 @@
 import { FormEvent, useState } from "react";
-import GenericInput from "./GenericInput";
+import GenericInput from "../GenericInput";
 import { Button } from "@mui/material";
-import { formatCNPJ } from "../utils/isValidCNPJ";
-import { formatCEP } from "../utils/isValidCEP";
+import { formatCNPJ } from "../../utils/isValidCNPJ";
+import { formatCEP } from "../../utils/isValidCEP";
 
 // Definindo a interface para as props do componente
 interface RestaurantRegisterProps {

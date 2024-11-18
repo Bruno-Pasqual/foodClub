@@ -1,8 +1,8 @@
 import { Button } from "@mui/material"
-import EmailInput from "./EmailInput"
-import GenericInput from "./GenericInput"
+import EmailInput from "../../EmailInput"
+import GenericInput from "../../GenericInput"
 import { FormEvent, useState } from "react";
-import imagemFundo from '../assets/imagem-fundo.jpg'
+import imagemFundo from '../../../assets/imagem-fundo.jpg'
 
 interface IProps{
     screenSize:number;

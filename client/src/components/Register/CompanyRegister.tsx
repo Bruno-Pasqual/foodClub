@@ -1,5 +1,5 @@
 import { FormEvent } from "react";
-import GenericInput from "./GenericInput";
+import GenericInput from "../GenericInput";
 import { Button } from "@mui/material";
 
 interface CompanyRegisterProps {
