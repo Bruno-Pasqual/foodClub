@@ -4,10 +4,14 @@ import "./LoginForm.css";
 import { Button } from "@mui/material";
 import GenericInput from "./GenericInput";
 import EmailInput from "./EmailInput";
-import logo from "../assets/Logo.svg";
+import imagemFundo from "../assets/imagem-fundo.jpg";
 // import axios from "axios";
 
-const LoginForm = () => {
+interface IProps{
+	screenSize:number;
+}
+
+const LoginForm = ({screenSize}:IProps) => {
 	const [password, setPassword] = useState<string>("");
 
 	function handlePasswordChange(
@@ -37,41 +41,52 @@ const LoginForm = () => {
 	}
 
 	return (
-		<div id="loginForm">
-			<div className="logo">
-				<img src={logo} alt="logo da empresa" />
-			</div>
-			<form onSubmit={handleSubmit} className="form-principal">
-				<h1>Entrar</h1>
-				<EmailInput
-					name="email"
-					placeholder="Ex: sara@gmail.com"
-					labelText="Email"
-					required
-				/>
-				<GenericInput
-					minLength={6}
-					type="password"
-					placeholder="Digite a sua senha"
-					labelText="Digite a sua senha"
-					name="password"
-					value={password}
-					onChange={handlePasswordChange(setPassword)}
-				/>
-				<Button variant="contained" color="primary" type="submit">
-					Entrar
-				</Button>
+		<div className="form-img">
+			<div id="loginForm">
+			
+				<form onSubmit={handleSubmit} className="form-principal">
+					<div className="tittle">
+						<h1>Bem vindo de volta</h1>
+						<p>Entrar na sua conta</p>
+					</div>
+					<div className="form-group">
+						<EmailInput
+							name="email"
+							placeholder="Ex: sara@gmail.com"
+							labelText="Email"
+							required
+						/>
+						<span className="error-message" >Error message</span>
+					</div>
+					<div className="form-group">
+						<GenericInput
+							minLength={6}
+							type="password"
+							placeholder="Digite a sua senha"
+							labelText="Digite a sua senha"
+							name="password"
+							value={password}
+							onChange={handlePasswordChange(setPassword)}
+						/>
+						<span className="error-message" >Error message</span>
+					</div>
+					<Button variant="contained" color="primary" type="submit">
+						Entrar
+					</Button>
 
-				<Button
-					href="/cadastro"
-					id="btn-cadastro"
-					variant="contained"
-					color="inherit"
-				>
-					Cadastrar
-				</Button>
-				<span>Esqueci a senha</span>
-			</form>
+					<span className="link-cadastro" >Não tem conta? <a href="/cadastro">Cadastre-se agora</a></span>
+
+				</form>
+
+			
+		</div>
+
+			{ screenSize > 800 && (
+				<div className="imagem-fundo">
+					<img src={imagemFundo} alt="logo da empresa" />
+				</div>
+			) }
+
 		</div>
 	);
 };
