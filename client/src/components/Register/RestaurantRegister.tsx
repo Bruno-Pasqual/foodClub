@@ -72,14 +72,9 @@ const RestaurantRegister = ({data}:RestaurantRegisterProps) =>{
       setError("Número do endereço deve ser um número inteiro positivo."); // Exibe erro se não for válido
     }
   }
-  
-
-  
-
 
   return (
     <div>
-    
       <form onSubmit={handleSubmit} >
         <h1>Restaurante</h1>
         <GenericInput
@@ -123,7 +118,7 @@ const RestaurantRegister = ({data}:RestaurantRegisterProps) =>{
                   Cadastrar
         </Button>
       </form>
-  </div>
+    </div>
   )
 }
 

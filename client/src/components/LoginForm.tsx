@@ -4,7 +4,7 @@ import "./LoginForm.css";
 import { Button } from "@mui/material";
 import GenericInput from "./GenericInput";
 import EmailInput from "./EmailInput";
-import imagemFundo from "../assets/imagem-fundo.jpg";
+import imagemFundo from "../assets/eating a variety of foods-bro.svg";
 // import axios from "axios";
 
 interface IProps{

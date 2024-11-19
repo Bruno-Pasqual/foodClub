@@ -30,10 +30,6 @@ form {
   transition: transform 0.5s ease, opacity 0.5s ease-out;
 }
 
-.step-1-container {
-	margin: 5rem auto;
-}
-
 .step-1-container.visible,
 .step-2-container.visible {
 	display: flex;
@@ -72,10 +68,6 @@ form {
   background: #fff;
   color: #bb3301;
   font-weight: bold;
-}
-
-.imagem-fundo{
-	flex-grow: 2;
 }
 
 .imagem-fundo img {
