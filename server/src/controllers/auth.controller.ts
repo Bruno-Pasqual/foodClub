@@ -20,6 +20,7 @@ import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie";
 //#endregion
 
 export const logout = async (req: Request, res: Response): Promise<any> => {
+	console.log("Logout efetuado.");
 	res.clearCookie("fctoken");
 	return res.status(200).json({ success: true, message: "Logout efetuado." });
 };
@@ -104,6 +105,7 @@ export const businessSignup = async (
 	res: Response
 ): Promise<any> => {
 	const userData: IRestaurant | ICompany = req.body;
+	console.log(userData);
 
 	try {
 		const invalidField = await validateUserData(userData);
@@ -166,3 +168,23 @@ export const checkAuth = async (req: Request, res: Response) => {
 	res.status(200).json({ message: "Authorized", user });
 	return;
 };
+
+
+//I want a route that deletes all the users in the database
+export const deleteAllUsers = async (req: Request, res: Response) => {
+	try {
+		await User.deleteMany({});
+		res.status(200).json({ message: "All users deleted" });
+	} catch (error) {
+		res.status(500).json({ message: "Error deleting users" });
+	}
+}
+
+export const getAllUsers = async (req: Request, res: Response) => {
+	try {
+		const users = await User.find({});
+		res.status(200).json({ message: "All users", users });
+	} catch (error) {
+		res.status(500).json({ message: "Error getting users" });
+	}
+}
