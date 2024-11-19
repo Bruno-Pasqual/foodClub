@@ -1,20 +1,16 @@
 import { Button, FormControlLabel, FormLabel, Radio, RadioGroup } from "@mui/material"
 import { FormEvent, useEffect, useState } from "react";
 import './RegisterStepOne.css'
-import imagemFundo from '../../../assets/imagem-fundo.jpg'
 import imgColaborador from '../../../assets/colaborador.png';
 import imgEmpresa from '../../../assets/empresa.png';
 import imgRestaurante from '../../../assets/restaurante.png';
 
-interface IProps{
-  screenSize:number;
-}
 
 interface FormData {
   role: string;
 }
 
-export const RegisterStepOne = ({screenSize}:IProps) => {
+export const RegisterStepOne = () => {
   const [error, setError] = useState<string | null>(null);
   const [role, setRole] = useState<string>("");
   const [, setData] = useState({});
@@ -68,71 +64,74 @@ export const RegisterStepOne = ({screenSize}:IProps) => {
 }
   return (
     <div className={`step-1-container ${isAnimating ? "hidden" : "visible"}`}>
-      <form  id="formChooseRole" onSubmit={handleSubmit} >
-          <FormLabel id="demo-row-radio-buttons-group-label">
-              <h1>Você quer se cadastrar como</h1>
-              <span>Escolha o tipo desejado</span>
-          </FormLabel>
-          <RadioGroup
-              row
-              aria-labelledby="demo-row-radio-buttons-group-label"
-              name="row-radio-buttons-group"
-              onChange={handleRoleChange}
-          >
-            <FormControlLabel
-                  value="colaborador"
-                  control={<Radio 
-                    icon={<img src={imgColaborador} alt="Icone representando o colaborador não selecionado" />}
-                    checkedIcon={<img src={imgColaborador} alt="Icone representando o colaborador selecionado" style={
-                      {
-                        filter: "brightness(0.5)",
-                        transform: "scale(1.2)",
-                      }
-                    }/>}
-                  />}
-                  label="Colaborador"
-              />
+      <div id="registerFormStepOne">
+        <form  id="formChooseRole" onSubmit={handleSubmit} >
+            <div className="radio-label">
+              <FormLabel id="demo-row-radio-buttons-group-label">
+                  <h1>Você quer se cadastrar como</h1>
+                  <span>Escolha o tipo desejado</span>
+              </FormLabel>
+              <RadioGroup
+                  id="radio-group"
+                  row
+                  aria-labelledby="demo-row-radio-buttons-group-label"
+                  name="row-radio-buttons-group"
+                  onChange={handleRoleChange}
+              >
+                <FormControlLabel
+                      className="radio"
+                      value="colaborador"
+                      control={<Radio 
+                        icon={<img src={imgColaborador} alt="Icone representando o colaborador não selecionado" />}
+                        checkedIcon={<img src={imgColaborador} alt="Icone representando o colaborador selecionado" style={
+                          {
+                            filter: "brightness(0.5)",
+                            transform: "scale(1.2)",
+                          }
+                        }/>}
+                      />}
+                      label="Colaborador"
+                  />
 
-            <FormControlLabel
-                  value="empresa"
-                  control={<Radio 
-                    icon={<img src={imgEmpresa} alt="Icone representando o colaborador não selecionado" />}
-                    checkedIcon={<img src={imgEmpresa} alt="Icone representando o colaborador selecionado" style={
-                      {
-                        filter: "brightness(0.5)",
-                        transform: "scale(1.2)",
-                      }
-                    }/>}
-                  />}
-                  label="Empresa"
-              />
-              <FormControlLabel
-                  value="restaurante"
-                  control={<Radio 
-                    icon={<img src={imgRestaurante} alt="Icone representando o colaborador não selecionado" />}
-                    checkedIcon={<img src={imgRestaurante} alt="Icone representando o colaborador selecionado" style={
-                      {
-                        filter: "brightness(0.5)",
-                        transform: "scale(1.2)",
-                      }
-                    }/>}
-                  />}
-                  label="Restaurante"
-              />
-              
-          </RadioGroup>
+                <FormControlLabel
+                      className="radio"
+                      value="empresa"
+                      control={<Radio 
+                        icon={<img src={imgEmpresa} alt="Icone representando o colaborador não selecionado" />}
+                        checkedIcon={<img src={imgEmpresa} alt="Icone representando o colaborador selecionado" style={
+                          {
+                            filter: "brightness(0.5)",
+                            transform: "scale(1.2)",
+                          }
+                        }/>}
+                      />}
+                      label="Empresa"
+                  />
+                  <FormControlLabel
+                      className="radio"
+                      value="restaurante"
+                      control={<Radio 
+                        icon={<img src={imgRestaurante} alt="Icone representando o colaborador não selecionado" />}
+                        checkedIcon={<img src={imgRestaurante} alt="Icone representando o colaborador selecionado" style={
+                          {
+                            filter: "brightness(0.5)",
+                            transform: "scale(1.2)",
+                          }
+                        }/>}
+                      />}
+                      label="Restaurante"
+                  />
+                  
+              </RadioGroup>
+            </div>
 
-          <Button variant="contained" color="primary" type="submit">
-            Continuar
-          </Button>
-      </form>
+            <Button variant="contained" color="primary" type="submit">
+              Continuar
+            </Button>
+        </form>
+      </div>
       {error && <p style={{ color: "#D20000" }}>{error}</p>}{" "}
       
-      { screenSize > 800 && (
-				<div className="imagem-fundo">
-					<img src={imagemFundo} alt="logo da empresa" />
-				</div>
-			) }
   </div>
   )
 }

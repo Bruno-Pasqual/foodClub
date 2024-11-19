@@ -9,6 +9,7 @@ import {
   //import logo from "../../assets/Logo.svg";
 import { RegisterStepOne } from "./RegisterStepOne/ResgisterStepOne";
 import { RegisterStepTwo } from "./RegisterStepTwo/RegisterStepTwo";
+import imagemFundo from '../../assets/imagem-fundo.jpg'
   
   interface IProps{
     screenSize:number;
@@ -51,7 +52,13 @@ import { RegisterStepTwo } from "./RegisterStepTwo/RegisterStepTwo";
         <>
             {step === 1 && (
                 <div className="container">
-                    <RegisterStepOne screenSize={screenSize} />
+                    <RegisterStepOne />
+
+                    { screenSize > 800 && (
+                        <div className="imagem-fundo">
+                            <img src={imagemFundo} alt="logo da empresa" />
+                        </div>
+                    ) }
                 </div>
             )}
 
@@ -61,8 +68,16 @@ import { RegisterStepTwo } from "./RegisterStepTwo/RegisterStepTwo";
                         Voltar
                     </Button>
                     <RegisterStepTwo screenSize={screenSize} />
+
+                    { screenSize > 800 && (
+                        <div className="imagem-fundo">
+                            <img src={imagemFundo} alt="logo da empresa" />
+                        </div>
+                    ) }
                 </div>
             )}
+
+            
             
         </>
     )
