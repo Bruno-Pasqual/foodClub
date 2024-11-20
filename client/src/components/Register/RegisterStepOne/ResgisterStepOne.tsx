@@ -9,36 +9,42 @@ import { IEmployee } from "../RegisterForm";
 
 interface IRegisterStepOneProps {
   formData: ICompanyRestaurant | IEmployee;
+  onStepChange: (delta:number) => void;
+  onDataChange: (updatedData: ICompanyRestaurant | IEmployee) => void;
 }
 
-export const RegisterStepOne = ({ formData }: IRegisterStepOneProps) => {
+export const RegisterStepOne = ({ formData, onStepChange, onDataChange }: IRegisterStepOneProps) => {
   const [role, setRole] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<ICompanyRestaurant | IEmployee>(formData);
-  const [ step, setStep ] = useState<number>(1);
 
-  function handleStepPlus(){
-    setStep((prevStep) => (prevStep + 1 ));
-    console.log(step)
+  function goToNextStep(){
+    onStepChange(1); // Avançar
   };
 
-  const handleDataChange = () => {
+  /*
+    const goToPreviousStep = () => {
+    onStepChange(-1); // Retroceder
+    };
+  */
+
+  function handleDataChange(){
     if (!role) {
       setError("Por favor, selecione uma opção antes de prosseguir.");
       return;
     }
     setError(null); // Limpa a mensagem de erro
-
+  
+    let updatedData: ICompanyRestaurant | IEmployee;
+  
     // Verifica o tipo de dados e atualiza com o role selecionado
     if (role === "restaurante" || role === "empresa") {
-      // Garantindo que o data seja ICompanyRestaurant
-      const newDataCR: ICompanyRestaurant = {
+      updatedData = {
         email: formData.email || "",
         password1: formData.password1 || "",
         password2: formData.password2 || "",
         name: formData.name || "",
-        // Propriedades específicas de ICompanyRestaurant
-        cnpj: (formData as ICompanyRestaurant).cnpj || "", // Tipo de guarda aqui
+        cnpj: (formData as ICompanyRestaurant).cnpj || "",
         cep: (formData as ICompanyRestaurant).cep || "",
         street: (formData as ICompanyRestaurant).street || "",
         city: (formData as ICompanyRestaurant).city || "",
@@ -47,21 +53,23 @@ export const RegisterStepOne = ({ formData }: IRegisterStepOneProps) => {
         number: (formData as ICompanyRestaurant).number || "",
         role,
       };
-      setData(newDataCR);
     } else {
-      const newDataE: IEmployee = {
-        email: formData.email || "", 
+      updatedData = {
+        email: formData.email || "",
         password1: formData.password1 || "",
         password2: formData.password2 || "",
         name: formData.name || "",
-        // Propriedades específicas de IEmployee
         birthday: (formData as IEmployee).birthday || "",
         company: (formData as IEmployee).company || "",
-        role
+        role,
       };
-      setData(newDataE);
     }
+  
+    setData(updatedData);
+    onDataChange(updatedData); // Notifica o componente pai
+    goToNextStep();
   };
+    
 
   function handleRoleChange(event: React.ChangeEvent<HTMLInputElement>) {
     setRole(event.target.value);
@@ -140,7 +148,7 @@ export const RegisterStepOne = ({ formData }: IRegisterStepOneProps) => {
 
           <div className="buttonGroup">
             {error && <span style={{ color: "red" }}>{error}</span>}
-            <Button variant="contained" color="primary" type="submit" onClick={handleStepPlus} >
+            <Button variant="contained" color="primary" type="submit" >
               Prosseguir
             </Button>
           </div>

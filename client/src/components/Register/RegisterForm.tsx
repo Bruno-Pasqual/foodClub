@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { Button } from "@mui/material";
-import ArrowBack from "@mui/icons-material/ArrowBack";
 import "./RegisterForm.css";
 import { RegisterStepOne } from "./RegisterStepOne/ResgisterStepOne";
 import { RegisterStepTwo } from "./RegisterStepTwo/RegisterStepTwo";
@@ -35,8 +33,8 @@ export interface ICompanyRestaurant {
 }
 
 const RegisterForm = ({ screenSize }: IProps) => {
-  const [step, ] = useState<number>(1);
-  const [ formData, ] = useState<ICompanyRestaurant | IEmployee>({
+  const [step, setStep ] = useState<number>(1);
+  const [ formData, setFormData] = useState<ICompanyRestaurant | IEmployee>({
     role: "",
     email: "",
     password1: "",
@@ -53,22 +51,22 @@ const RegisterForm = ({ screenSize }: IProps) => {
     company: "",
   }) 
 
-  /* 
-    function handleStepChangePlus(){
-    setStep((prevStep) => (prevStep + 1 ));
-    };
+  
+  function handleStepChange(delta: number) {
+    setStep((prevStep) => prevStep + delta);
+  }
 
-    function handleStepChangeMinus(){
-      setStep((prevStep) => (prevStep - 1 ));
-    };
-  */
+  const handleDataChange = (updatedData: ICompanyRestaurant | IEmployee) => {
+    setFormData(updatedData);
+  };
+  
 
   const renderStepContent = () => {
     switch (step) {
       case 1:
         return (
           <>
-            <RegisterStepOne formData={formData} />
+            <RegisterStepOne formData={formData} onStepChange={handleStepChange} onDataChange={handleDataChange} />
             {screenSize > 800 && (
               <div className="imagem-fundo">
                 <img src={imagemFundo} alt="Imagem ilustrativa" />
@@ -79,10 +77,7 @@ const RegisterForm = ({ screenSize }: IProps) => {
       case 2:
         return (
           <>
-            <Button id="return" startIcon={<ArrowBack />}>
-              Voltar
-            </Button>
-            <RegisterStepTwo />
+            <RegisterStepTwo formData={formData} onStepChange={handleStepChange} onDataChange={handleDataChange} />
             {screenSize > 800 && (
               <div className="imagem-fundo">
                 <img src={imagemFundo} alt="Imagem ilustrativa" />
