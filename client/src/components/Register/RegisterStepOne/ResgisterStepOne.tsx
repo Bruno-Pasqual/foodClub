@@ -1,74 +1,85 @@
 import { Button, FormControlLabel, FormLabel, Radio, RadioGroup } from "@mui/material";
-import { FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./RegisterStepOne.css";
 import imgColaborador from "../../../assets/colaborador.png";
 import imgEmpresa from "../../../assets/empresa.png";
 import imgRestaurante from "../../../assets/restaurante.png";
+import { ICompanyRestaurant } from "../RegisterForm";
+import { IEmployee } from "../RegisterForm";
 
-interface FormData {
-  role: string;
+interface IRegisterStepOneProps {
+  formData: ICompanyRestaurant | IEmployee;
 }
 
-export const RegisterStepOne = () => {
+export const RegisterStepOne = ({ formData }: IRegisterStepOneProps) => {
   const [role, setRole] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
-  const [, setData] = useState({});
-  const [step, setStep] = useState<number>(1);
-  const [, setIsAnimating] = useState<boolean>(false);
+  const [data, setData] = useState<ICompanyRestaurant | IEmployee>(formData);
+  const [ step, setStep ] = useState<number>(1);
+
+  function handleStepPlus(){
+    setStep((prevStep) => (prevStep + 1 ));
+    console.log(step)
+  };
+
+  const handleDataChange = () => {
+    if (!role) {
+      setError("Por favor, selecione uma opção antes de prosseguir.");
+      return;
+    }
+    setError(null); // Limpa a mensagem de erro
+
+    // Verifica o tipo de dados e atualiza com o role selecionado
+    if (role === "restaurante" || role === "empresa") {
+      // Garantindo que o data seja ICompanyRestaurant
+      const newDataCR: ICompanyRestaurant = {
+        email: formData.email || "",
+        password1: formData.password1 || "",
+        password2: formData.password2 || "",
+        name: formData.name || "",
+        // Propriedades específicas de ICompanyRestaurant
+        cnpj: (formData as ICompanyRestaurant).cnpj || "", // Tipo de guarda aqui
+        cep: (formData as ICompanyRestaurant).cep || "",
+        street: (formData as ICompanyRestaurant).street || "",
+        city: (formData as ICompanyRestaurant).city || "",
+        state: (formData as ICompanyRestaurant).state || "",
+        complement: (formData as ICompanyRestaurant).complement || "",
+        number: (formData as ICompanyRestaurant).number || "",
+        role,
+      };
+      setData(newDataCR);
+    } else {
+      const newDataE: IEmployee = {
+        email: formData.email || "", 
+        password1: formData.password1 || "",
+        password2: formData.password2 || "",
+        name: formData.name || "",
+        // Propriedades específicas de IEmployee
+        birthday: (formData as IEmployee).birthday || "",
+        company: (formData as IEmployee).company || "",
+        role
+      };
+      setData(newDataE);
+    }
+  };
 
   function handleRoleChange(event: React.ChangeEvent<HTMLInputElement>) {
     setRole(event.target.value);
-  };
-
-  function handleStep() {
-    if (step === 1) {
-      setIsAnimating(true);
-      setTimeout(() => {
-        setStep((prevStep) => prevStep + 1);
-        setIsAnimating(false);
-      }, 500);
-    } else {
-      setIsAnimating(true);
-      setTimeout(() => {
-        setStep((prevStep) => prevStep - 1);
-        setIsAnimating(false);
-      }, 500);
-    }
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>): void {
-    event.preventDefault();
-
-    setError(null); // Limpa a mensagem de erro ao submeter
-
-    const formData = new FormData(event.currentTarget);
-    const role = formData.get("row-radio-buttons-group") as string; // Certifique-se de que o 'name' no RadioGroup é 'row-radio-buttons-group'
-
-    // Verifica se a role foi selecionada
-    if (!role) {
-      setError("Por favor, selecione um tipo de cadastro.");
-      return;
-    }
-
-    const newData: FormData = {
-      role, // Corrigido para usar o valor correto
-    };
-
-    console.log(`newData: ${newData.role}`);
-    setData(newData);
-    handleStep();
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault(); // Evita o reload da página
+    handleDataChange();
   }
-
 
   useEffect(() => {
-    console.log(role)
-  }, [role])
+    console.log(data);
+  }, [data]);
 
   return (
     <div className="step-1-container">
       <div id="registerFormStepOne">
-        
-        <form id="formChooseRole" onSubmit={handleSubmit} >
+        <form id="formChooseRole" onSubmit={handleSubmit}>
           <div className="form-group">
             <div className="form-header">
               <FormLabel id="demo-row-radio-buttons-group-label">
@@ -78,11 +89,11 @@ export const RegisterStepOne = () => {
             </div>
 
             <RadioGroup
+              onChange={handleRoleChange}
               id="radio-group"
               row
               aria-labelledby="demo-row-radio-buttons-group-label"
               name="row-radio-buttons-group"
-              onChange={handleRoleChange}
               value={role}
             >
               {[
@@ -113,7 +124,7 @@ export const RegisterStepOne = () => {
                       }
                     />
                   }
-                  label={value === role ? ` ${label}` : label} // Alteração dinâmica da label
+                  label={value === role ? ` ${label}` : label}
                   sx={{
                     "& .MuiFormControlLabel-label": {
                       fontSize: "1.2rem",
@@ -121,7 +132,6 @@ export const RegisterStepOne = () => {
                       color: value === role ? "#7D0000" : "#000",
                       transition: "0.3s ease",
                     },
-
                   }}
                 />
               ))}
@@ -130,7 +140,7 @@ export const RegisterStepOne = () => {
 
           <div className="buttonGroup">
             {error && <span style={{ color: "red" }}>{error}</span>}
-            <Button variant="contained" color="primary" type="submit">
+            <Button variant="contained" color="primary" type="submit" onClick={handleStepPlus} >
               Prosseguir
             </Button>
           </div>

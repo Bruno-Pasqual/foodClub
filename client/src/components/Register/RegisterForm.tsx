@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button } from "@mui/material";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import "./RegisterForm.css";
-
 import { RegisterStepOne } from "./RegisterStepOne/ResgisterStepOne";
 import { RegisterStepTwo } from "./RegisterStepTwo/RegisterStepTwo";
 import imagemFundo from "../../assets/eating a variety of foods-bro.svg";
@@ -11,36 +10,66 @@ interface IProps {
   screenSize: number;
 }
 
-/*
-interface FormData {
+export interface IEmployee{
+  role: string;
   email: string;
   password1: string;
   password2: string;
-  role: string;
+  name: string;
+  birthday:string;
+  company:string;
 }
-*/
+export interface ICompanyRestaurant {
+  role: string;
+  email: string;
+  password1: string;
+  password2: string;
+  name: string;
+  cnpj: string;
+  cep: string;
+  street: string;
+  city: string;
+  state: string;
+  complement: string;
+  number: string;
+}
 
 const RegisterForm = ({ screenSize }: IProps) => {
-  const [step, setStep] = useState<number>(1);
-  const [, setIsAnimating] = useState<boolean>(false);
+  const [step, ] = useState<number>(1);
+  const [ formData, ] = useState<ICompanyRestaurant | IEmployee>({
+    role: "",
+    email: "",
+    password1: "",
+    password2: "",
+    name: "",
+    cnpj: "",
+    cep: "",
+    street: "",
+    city: "",
+    state: "",
+    complement: "",
+    number: "",
+    birthday: "",
+    company: "",
+  }) 
 
-  const isLargeScreen = screenSize > 800;
+  /* 
+    function handleStepChangePlus(){
+    setStep((prevStep) => (prevStep + 1 ));
+    };
 
-  const handleStep = () => {
-    setIsAnimating(true);
-    setTimeout(() => {
-      setStep((prevStep) => (prevStep === 1 ? prevStep + 1 : prevStep - 1));
-      setIsAnimating(false);
-    }, 500);
-  };
+    function handleStepChangeMinus(){
+      setStep((prevStep) => (prevStep - 1 ));
+    };
+  */
 
   const renderStepContent = () => {
     switch (step) {
       case 1:
         return (
           <>
-            <RegisterStepOne />
-            {isLargeScreen && (
+            <RegisterStepOne formData={formData} />
+            {screenSize > 800 && (
               <div className="imagem-fundo">
                 <img src={imagemFundo} alt="Imagem ilustrativa" />
               </div>
@@ -50,11 +79,11 @@ const RegisterForm = ({ screenSize }: IProps) => {
       case 2:
         return (
           <>
-            <Button id="return" onClick={handleStep} startIcon={<ArrowBack />}>
+            <Button id="return" startIcon={<ArrowBack />}>
               Voltar
             </Button>
-            <RegisterStepTwo screenSize={screenSize} />
-            {isLargeScreen && (
+            <RegisterStepTwo />
+            {screenSize > 800 && (
               <div className="imagem-fundo">
                 <img src={imagemFundo} alt="Imagem ilustrativa" />
               </div>
