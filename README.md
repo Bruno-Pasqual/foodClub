@@ -28,6 +28,21 @@ Criar uma plataforma que facilite a comunicação entre restaurantes e empresas,
 
 **Opção de Prazos Maiores**: Opção de fechar prazos maiores com o mesmo restaurante para garantir preços melhores.
 
+### 📝 **Protótipo & Documentação**
+
+No planejamento do projeto, foram criados wireframes e designs para definir o layout da aplicação. Após aprovação, esses designs foram transformados em um protótipo interativo desenvolvido em React.
+
+A base do projeto foi feita com microsserviços, o que permitiu separar as responsabilidades entre o front-end e o back-end. As funcionalidades foram integradas por meio de APIs. Elas foram documentadas e mantidas durante o desenvolvimento utilizando ferramentas como o Swagger, detalhando os endpoints de cada API.
+
+Além disso, outras documentações importantes, como fluxos de dados, diagramas de classes e casos de uso, modelagem do banco de dados e arquitetura do sistema, foram colocadas em um PDF para facilitar o entendimento.
+
+### 💻 **Tecnologias**
+
+As  ferramentas, linguagens, bibliotecas e tecnologias utilizadas no projeto foram:
+
+Figma Typescript HTML CSS React Node Java MongoDB
+Python VS Code Discord GitHub Google Sheets Google Docs
+
 ## 👥 Equipe
 
 | Função | Nome | GitHub |
