@@ -11,7 +11,7 @@ interface IRegisterStepTwoProps {
     formData: ICompanyRestaurant | IEmployee;
     onStepChange: (delta:number) => void;
     onDataChange: (updatedData: ICompanyRestaurant | IEmployee) => void;
-  }
+}
 
 export const RegisterStepTwo = ({ formData, onStepChange, onDataChange }: IRegisterStepTwoProps) => {
     const [ email, setEmail ] = useState(formData.email);
@@ -24,7 +24,7 @@ export const RegisterStepTwo = ({ formData, onStepChange, onDataChange }: IRegis
 
     function goToNextStep(){
         onStepChange(1); // Avançar
-      };
+    };
     
     /*
         function goToPreviousStep(){
@@ -84,7 +84,6 @@ export const RegisterStepTwo = ({ formData, onStepChange, onDataChange }: IRegis
               complement: (formData as ICompanyRestaurant).complement || "",
               number: (formData as ICompanyRestaurant).number || "",
               role: (formData as ICompanyRestaurant).role,
-
               email,
               password1,
               password2,

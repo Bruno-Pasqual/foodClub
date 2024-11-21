@@ -3,6 +3,7 @@ import "./RegisterForm.css";
 import { RegisterStepOne } from "./RegisterStepOne/ResgisterStepOne";
 import { RegisterStepTwo } from "./RegisterStepTwo/RegisterStepTwo";
 import imagemFundo from "../../assets/eating a variety of foods-bro.svg";
+import { RegisterStepThree } from "./RegisterStepThree/RegisterStepThree";
 
 interface IProps {
   screenSize: number;
@@ -85,6 +86,18 @@ const RegisterForm = ({ screenSize }: IProps) => {
             )}
           </>
         );
+
+      case 3:
+        return (
+          <>
+            <RegisterStepThree formData={formData} onStepChange={handleStepChange} onDataChange={handleDataChange} />
+            {screenSize > 800 && (
+              <div className="imagem-fundo">  
+                <img src={imagemFundo} alt="Imagem ilustrativa" />  
+              </div>
+            )}
+          </>
+        )
       default:
         return null;
     }

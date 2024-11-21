@@ -13,7 +13,8 @@ form {
 }
 
 .step-1-container,
-.step-2-container {
+.step-2-container,
+.step-3-container {
   display: flex;
     flex-wrap: wrap;
     flex-direction: row-reverse;
@@ -31,7 +32,8 @@ form {
 }
 
 .step-1-container.visible,
-.step-2-container.visible {
+.step-2-container.visible,
+.step-3-container.visible{
 	display: flex;
 	flex-direction: row;
 	margin: 0;
