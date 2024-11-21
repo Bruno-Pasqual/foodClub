@@ -1,9 +1,22 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { IRegisterStepThreeProps } from "../RegisterStepThree";
 import { Button, FormLabel } from "@mui/material";
 import GenericInput from "../../../GenericInput";
 import { ICompanyRestaurant } from "../../RegisterForm";
 import { fetchAddressByCep } from "../../../../utils/apiCEP";
+import { formatCEP } from "../../../../utils/isValidCEP";
+import { formatCNPJ } from "../../../../utils/isValidCNPJ";
+
+// Função debounce para limitar requisições
+const debounce = (func: (...args: any[]) => void, delay: number) => {
+  let timeoutId: NodeJS.Timeout;
+  return (...args: any[]) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      func(...args);
+    }, delay);
+  };
+};
 
 export const RegisterRestaurantCompany = ({ formData, onStepChange, onDataChange }: IRegisterStepThreeProps) => {
   const [formState, setFormState] = useState<ICompanyRestaurant>({
@@ -18,22 +31,29 @@ export const RegisterRestaurantCompany = ({ formData, onStepChange, onDataChange
     role: (formData as ICompanyRestaurant).role || "",
   });
 
-  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>){
+  const [isLoadingCep, setIsLoadingCep] = useState(false);
+  const [formattedCNPJ, setFormattedCNPJ] = useState<string>("");
+  const [formattedCEP, setFormattedCEP] = useState<string>("");
+
+  // Função debounce para limitar requisições
+  //const debouncedFetchAddress = useCallback(debounce(fetchAddress, 500), []);
+
+  function goToNextStep() {
+    onStepChange(1); // Avançar
+  }
+
+  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
     setFormState((prevState) => ({
       ...prevState,
       [name]: value,
     }));
-  };
+  }
 
-  async function handleCepChange(e: React.ChangeEvent<HTMLInputElement>){
-    const cep = e.target.value;
-    setFormState((prevState) => ({
-      ...prevState,
-      cep,
-    }));
-
-    if (cep.length === 8) {
+  // Função debounce para fetchAddress
+  const debouncedFetchAddress = useCallback(
+    debounce(async (cep: string) => {
+      setIsLoadingCep(true);
       try {
         const address = await fetchAddressByCep(cep);
         if (address) {
@@ -52,12 +72,50 @@ export const RegisterRestaurantCompany = ({ formData, onStepChange, onDataChange
         }
       } catch (error) {
         console.error("Erro ao buscar o CEP:", error);
+      } finally {
+        setIsLoadingCep(false);
       }
+    }, 500),
+    [formState, onDataChange] // Adicione 'formState' e 'onDataChange' como dependências
+  );
+
+  function handleCepChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const cep = e.target.value.replace(/\D/g, ""); // Remove caracteres não numéricos
+    setFormattedCEP(formatCEP(cep));
+    setFormState((prevState) => ({ ...prevState, cep }));
+
+    if (cep.length === 8) {
+      debouncedFetchAddress(cep); // Executa a busca com debounce
     }
-  };
+  }
+
+  function handleCNPJChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const value = event.target.value;
+    setFormattedCNPJ(formatCNPJ(value));
+    setFormState((prevState) => ({
+      ...prevState,
+      cnpj: value,
+    }));
+  }
+
+  function handleDataChange() {
+    const updatedData: ICompanyRestaurant = {
+      ...formState,
+    };
+
+    setFormState(updatedData);
+    onDataChange(updatedData); // Notifica o componente pai
+    console.log(updatedData);
+    goToNextStep();
+  }
+
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault(); // Evita o reload da página
+    handleDataChange();
+  }
 
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div className="basic-info-container">
         <div className="input-label-group">
           <FormLabel id="demo-row-radio-buttons-group-label">
@@ -79,8 +137,10 @@ export const RegisterRestaurantCompany = ({ formData, onStepChange, onDataChange
             placeholder="CNPJ"
             labelText="Digite o CNPJ"
             name="cnpj"
-            value={formState.cnpj}
-            onChange={handleInputChange}
+            value={formattedCNPJ}
+            onChange={handleCNPJChange}
+            minLength={18}
+            maxLength={18}
           />
 
           <GenericInput
@@ -88,8 +148,10 @@ export const RegisterRestaurantCompany = ({ formData, onStepChange, onDataChange
             placeholder="Digite o CEP"
             labelText="CEP"
             name="cep"
-            value={formState.cep}
+            value={formattedCEP}
             onChange={handleCepChange}
+            minLength={9}
+            maxLength={9}
           />
 
           <GenericInput
@@ -99,6 +161,7 @@ export const RegisterRestaurantCompany = ({ formData, onStepChange, onDataChange
             name="street"
             value={formState.street}
             onChange={handleInputChange}
+            disabled={!!formState.street || isLoadingCep}
           />
 
           <div className="input-group">
@@ -109,6 +172,7 @@ export const RegisterRestaurantCompany = ({ formData, onStepChange, onDataChange
               name="city"
               value={formState.city}
               onChange={handleInputChange}
+              disabled={!!formState.city || isLoadingCep}
             />
 
             <GenericInput
@@ -118,6 +182,7 @@ export const RegisterRestaurantCompany = ({ formData, onStepChange, onDataChange
               name="state"
               value={formState.state}
               onChange={handleInputChange}
+              disabled={!!formState.state || isLoadingCep}
             />
           </div>
 

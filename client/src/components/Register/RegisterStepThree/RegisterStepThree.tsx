@@ -17,7 +17,7 @@ export const RegisterStepThree = ({ formData, onStepChange, onDataChange }: IReg
   return (
     <div className={`step-3-container ${isAnimating ? "hidden" : "visible"}`} >
 
-      {role === 'restaurante' || role === 'empresa' && (
+      {(role === 'restaurante' || role === 'empresa') && (
         <RegisterRestaurantCompany 
           formData={formData} 
           onStepChange={onStepChange}

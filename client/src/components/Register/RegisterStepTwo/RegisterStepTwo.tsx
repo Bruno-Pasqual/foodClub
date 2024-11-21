@@ -48,7 +48,7 @@ export const RegisterStepTwo = ({ formData, onStepChange, onDataChange }: IRegis
         };
     }
 
-    const handleDataChange = () =>{
+    function handleDataChange(){
         // Validação de campos obrigatórios
         if (!email || !password1 || !password2) {
             setError("Por favor, preencha todos os campos obrigatórios.");
