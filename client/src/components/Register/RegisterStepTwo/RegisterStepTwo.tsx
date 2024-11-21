@@ -135,9 +135,7 @@ export const RegisterStepTwo = ({ formData, onStepChange, onDataChange }: IRegis
                             value={email}
                             onChange={handleEmailChange(setEmail)}
                         />
-                        {error && error.includes("E-mail") && (
-                            <FormHelperText error>{error}</FormHelperText>
-                        )}
+                        
                         <GenericInput
                             minLength={6}
                             type="password"

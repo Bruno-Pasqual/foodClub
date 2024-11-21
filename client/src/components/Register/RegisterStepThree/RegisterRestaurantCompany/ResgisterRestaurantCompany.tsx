@@ -101,7 +101,7 @@ export const RegisterRestaurantCompany = ({ formData, onStepChange, onDataChange
   function handleDataChange() {
     const updatedData: ICompanyRestaurant = {
       ...formState,
-    };
+  };
 
     setFormState(updatedData);
     onDataChange(updatedData); // Notifica o componente pai

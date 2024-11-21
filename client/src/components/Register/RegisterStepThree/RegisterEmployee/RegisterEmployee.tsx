@@ -17,6 +17,10 @@ export const RegisterEmployee = ({ formData, onStepChange, onDataChange }: IRegi
   const [loading, setLoading] = useState<boolean>(true);      // Estado para controle de loading
   const [error, setError] = useState<string | null>(null);     // Estado para controlar erros
 
+  function goToNextStep() {
+    onStepChange(1); // Avançar
+  }
+
   // Função para carregar as empresas via requisição
   useEffect(() => {
     const fetchCompanies = async () => {
@@ -26,6 +30,7 @@ export const RegisterEmployee = ({ formData, onStepChange, onDataChange }: IRegi
         const data = await response.json();
         setCompanies(data);  // Armazena as empresas no estado
       } catch {
+        //setCompanies(['teste1'])
         setError("Erro ao carregar as empresas");  // Define erro caso a requisição falhe
       } finally {
         setLoading(false);  // Remove o loading após a requisição
@@ -49,9 +54,25 @@ export const RegisterEmployee = ({ formData, onStepChange, onDataChange }: IRegi
     });
   };
 
+  const handleDataChange = () => {
+    const updatedData: IEmployee = {
+      ...formState,
+    }
+    setFormState(updatedData);
+    onDataChange(updatedData); // Notifica o componente pai
+    console.log(updatedData);
+    goToNextStep();
+  };
+  
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault(); // Evita o reload da página
+    handleDataChange();
+    console.log(formState)
+  }
+
   return (
     <>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="basic-info-container">
           <div className="input-label-group">
             <FormLabel id="demo-row-radio-buttons-group-label">
@@ -72,7 +93,7 @@ export const RegisterEmployee = ({ formData, onStepChange, onDataChange }: IRegi
               <GenericInput
                 type="date"
                 placeholder="Data de nascimento"
-                labelText="Data de nascimento"
+                labelText=""
                 name="birthday"  // Ajustando o nome para ser 'birthday' ao invés de 'date'
                 value={formState.birthday}
                 onChange={handleChange}  // Adicionando o onChange
@@ -89,7 +110,7 @@ export const RegisterEmployee = ({ formData, onStepChange, onDataChange }: IRegi
                 labelText="Empresa"
                 value={formState.company}
                 onChange={handleChange}
-                options={companies}
+                options={["teste"]}
                 error={!!error}
                 helperText={error || (loading ? "Carregando empresas..." : "")}
                 disabled={loading}
