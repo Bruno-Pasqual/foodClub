@@ -1,7 +1,5 @@
 {
 	"compilerOptions": {
-		"resolveJsonModule": true,
-		"outDir": "./dist",
 		/* Visit https://aka.ms/tsconfig to read more about this file */
 
 		/* Projects */
@@ -106,22 +104,5 @@
 		/* Completeness */
 		// "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
 		"skipLibCheck": true /* Skip type checking all .d.ts files. */
-	},
-	"include": [
-		"src/swagger-output.json",
-		"src/**/*"
-  	],
-	"exclude": [
-    	"node_modules"
-  	],
-	"lib": [
-		"es2015"
-	],
-	"typeRoots": [
-		"node_modules/@types"
-	],
-	"types": [
-		"node",
-		"express"
-	]
+	}
 }
