@@ -4,7 +4,7 @@ import { RegisterStepOne } from "./RegisterStepOne/ResgisterStepOne";
 import { RegisterStepTwo } from "./RegisterStepTwo/RegisterStepTwo";
 import imagemFundo from "../../assets/eating a variety of foods-bro.svg";
 import { RegisterStepThree } from "./RegisterStepThree/RegisterStepThree";
-import { RegisterStepFour } from "./RegisterStepFour/RegisterStepFour";
+import { RegisterStepFive} from "./RegisterStepFive/RegisterStepFive";
 
 interface IProps {
   screenSize: number;
@@ -102,7 +102,7 @@ const RegisterForm = ({ screenSize }: IProps) => {
       case 4:
         return (
           <>
-            <RegisterStepFour />
+            <RegisterStepFive />
             {screenSize > 800 && (
               <div className="imagem-fundo">
                 <img src={imagemFundo} alt="Imagem ilustrativa" />

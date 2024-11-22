@@ -1,10 +1,11 @@
-import { Select, MenuItem, FormControl, InputLabel, FormHelperText } from "@mui/material";
+import { Select, MenuItem, FormControl, InputLabel, FormHelperText, SelectChangeEvent } from "@mui/material";
+import { ReactNode } from "react";
 
 interface GenericSelectProps {
   name: string;
   labelText: string;
   value: string;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: ((event: SelectChangeEvent<string>, child: ReactNode) => void) | undefined
   options: string[]; // Opções que aparecerão no select
   error?: boolean; // Para controlar a exibição de erro
   helperText?: string; // Mensagem de ajuda ou erro

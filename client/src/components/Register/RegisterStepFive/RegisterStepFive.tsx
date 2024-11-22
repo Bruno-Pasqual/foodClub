@@ -1,9 +1,9 @@
 import { useState } from "react";
 import checkIcon from '../../../assets/check-icon.png'
-import './RegisterStepFour.css'
+import './RegisterStepFive.css'
 import { Button } from "@mui/material";
 
-export const RegisterStepFour = () => {
+export const RegisterStepFive = () => {
   const [isAnimating, ] = useState<boolean>(false);
   return(
     <div className={`step-4-container ${isAnimating ? "hidden" : "visible"}`}>
