@@ -11,6 +11,7 @@ export const RegisterEmployee = ({ formData, onStepChange, onDataChange }: IRegi
     ...formData,
     birthday: (formData as IEmployee).birthday || "",
     company: (formData as IEmployee).company || "",
+    
   });
 
   const [companies, setCompanies] = useState<string[]>([]);  // Estado para armazenar as empresas
