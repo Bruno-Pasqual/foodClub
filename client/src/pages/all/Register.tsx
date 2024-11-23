@@ -1,8 +1,8 @@
-import { useLayoutEffect, useState } from "react";
-import LoginForm from "../../components/LoginForm";
+import { useState, useLayoutEffect } from 'react';
+import RegisterForm from '../../components/Register/RegisterForm';
 
-const Login = () => {
-	const [screenSize, setScreenSize] = useState<number>(window.innerWidth);
+const Register = () => {
+  const [screenSize, setScreenSize] = useState<number>(window.innerWidth);
 
   useLayoutEffect(() => {
     const updateScreenSize = () => setScreenSize(window.innerWidth);
@@ -16,7 +16,7 @@ const Login = () => {
     return () => window.removeEventListener('resize', updateScreenSize);
   }, []);
 
-	return <LoginForm screenSize={screenSize} />;
+  return <RegisterForm screenSize={screenSize} />;
 };
 
-export default Login;
+export default Register;

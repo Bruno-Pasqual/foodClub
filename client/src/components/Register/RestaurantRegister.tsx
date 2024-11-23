@@ -1,8 +1,8 @@
 import { FormEvent, useState } from "react";
-import GenericInput from "./GenericInput";
+import GenericInput from "../GenericInput";
 import { Button } from "@mui/material";
-import { formatCNPJ } from "../utils/isValidCNPJ";
-import { formatCEP } from "../utils/isValidCEP";
+import { formatCNPJ } from "../../utils/isValidCNPJ";
+import { formatCEP } from "../../utils/isValidCEP";
 
 // Definindo a interface para as props do componente
 interface RestaurantRegisterProps {
@@ -72,14 +72,9 @@ const RestaurantRegister = ({data}:RestaurantRegisterProps) =>{
       setError("Número do endereço deve ser um número inteiro positivo."); // Exibe erro se não for válido
     }
   }
-  
-
-  
-
 
   return (
     <div>
-    
       <form onSubmit={handleSubmit} >
         <h1>Restaurante</h1>
         <GenericInput
@@ -123,7 +118,7 @@ const RestaurantRegister = ({data}:RestaurantRegisterProps) =>{
                   Cadastrar
         </Button>
       </form>
-  </div>
+    </div>
   )
 }
 
