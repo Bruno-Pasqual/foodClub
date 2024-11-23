@@ -76,7 +76,7 @@ export const RegisterRestaurantCompany = ({ formData, onStepChange, onDataChange
         setIsLoadingCep(false);
       }
     }, 500),
-    [formState, onDataChange] // Adicione 'formState' e 'onDataChange' como dependências
+    [formState, onDataChange]
   );
 
   function handleCepChange(e: React.ChangeEvent<HTMLInputElement>) {

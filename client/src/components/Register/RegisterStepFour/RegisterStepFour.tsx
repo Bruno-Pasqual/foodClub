@@ -1,21 +1,25 @@
 import { useState } from "react";
-import checkIcon from '../../../assets/check-icon.png'
-import './RegisterStepFour.css'
-import { Button } from "@mui/material";
+import { ICompanyRestaurant, IEmployee } from "../RegisterForm";
 
-export const RegisterStepFour = () => {
-  const [isAnimating, ] = useState<boolean>(false);
-  return(
-    <div className={`step-4-container ${isAnimating ? "hidden" : "visible"}`}>
-      <div className="icon-text">
-        <img src={checkIcon} alt="Ícone simbolizando que o cadastro foi realizado com sucesso." />
-        <h1>Cadastro realizado com sucesso</h1>
-        <span>A sua conta foi cadastrada e você já pode estar realizando o seu login</span>
-      </div>
 
-      <Button className="btn-entrar" href="/login" variant="contained" color="primary" type="submit">
-        Entrar
-      </Button>
-    </div>
-  )
+export interface IRegisterStepFourProps {
+  formData: ICompanyRestaurant | IEmployee;
+  onStepChange: (delta:number) => void;
+  onDataChange: (updatedData: ICompanyRestaurant | IEmployee) => void;
+}
+
+export const RegisterStepFour = ({formData}:IRegisterStepFourProps) =>{
+    const [isAnimating, ] = useState<boolean>(false);
+    const [ role, ] = useState<string>(formData.role);
+    return (
+        <div className={`step-3-container ${isAnimating ? "hidden" : "visible"}`} >
+        {(role === 'restaurante' || role === 'empresa') && (
+            <h1>Restaurant/Empresa</h1>
+        )}
+
+        {role === 'colaborador' && (
+            <h1>Colaborador</h1>
+        )}
+        </div>
+    )
 }
