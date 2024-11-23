@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { IEmployee } from "../../RegisterForm";
 import { IRegisterStepThreeProps } from "../RegisterStepThree"
-import { Button, FormLabel } from "@mui/material";
+import { Button, FormLabel, SelectChangeEvent } from "@mui/material";
 import GenericInput from "../../../GenericInput";
 import './RegisterEmployee.css'
 import GenericSelect from "../../../GenericSelect";
@@ -11,6 +11,7 @@ export const RegisterEmployee = ({ formData, onStepChange, onDataChange }: IRegi
     ...formData,
     birthday: (formData as IEmployee).birthday || "",
     company: (formData as IEmployee).company || "",
+    
   });
 
   const [companies, setCompanies] = useState<string[]>([]);  // Estado para armazenar as empresas
@@ -26,9 +27,11 @@ export const RegisterEmployee = ({ formData, onStepChange, onDataChange }: IRegi
     const fetchCompanies = async () => {
       try {
         setLoading(true);
-        const response = await fetch("/api/auth/"); // Supondo que a API retorne um array de empresas
-        const data = await response.json();
-        setCompanies(data);  // Armazena as empresas no estado
+        const response = await fetch('http://localhost:5000/api/auth/companies');
+        const responseData = await response.json();
+        
+        setCompanies(responseData.data);  // Armazena as empresas no estado
+        setError(null); // Reseta o erro ao carregar com sucesso
       } catch {
         //setCompanies(['teste1'])
         setError("Erro ao carregar as empresas");  // Define erro caso a requisição falhe
@@ -41,7 +44,7 @@ export const RegisterEmployee = ({ formData, onStepChange, onDataChange }: IRegi
   }, []);
 
   // Função para atualizar o estado quando o valor dos inputs mudar
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: SelectChangeEvent<string>) => {
     const { name, value } = e.target;
     setFormState((prevState) => ({
       ...prevState,
@@ -60,7 +63,6 @@ export const RegisterEmployee = ({ formData, onStepChange, onDataChange }: IRegi
     }
     setFormState(updatedData);
     onDataChange(updatedData); // Notifica o componente pai
-    console.log(updatedData);
     goToNextStep();
   };
   
@@ -110,7 +112,7 @@ export const RegisterEmployee = ({ formData, onStepChange, onDataChange }: IRegi
                 labelText="Empresa"
                 value={formState.company}
                 onChange={handleChange}
-                options={["teste"]}
+                options={companies}
                 error={!!error}
                 helperText={error || (loading ? "Carregando empresas..." : "")}
                 disabled={loading}

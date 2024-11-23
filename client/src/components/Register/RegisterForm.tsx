@@ -4,6 +4,7 @@ import { RegisterStepOne } from "./RegisterStepOne/ResgisterStepOne";
 import { RegisterStepTwo } from "./RegisterStepTwo/RegisterStepTwo";
 import imagemFundo from "../../assets/eating a variety of foods-bro.svg";
 import { RegisterStepThree } from "./RegisterStepThree/RegisterStepThree";
+import { RegisterStepFive} from "./RegisterStepFive/RegisterStepFive";
 import { RegisterStepFour } from "./RegisterStepFour/RegisterStepFour";
 
 interface IProps {
@@ -18,6 +19,7 @@ export interface IEmployee{
   name: string;
   birthday:string;
   company:string;
+  image: string;
 }
 export interface ICompanyRestaurant {
   role: string;
@@ -32,6 +34,7 @@ export interface ICompanyRestaurant {
   state: string;
   complement: string;
   number: string;
+  image: string;
 }
 
 const RegisterForm = ({ screenSize }: IProps) => {
@@ -51,6 +54,7 @@ const RegisterForm = ({ screenSize }: IProps) => {
     number: "",
     birthday: "",
     company: "",
+    image:"",
   }) 
 
   
@@ -71,7 +75,7 @@ const RegisterForm = ({ screenSize }: IProps) => {
             <RegisterStepOne formData={formData} onStepChange={handleStepChange} onDataChange={handleDataChange} />
             {screenSize > 800 && (
               <div className="imagem-fundo">
-                <img src={imagemFundo} alt="Imagem ilustrativa" />
+                <img src={imagemFundo} alt="Imagem de fundo" />
               </div>
             )}
           </>
@@ -82,7 +86,7 @@ const RegisterForm = ({ screenSize }: IProps) => {
             <RegisterStepTwo formData={formData} onStepChange={handleStepChange} onDataChange={handleDataChange} />
             {screenSize > 800 && (
               <div className="imagem-fundo">
-                <img src={imagemFundo} alt="Imagem ilustrativa" />
+                <img src={imagemFundo} alt="Imagem de fundo" />
               </div>
             )}
           </>
@@ -94,18 +98,31 @@ const RegisterForm = ({ screenSize }: IProps) => {
             <RegisterStepThree formData={formData} onStepChange={handleStepChange} onDataChange={handleDataChange} />
             {screenSize > 800 && (
               <div className="imagem-fundo">  
-                <img src={imagemFundo} alt="Imagem ilustrativa" />  
+                <img src={imagemFundo} alt="Imagem de fundo" />  
               </div>
             )}
           </>
         )
+
       case 4:
         return (
           <>
-            <RegisterStepFour />
+            <RegisterStepFour formData={formData} onStepChange={handleStepChange} onDataChange={handleDataChange}/>
+            { screenSize > 800 && (
+              <div className="imagem-fundo">
+                <img src={imagemFundo} alt="Imagem de fundo" />
+              </div>
+            ) }
+          </>
+        )
+
+      case 5:
+        return (
+          <>
+            <RegisterStepFive />
             {screenSize > 800 && (
               <div className="imagem-fundo">
-                <img src={imagemFundo} alt="Imagem ilustrativa" />
+                <img src={imagemFundo} alt="Imagem de fundo" />
               </div>
             )}
           </>
