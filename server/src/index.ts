@@ -3,8 +3,9 @@ import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import { connectDB } from "./db/connectDb";
-
+import {setupSwagger} from "./swagger"
 import authRoutes from "./routes/auth.routes";
+
 
 dotenv.config();
 const app = express();
@@ -22,6 +23,7 @@ const PORT = process.env.PORT || 3000;
 
 //Rotas
 app.use("/api/auth", authRoutes);
+setupSwagger(app);
 
 export const startServer = async () => {
 	try {
