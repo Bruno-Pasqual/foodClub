@@ -166,3 +166,26 @@ export const checkAuth = async (req: Request, res: Response) => {
 	res.status(200).json({ message: "Authorized", user });
 	return;
 };
+
+export const getIsEmailAvailable = async (
+	req: Request,
+	res: Response
+): Promise<void> => {
+	try {
+		const email = req.body.email;
+		const user = await User.findOne({ email });
+
+		if (user) {
+			res.status(400).json({ available: false, message: "Email já cadastrado." });
+			return;
+		} else {
+			res.status(200).json({ available: true, message: "Email disponível." });
+			return;
+		}
+	} catch (error) {
+		res
+			.status(500)
+			.json({ available: false, message: "Erro interno do servidor." });
+		return;
+	}
+};

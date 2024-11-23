@@ -9,10 +9,9 @@ form {
 
 body {
 	padding: 0 1rem;
-	overflow-y: hidden;
 }
 
-.form-img{
+.form-img {
 	display: flex;
 	justify-content: center;
 }
@@ -33,7 +32,7 @@ body {
 	flex-grow: 1;
 }
 
-.imagem-fundo{
+.imagem-fundo {
 	flex-grow: 2;
 	display: flex;
 	flex-direction: row;
@@ -51,18 +50,18 @@ body {
 	width: 100%;
 }
 
-.form-principal .form-group{
+.form-principal .form-group {
 	display: flex;
 	flex-direction: column;
 }
 
-.form-principal .error-message{
+.form-principal .error-message {
 	color: red;
 	width: auto;
 	text-align: end;
 }
-.form-principal p{
-	color:#949494;
+.form-principal p {
+	color: #949494;
 }
 #btn-cadastro {
 	border: 1px solid #bb3301;
@@ -101,10 +100,10 @@ input {
 	opacity: 0.8;
 }
 
-.link-cadastro{
+.link-cadastro {
 	color: #949494;
 }
 
-.link-cadastro a{
+.link-cadastro a {
 	color: black;
 }
