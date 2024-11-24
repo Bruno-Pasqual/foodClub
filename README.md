@@ -21,8 +21,11 @@ Criar uma plataforma que facilite a comunicação entre restaurantes e empresas,
 **Visibilidade para Restaurantes**: Plataforma serve como vitrine online para restaurantes expandirem sua base de clientes.
 
 ### **Prototipo e Documentação**
+
 No planejamento do projeto, foram criados wireframes e mockups para definir o layout da aplicação. Após aprovação, esses designs foram transformados em um protótipo interativo desenvolvido em React.
+
 As documentações importantes, como fluxos de dados, diagramas de classes e casos de uso, modelagem do banco de dados e arquitetura do sistema, foram reunidas em um guia PDF disponibilizado a baixo, para facilitar o entendimento geral do projeto.
+
 [Projeto Interdisciplinar - FoodClub.pdf](https://github.com/user-attachments/files/17894084/Projeto.Interdisciplinar.-.FoodClub.pdf)
 
 
@@ -42,6 +45,7 @@ As documentações importantes, como fluxos de dados, diagramas de classes e cas
 | Sprint 3	| Integração com Back-end para Submissão do Cadastro |	Integrar o formulário de cadastro com o back-end para envio de dados ao servidor.	| Equipe Back-end |
 | Sprint 3	| Integração com Back-end para Submissão do Login |	Integrar o formulário de login com o back-end para autenticação de usuários. |	Equipe Back-end |
 | Sprint 3	| Fazer Transição de JS para TS |	Refatorar o código do projeto de JavaScript para TypeScript. |	Equipe Front-end |
+
 
 
 | Épico	| ID	| Ator	| Ação	Motivo |
