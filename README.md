@@ -72,6 +72,19 @@ As documentações importantes, como fluxos de dados, diagramas de classes e cas
 
 **Opção de Prazos Maiores**: Opção de fechar prazos maiores com o mesmo restaurante para garantir preços melhores.
 
+### 💻 **Tecnologias**
+
+As ferramentas, linguagens, bibliotecas e tecnologias utilizadas foram listadas a baixo:
+
+- Figma 
+- Typescript 
+- HTML 
+- CSS 
+- React 
+- Node  
+- MongoDB 
+- GitHub 
+
 ## 👥 Equipe
 
 | Função | Nome | GitHub |
