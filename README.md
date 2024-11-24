@@ -20,7 +20,7 @@ Criar uma plataforma que facilite a comunicação entre restaurantes e empresas,
 
 **Visibilidade para Restaurantes**: Plataforma serve como vitrine online para restaurantes expandirem sua base de clientes.
 
-### **Prototipo e Documentação**
+### 🛠 **Prototipo e Documentação**
 
 No planejamento do projeto, foram criados wireframes e mockups para definir o layout da aplicação. Após aprovação, esses designs foram transformados em um protótipo interativo desenvolvido em React.
 
