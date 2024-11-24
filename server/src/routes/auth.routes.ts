@@ -11,6 +11,8 @@ import { verifyToken } from "../middleware/verifyToken";
 
 const router = express.Router();
 
+//TODO - Verificar a parte do token, não está funcionando corretamente
+
 router.post("/busignup", businessSignup);
 router.post("/emsignup", employeeSignup);
 router.post("/login", login);

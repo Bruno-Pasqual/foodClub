@@ -15,6 +15,7 @@ import { UserType } from "../models/enums/enums";
 import { Employee } from "../models/Employee";
 import { initialUSerToken as setInitialUserToken } from "../middleware/verifyToken";
 import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie";
+import { Company } from "../models/Company";
 
 //#endregion
 
@@ -121,7 +122,7 @@ export const businessSignup = async (
 				.status(201)
 				.json({ success: true, message: "Restaurante Cadastrado." });
 		} else if (userData.userType === UserType.COMPANY) {
-			const user = new Restaurant(userData);
+			const user = new Company(userData);
 			await user.save();
 			generateTokenAndSetCookie(res, user._id.toString());
 

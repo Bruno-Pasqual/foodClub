@@ -1,7 +1,8 @@
 import axios from "axios";
 import { create } from "zustand";
+import { IUser } from "../interfaces/user";
 
-const API_URL = "http://localhost:5000/api/auth/";
+const API_URL = "https://food-club-api.onrender.com/api/auth/";
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 function handleAxiosError(error: unknown, set: Function) {
@@ -20,7 +21,7 @@ function handleAxiosError(error: unknown, set: Function) {
 }
 
 interface iAuthStore {
-	user: unknown;
+	user: IUser | null;
 	isAuthenticated: boolean;
 	role: string;
 	isLoading: boolean;
@@ -38,20 +39,18 @@ export const useAuthStore = create<iAuthStore>((set) => ({
 	role: "",
 
 	checkAuth: async () => {
-		set({ isLoading: true, error: "" });
-		try {
-			const response = await axios.get(API_URL + "check-auth", {
-				withCredentials: true,
-			});
+		//TODO - Verificando se existe um usuário no localStorage, se houver redireciona para página inicial (remover, deve usar o token)
 
-			if (response.data.success) {
-				set({ isAuthenticated: true, isLoading: false, user: response.data.user });
-			} else {
-				set({ isAuthenticated: false, isLoading: false, user: null });
-			}
-		} catch (error) {
-			handleAxiosError(error, set);
+		const user = localStorage.getItem("user");
+
+		if (user) {
+			set({ user: JSON.parse(user), isAuthenticated: true, isLoading: false });
+			return;
+		} else {
+			set({ user: null, isAuthenticated: false, isLoading: false });
 		}
+
+		set({ isLoading: true, error: "" });
 	},
 
 	login: async (email: string, password: string) => {
@@ -73,6 +72,7 @@ export const useAuthStore = create<iAuthStore>((set) => ({
 				return;
 			}
 
+			localStorage.setItem("user", JSON.stringify(response.data.user)); //TODO - adicionando o user no sessionStorage (remover depois)
 			set({ user: response.data.user, isAuthenticated: true, isLoading: false });
 		} catch (error) {
 			handleAxiosError(error, set);
@@ -85,11 +85,9 @@ export const useAuthStore = create<iAuthStore>((set) => ({
 			const response = await axios.post(API_URL + "logout", {
 				withCredentials: true,
 			});
-			console.log(response);
 
 			if (response.data.success) {
-				// Deletando o cookie 'fctoken' no cliente
-
+				localStorage.removeItem("user");
 				set({ user: null, isAuthenticated: false, isLoading: false });
 				return;
 			}
