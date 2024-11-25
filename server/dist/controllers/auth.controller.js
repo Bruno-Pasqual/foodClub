@@ -13,6 +13,7 @@ const enums_1 = require("../models/enums/enums");
 const Employee_1 = require("../models/Employee");
 const verifyToken_1 = require("../middleware/verifyToken");
 const generateTokenAndSetCookie_1 = require("../utils/generateTokenAndSetCookie");
+const Company_1 = require("../models/Company");
 //#endregion
 const logout = async (req, res) => {
     res.clearCookie("fctoken");
@@ -98,7 +99,7 @@ const businessSignup = async (req, res) => {
                 .json({ success: true, message: "Restaurante Cadastrado." });
         }
         else if (userData.userType === enums_1.UserType.COMPANY) {
-            const user = new Restaurant_1.Restaurant(userData);
+            const user = new Company_1.Company(userData);
             await user.save();
             (0, generateTokenAndSetCookie_1.generateTokenAndSetCookie)(res, user._id.toString());
             return res
