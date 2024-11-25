@@ -13,21 +13,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
 	cors({
-		origin: (origin, callback) => {
-			// Lista de origens permitidas
-			const allowedOrigins = [
-				"http://localhost:5173",
-				"https://foodclub2.netlify.app",
-			];
-
-			// Permitir requisições sem 'origin' (como as feitas por ferramentas locais como Postman)
-			if (!origin || allowedOrigins.includes(origin)) {
-				callback(null, true);
-			} else {
-				callback(new Error("Não permitido pela política de CORS"));
-			}
-		},
-		credentials: true, // Permitir envio de cookies
+		origin: "https://foodclub2.netlify.app/",
+		credentials: true,
 	})
 );
 app.use(cookieParser());
