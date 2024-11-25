@@ -16,7 +16,12 @@ const generateTokenAndSetCookie_1 = require("../utils/generateTokenAndSetCookie"
 const Company_1 = require("../models/Company");
 //#endregion
 const logout = async (req, res) => {
-    res.clearCookie("fctoken");
+    res.clearCookie("fctoken", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        path: "/",
+    });
     return res.status(200).json({ success: true, message: "Logout efetuado." });
 };
 exports.logout = logout;
@@ -123,6 +128,7 @@ const checkAuth = async (req, res) => {
     }
     const decoded = jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET);
     const user = await User_1.User.findById(decoded.userId);
+    console.log(user);
     if (!user) {
         res.clearCookie("fctoken");
         res
