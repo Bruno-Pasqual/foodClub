@@ -2,7 +2,8 @@ import axios from "axios";
 import { create } from "zustand";
 import { IUser } from "../interfaces/user";
 
-const API_URL = "https://food-club-api.onrender.com/api/auth/";
+// const API_URL = "https://food-club-api.onrender.com/api/auth/"; //production
+const API_URL = "http://localhost:5000/api/auth/"; //development
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 function handleAxiosError(error: unknown, set: Function) {
@@ -39,18 +40,33 @@ export const useAuthStore = create<iAuthStore>((set) => ({
 	role: "",
 
 	checkAuth: async () => {
-		//TODO - Verificando se existe um usuário no localStorage, se houver redireciona para página inicial (remover, deve usar o token)
-
-		const user = localStorage.getItem("user");
-
-		if (user) {
-			set({ user: JSON.parse(user), isAuthenticated: true, isLoading: false });
-			return;
-		} else {
-			set({ user: null, isAuthenticated: false, isLoading: false });
-		}
-
+		// Setando o estado inicial de carregamento
 		set({ isLoading: true, error: "" });
+
+		try {
+			// Faz a requisição para verificar a autenticação
+			const response = await axios.get(API_URL + "check-auth", {
+				withCredentials: true,
+			});
+
+			// Caso o backend retorne sucesso, atualiza o estado com o usuário
+			set({
+				user: response.data.user,
+				isAuthenticated: response.data.success,
+				isLoading: false,
+			});
+		} catch (error) {
+			if (axios.isAxiosError(error) && error.response) {
+				// Tratando erros de 401 ou outros
+				if (error.response?.status === 401) {
+					set({ error: "Unauthorized", isAuthenticated: false, user: null });
+				} else {
+					set({ error: "An error occurred", isAuthenticated: false, user: null });
+				}
+
+				set({ isLoading: false });
+			}
+		}
 	},
 
 	login: async (email: string, password: string) => {
@@ -81,10 +97,17 @@ export const useAuthStore = create<iAuthStore>((set) => ({
 
 	logout: async () => {
 		set({ isLoading: true, error: "" });
+
 		try {
-			const response = await axios.post(API_URL + "logout", {
-				withCredentials: true,
-			});
+			const response = await axios.post(
+				API_URL + "logout",
+				{},
+				{
+					withCredentials: true,
+				}
+			);
+
+			console.log(response);
 
 			if (response.data.success) {
 				localStorage.removeItem("user");

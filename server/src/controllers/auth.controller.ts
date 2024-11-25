@@ -20,7 +20,12 @@ import { Company } from "../models/Company";
 //#endregion
 
 export const logout = async (req: Request, res: Response): Promise<any> => {
-	res.clearCookie("fctoken");
+	res.clearCookie("fctoken", {
+		httpOnly: true,
+		secure: process.env.NODE_ENV === "production",
+		sameSite: "strict",
+		path: "/",
+	});
 	return res.status(200).json({ success: true, message: "Logout efetuado." });
 };
 
@@ -154,6 +159,8 @@ export const checkAuth = async (req: Request, res: Response) => {
 	) as jwt.JwtPayload;
 
 	const user = await User.findById(decoded.userId);
+
+	console.log(user);
 
 	if (!user) {
 		res.clearCookie("fctoken");

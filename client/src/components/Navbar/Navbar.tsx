@@ -7,7 +7,6 @@ const Navbar = () => {
 	const { user } = useAuthStore();
 
 	if (user) {
-		console.log(user.userType);
 		const filteredIcons = navIconsList.filter((icon) =>
 			icon.iconFor.includes(user.userType)
 		);
