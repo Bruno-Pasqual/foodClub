@@ -6,6 +6,7 @@ import { connectDB } from "./db/connectDb";
 
 import authRoutes from "./routes/auth.routes";
 import companyRoutes from "./routes/company.routes";
+import restaurantRoutes from "./routes/restaurant.routes";
 
 dotenv.config();
 const app = express();
@@ -37,7 +38,8 @@ const PORT = process.env.PORT || 3000;
 
 //Rotas
 app.use("/api/auth", authRoutes);
-app.use("/api/auth", companyRoutes);
+app.use("/api/company", companyRoutes);
+app.use("/api/restaurant", restaurantRoutes);
 
 export const startServer = async () => {
 	try {

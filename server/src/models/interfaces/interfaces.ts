@@ -26,6 +26,14 @@ export interface IUser extends Document {
 	//todo - keep or not ?
 }
 
+export interface IDish {
+	_id: Types.ObjectId;
+	name: string;
+	description: string;
+	price: number;
+}
+
+// Interface para o restaurante
 export interface IRestaurant extends IUser {
 	name: string;
 	cnpj: string;
@@ -33,13 +41,6 @@ export interface IRestaurant extends IUser {
 	number: string;
 	dishes: IDish[];
 	companyOrders: Types.ObjectId[];
-}
-
-export interface IDish {
-	name: string;
-	description: string; // 80 characters min
-	price: number; //	> 0 and not null
-	restaurant: Types.ObjectId;
 }
 
 export interface IEmployee extends IUser {
