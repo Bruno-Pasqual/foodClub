@@ -15,7 +15,7 @@ const Navbar = () => {
 		return (
 			<nav className="navbar-container">
 				{filteredIcons.map(({ element, link, label, id }) => (
-					<div key={id}>
+					<div key={id} className="nav-link-container">
 						<NavLink to={link} className={`nav-link `}>
 							<div className="nav-icon">{element}</div>
 							<p>{label}</p>

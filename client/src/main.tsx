@@ -10,15 +10,16 @@ import { ThemeProvider } from "@emotion/react";
 import { theme } from "./theme/theme";
 import { CssBaseline } from "@mui/material";
 import HomePage from "./pages/all/HomePage";
-import Navbar from "./components/Navbar/Navbar";
+
+import Refeicoes from "./pages/restaurant/Refeicoes";
+import ProtectedLayout from "./components/ProtectedLayout";
+import Pedidos from "./pages/all/Pedidos";
+import Gerenciar from "./pages/all/Gerenciar";
+import Colaboradores from "./pages/company/Colaboradores";
+import Busca from "./pages/employee/Busca";
+import Perfil from "./pages/employee/Perfil";
 
 const PublicLayout = () => <Outlet />;
-const ProtectedLayout = () => (
-	<>
-		<Navbar />
-		<Outlet />
-	</>
-);
 
 const router = createBrowserRouter([
 	{
@@ -36,13 +37,12 @@ const router = createBrowserRouter([
 		element: <ProtectedLayout />, // Navbar é incluído aqui
 		children: [
 			{ path: "/inicio", element: <HomePage /> },
-			{ path: "/refeicoes", element: <HomePage /> },
-			{ path: "/pedidos", element: <HomePage /> },
-			{ path: "/gerenciar", element: <HomePage /> },
-			{ path: "/colaboradores", element: <HomePage /> },
-			{ path: "/busca", element: <HomePage /> },
-			{ path: "/perfil", element: <HomePage /> },
-			{ path: "/busca", element: <HomePage /> },
+			{ path: "/refeicoes", element: <Refeicoes /> },
+			{ path: "/pedidos", element: <Pedidos /> },
+			{ path: "/gerenciar", element: <Gerenciar /> },
+			{ path: "/colaboradores", element: <Colaboradores /> },
+			{ path: "/busca", element: <Busca /> },
+			{ path: "/perfil", element: <Perfil /> },
 		],
 	},
 ]);

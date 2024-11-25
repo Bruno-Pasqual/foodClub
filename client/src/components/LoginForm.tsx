@@ -68,7 +68,8 @@ const LoginForm = ({ screenSize }: IProps) => {
 							labelText="Email"
 							required
 						/>
-						<span className="error-message">Error message</span>
+						{/* TODO - Criar mensagem de erro */}
+						{/* <span className="error-message">Error message</span> */}
 					</div>
 					<div className="form-group">
 						<GenericInput
@@ -80,7 +81,8 @@ const LoginForm = ({ screenSize }: IProps) => {
 							value={password}
 							onChange={handlePasswordChange(setPassword)}
 						/>
-						<span className="error-message">Error message</span>
+						{/* TODO - Criar mensagem de erro */}
+						{/* <span className="error-message">Error message</span> */}
 					</div>
 					<Button variant="contained" color="primary" type="submit">
 						Entrar

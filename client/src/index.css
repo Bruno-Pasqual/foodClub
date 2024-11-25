@@ -27,3 +27,27 @@ main {
 	flex-direction: column;
 	min-height: 100vh; /* Isso garante que ele ocupe pelo menos a altura total da viewport */
 }
+
+/* Container principal */
+.main-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: calc(100vh - 60px); /* Para telas menores */
+	margin-top: 0;
+	padding: 20px;
+	box-sizing: border-box;
+}
+
+@media (min-width: 600px) {
+	.main-container {
+		margin-left: 60px; /* Espaço reservado para a navbar lateral */
+		height: 100vh;
+	}
+}
+@media (min-width: 900px) {
+	.main-container {
+		margin-left: 200px; /* Espaço reservado para a navbar lateral */
+		height: 100vh;
+	}
+}
