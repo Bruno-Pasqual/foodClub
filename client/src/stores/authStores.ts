@@ -3,6 +3,9 @@ import { create } from "zustand";
 import { IRestaurant } from "../interfaces/restaurant";
 import { ICompany } from "../interfaces/company";
 import { IEmployee } from "../interfaces/employee";
+import { IBusinessDTO } from "../DTO/business.dto";
+import { iEmployeeDTO } from "../DTO/employee.dto";
+import { UserType } from "../enums/enums";
 
 // const API_URL = "https://food-club-api.onrender.com/api/auth/"; //production
 const API_URL = "http://localhost:5000/api/auth/"; //development
@@ -29,6 +32,8 @@ interface iAuthStore {
 	role: string;
 	isLoading: boolean;
 	error: string;
+	businessDTO: IBusinessDTO;
+	employeeDTO: iEmployeeDTO;
 	login: (email: string, password: string) => Promise<void>;
 	checkAuth: () => Promise<void>;
 	logout: () => Promise<void>;
@@ -40,6 +45,65 @@ export const useAuthStore = create<iAuthStore>((set) => ({
 	isLoading: false,
 	error: "",
 	role: "",
+
+	businessDTO: {
+		name: "",
+		cnpj: "",
+		email: "",
+		password: "",
+		cep: "",
+		number: "",
+		userType: "",
+		verificationToken: "",
+		verificationTokenExpireAt: new Date(),
+	},
+	employeeDTO: {
+		name: "",
+		cpf: "",
+		email: "",
+		password: "",
+		birthDate: new Date(),
+		company: "",
+		userType: UserType.EMPLOYEE,
+	},
+
+	updateEmployeeDto: (employeeDTO: iEmployeeDTO) => {
+		set({ employeeDTO });
+	},
+
+	updateBusinessDto: (businessDTO: IBusinessDTO) => {
+		set({ businessDTO });
+	},
+
+	cleanBusinessDto: () => {
+		set({
+			businessDTO: {
+				name: "",
+				cnpj: "",
+				email: "",
+				password: "",
+				cep: "",
+				number: "",
+				userType: "",
+				verificationToken: "",
+				verificationTokenExpireAt: new Date(),
+			},
+		});
+	},
+
+	cleanEmployeeDto: () => {
+		set({
+			employeeDTO: {
+				name: "",
+				cpf: "",
+				email: "",
+				password: "",
+				birthDate: new Date(),
+				company: "",
+				userType: UserType.EMPLOYEE,
+			},
+		});
+	},
 
 	checkAuth: async () => {
 		// Setando o estado inicial de carregamento
