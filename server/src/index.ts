@@ -7,6 +7,7 @@ import { connectDB } from "./db/connectDb";
 import authRoutes from "./routes/auth.routes";
 import companyRoutes from "./routes/company.routes";
 import restaurantRoutes from "./routes/restaurant.routes";
+import employeeRoutes from "./routes/employee.routes";
 
 dotenv.config();
 const app = express();
@@ -40,6 +41,7 @@ const PORT = process.env.PORT || 3000;
 app.use("/api/auth", authRoutes);
 app.use("/api/company", companyRoutes);
 app.use("/api/restaurant", restaurantRoutes);
+app.use("/api/employee", employeeRoutes);
 
 export const startServer = async () => {
 	try {

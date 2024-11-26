@@ -19,7 +19,6 @@ const Refeicoes = () => {
 			dishDTO.price != 0 &&
 			dishDTO.image != ""
 		) {
-			console.log("user>>>>>>>>>>>>>>>>>>>>", user);
 			dishDTO.restaurantId = user._id;
 			createDish(dishDTO);
 		}

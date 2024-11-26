@@ -7,13 +7,16 @@ export interface ICompanyOrder {
 	collaboratorsOrders: Types.ObjectId[];
 	createdAt: Date;
 	status: OrderStatus;
+	restaurant: Types.ObjectId;
 }
 
 export interface IIndividualOrder {
-	quantity: number;
-	dish: Types.ObjectId;
-	employee: Types.ObjectId;
-	companyOrder: Types.ObjectId;
+	dishes: {
+		dishId: Types.ObjectId; // ID do prato (referência para o modelo Dish)
+		quantity: number; // Quantidade do prato
+	}[];
+	employee: Types.ObjectId; // Referência para o Employee (quem fez o pedido)
+	companyOrder: Types.ObjectId; // Referência para o CompanyOrder (o pedido da empresa)
 }
 
 export interface IUser extends Document {

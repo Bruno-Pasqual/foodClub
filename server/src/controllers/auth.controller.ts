@@ -198,3 +198,16 @@ export const getIsEmailAvailable = async (
 		return;
 	}
 };
+
+export const listUsers = async (req: Request, res: Response): Promise<any> => {
+	try {
+		const users = await User.find();
+
+		return res.status(200).json({ success: true, data: users });
+	} catch (error) {
+		return res.status(500).json({
+			success: false,
+			message: "algo deu errado ao listar os usuários." + error,
+		});
+	}
+};
