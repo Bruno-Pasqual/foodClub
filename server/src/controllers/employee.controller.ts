@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { Employee } from "../models/Employee";
-import { IndividualOrder } from "../models/IndividualOrder";
 import { CompanyOrder } from "../models/CompanyOrder";
+import IndividualOrder from "../models/IndividualOrder";
 
 export const getEmployeesByCompany = async (
 	req: Request,
@@ -81,6 +81,9 @@ export const createIndividualOrder = async (
 			dishes,
 		});
 
+		companyOrder.collaboratorsOrders.push(individualOrder._id);
+
+		await companyOrder.save();
 		await individualOrder.save();
 
 		return res.status(201).json({
@@ -110,5 +113,29 @@ export const getEmployees = async (
 			message: "Algo deu errado ao buscar os funcionários",
 			error: error,
 		});
+	}
+};
+
+export const getIndividualOrdersByCompanyOrder = async (
+	req: Request,
+	res: Response
+): Promise<any> => {
+	try {
+		const { companyOrderId } = req.params;
+		const individualOrders = await IndividualOrder.find({
+			companyOrder: companyOrderId,
+		}).populate({
+			path: "dishes.dishId",
+			select: "-__v",
+		});
+		return res.status(200).json({ success: true, data: individualOrders });
+	} catch (error) {
+		if (error instanceof Error) {
+			return res.status(500).json({
+				success: false,
+				message: "Algo deu errado ao buscar os pedidos individuais",
+				error: error.message,
+			});
+		}
 	}
 };

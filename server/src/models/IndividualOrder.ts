@@ -1,36 +1,33 @@
-import mongoose from "mongoose";
-import { IIndividualOrder } from "./interfaces/interfaces";
+import mongoose, { Schema, Document } from "mongoose";
+import Dish from "./Dish"; // Importando o modelo Dish
 
-const IndividualOrderSchema = new mongoose.Schema<IIndividualOrder>({
-	dishes: {
-		type: [
-			{
-				dishId: {
-					type: mongoose.Schema.Types.ObjectId,
-					ref: "Dish",
-					required: true,
-				},
-				quantity: { type: Number, required: true },
-			},
-		],
+// Definindo o schema do IndividualOrder
+const individualOrderSchema = new Schema({
+	companyOrder: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "CompanyOrder",
 		required: true,
-		default: [],
 	},
 	employee: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "Employee",
 		required: true,
 	},
-	companyOrder: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: "CompanyOrder",
-		required: true,
-	},
+	dishes: [
+		{
+			dishId: {
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "Dish",
+				required: true,
+			},
+			quantity: { type: Number, required: true },
+		},
+	],
 });
 
-const IndividualOrder = mongoose.model<IIndividualOrder>(
+const IndividualOrder = mongoose.model(
 	"IndividualOrder",
-	IndividualOrderSchema
+	individualOrderSchema
 );
 
-export { IndividualOrder };
+export default IndividualOrder;

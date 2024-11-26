@@ -30,6 +30,7 @@ interface iRestaurantStore {
 	updateDishDTO: (dishDTO: IDishDTO) => void;
 	createDish: (dishDTO: IDishDTO) => Promise<void>;
 	cleanDishDTO: () => void;
+	listDishes: (restaurantId: string) => Promise<void>;
 }
 
 export const useRestaurantStore = create<iRestaurantStore>((set) => ({
@@ -80,6 +81,16 @@ export const useRestaurantStore = create<iRestaurantStore>((set) => ({
 			}
 
 			set({ isLoading: false, message: response.data.message });
+		} catch (error) {
+			handleAxiosError(error, set);
+		}
+	},
+	listDishes: async (restaurantId: string) => {
+		try {
+			const response = await axios.get(API_URL + restaurantId + "/dishes", {
+				withCredentials: true,
+			});
+			return response.data.dishes;
 		} catch (error) {
 			handleAxiosError(error, set);
 		}

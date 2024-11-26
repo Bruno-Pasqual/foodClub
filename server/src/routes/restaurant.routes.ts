@@ -14,7 +14,7 @@ const router = express.Router();
 router.post("/dish", createDish);
 router.delete("/dish/:restaurantId/:dishId", deleteDish);
 router.patch("/dish/:restaurantId/:dishId", updateDish);
-router.get("/dishes", getDishes);
+router.get("/:restaurantId/dishes", getDishes);
 router.get("/list", getRestaurants);
 router.get("/:id", getRestaurant);
 router.post("/:restaurantId/:dishId/rating", ratingDish);

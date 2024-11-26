@@ -8,7 +8,6 @@ const useCheckAuth = (redirectIfUnauthenticated: string = "/login") => {
 	const hasCheckedAuth = useRef(false);
 
 	useEffect(() => {
-		console.log("entrei no effect");
 		const verifyAuth = async () => {
 			await checkAuth(); // Aguarda o estado ser atualizado
 

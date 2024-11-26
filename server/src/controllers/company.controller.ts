@@ -108,7 +108,9 @@ export const getCompanyOrders = async (
 ): Promise<any> => {
 	try {
 		const { companyId } = req.params;
-		const orders = await CompanyOrder.find({ company: companyId });
+		const orders = await CompanyOrder.find({ company: companyId }).populate(
+			"collaboratorsOrders"
+		);
 		return res.status(200).json({ success: true, data: orders });
 	} catch (error) {
 		return res.status(500).json({
@@ -136,17 +138,10 @@ export const getCompanyOrdersByRestaurant = async (
 		// Converte o restaurantId para ObjectId, caso não seja
 		const objectIdRestaurant = new mongoose.Types.ObjectId(restaurantId);
 
-		// Adicionando console.log para depuração
-		console.log(
-			"Buscando pedidos para o restaurante com ID:",
-			objectIdRestaurant
-		);
+		const orders = await CompanyOrder.find({
+			restaurant: objectIdRestaurant,
+		}).populate("collaboratorsOrders");
 
-		// Realizando a consulta no banco
-		const orders = await CompanyOrder.find();
-		console.log(orders);
-
-		// Verificando se retornou algum pedido
 		if (orders.length === 0) {
 			return res.status(404).json({
 				success: false,
