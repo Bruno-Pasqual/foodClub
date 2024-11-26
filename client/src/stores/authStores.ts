@@ -32,11 +32,18 @@ interface iAuthStore {
 	role: string;
 	isLoading: boolean;
 	error: string;
+	message: string;
 	businessDTO: IBusinessDTO;
 	employeeDTO: iEmployeeDTO;
 	login: (email: string, password: string) => Promise<void>;
 	checkAuth: () => Promise<void>;
 	logout: () => Promise<void>;
+	updateBusinessDto: (businessDTO: IBusinessDTO) => void;
+	updateEmployeeDto: (employeeDTO: iEmployeeDTO) => void;
+	cleanBusinessDto: () => void;
+	cleanEmployeeDto: () => void;
+	createBusiness: (businessDTO: IBusinessDTO) => Promise<void>;
+	createEmployee: (employeeDTO: iEmployeeDTO) => Promise<void>;
 }
 
 export const useAuthStore = create<iAuthStore>((set) => ({
@@ -45,6 +52,7 @@ export const useAuthStore = create<iAuthStore>((set) => ({
 	isLoading: false,
 	error: "",
 	role: "",
+	message: "",
 
 	businessDTO: {
 		name: "",
@@ -65,6 +73,40 @@ export const useAuthStore = create<iAuthStore>((set) => ({
 		birthDate: new Date(),
 		company: "",
 		userType: UserType.EMPLOYEE,
+	},
+
+	createEmployee: async (employeeDTO: iEmployeeDTO) => {
+		try {
+			const response = await axios.post(API_URL + "emsignup", employeeDTO, {
+				withCredentials: true,
+			});
+
+			if (!response.data.success) {
+				set({ error: response.data.message, isLoading: false });
+				return;
+			}
+
+			set({ isLoading: false, message: response.data.message });
+		} catch (error) {
+			handleAxiosError(error, set);
+		}
+	},
+
+	createBusiness: async (businessDTO: IBusinessDTO) => {
+		try {
+			const response = await axios.post(API_URL + "busignup", businessDTO, {
+				withCredentials: true,
+			});
+
+			if (!response.data.success) {
+				set({ error: response.data.message, isLoading: false });
+				return;
+			}
+
+			set({ isLoading: false, message: response.data.message });
+		} catch (error) {
+			handleAxiosError(error, set);
+		}
 	},
 
 	updateEmployeeDto: (employeeDTO: iEmployeeDTO) => {
