@@ -2,12 +2,20 @@ import { Rating } from "@mui/material";
 import "./RefeicaoCard.css";
 
 type Props = {
-	id: string; // Agora, cada prato tem um ID
+	id: string;
 	name: string;
 	description: string;
 	price: number;
 	image: string;
 	ratings: { userId: string; rating: number }[];
+};
+
+const mediaRatings = (ratings: { userId: string; rating: number }[]) => {
+	let sum = 0;
+	for (let i = 0; i < ratings.length; i++) {
+		sum += ratings[i].rating;
+	}
+	return sum / ratings.length;
 };
 
 const RefeicaoCard = (props: Props) => {
@@ -28,7 +36,7 @@ const RefeicaoCard = (props: Props) => {
 					<div className="r-rating-container">
 						<Rating
 							name="half-rating"
-							defaultValue={2.5}
+							defaultValue={mediaRatings(props.ratings)}
 							precision={0.5}
 							size="small"
 							readOnly

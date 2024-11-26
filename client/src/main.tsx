@@ -1,6 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { CssBaseline } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
 import { theme } from "./theme/theme";
@@ -18,8 +18,7 @@ import Gerenciar from "./pages/all/Gerenciar";
 import Colaboradores from "./pages/company/Colaboradores";
 import Busca from "./pages/employee/Busca";
 import Perfil from "./pages/employee/Perfil";
-
-const PublicLayout = () => <Outlet />;
+import PublicLayout from "./components/layouts/PublicLayout";
 
 const router = createBrowserRouter([
 	{

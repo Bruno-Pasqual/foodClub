@@ -1,6 +1,8 @@
 import axios from "axios";
 import { create } from "zustand";
-import { IUser } from "../interfaces/user";
+import { IRestaurant } from "../interfaces/restaurant";
+import { ICompany } from "../interfaces/company";
+import { IEmployee } from "../interfaces/employee";
 
 // const API_URL = "https://food-club-api.onrender.com/api/auth/"; //production
 const API_URL = "http://localhost:5000/api/auth/"; //development
@@ -22,7 +24,7 @@ function handleAxiosError(error: unknown, set: Function) {
 }
 
 interface iAuthStore {
-	user: IUser | null;
+	user: IRestaurant | ICompany | IEmployee | null;
 	isAuthenticated: boolean;
 	role: string;
 	isLoading: boolean;
@@ -56,16 +58,7 @@ export const useAuthStore = create<iAuthStore>((set) => ({
 				isLoading: false,
 			});
 		} catch (error) {
-			if (axios.isAxiosError(error) && error.response) {
-				// Tratando erros de 401 ou outros
-				if (error.response?.status === 401) {
-					set({ error: "Unauthorized", isAuthenticated: false, user: null });
-				} else {
-					set({ error: "An error occurred", isAuthenticated: false, user: null });
-				}
-
-				set({ isLoading: false });
-			}
+			handleAxiosError(error, set);
 		}
 	},
 
@@ -88,7 +81,6 @@ export const useAuthStore = create<iAuthStore>((set) => ({
 				return;
 			}
 
-			localStorage.setItem("user", JSON.stringify(response.data.user)); //TODO - adicionando o user no sessionStorage (remover depois)
 			set({ user: response.data.user, isAuthenticated: true, isLoading: false });
 		} catch (error) {
 			handleAxiosError(error, set);

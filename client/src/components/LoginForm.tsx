@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./LoginForm.css";
 import { Button } from "@mui/material";
 import GenericInput from "./GenericInput";
@@ -40,19 +40,15 @@ const LoginForm = ({ screenSize }: IProps) => {
 		};
 
 		await login(data.email as string, data.password as string);
-
-		// Redireciona para a página inicial após login
-		if (isAuthenticated) {
-			navigate("/inicio");
-		}
 	}
 
 	//#endregion
 
-	if (isAuthenticated && user) {
-		navigate("/inicio");
-	}
-
+	useEffect(() => {
+		if (isAuthenticated && user) {
+			navigate("/inicio");
+		}
+	}, [isAuthenticated, user, navigate]);
 	return (
 		<div className="form-img">
 			<div id="loginForm">

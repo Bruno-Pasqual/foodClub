@@ -34,7 +34,7 @@ export const getDishes = async (req: Request, res: Response): Promise<any> => {
 export const updateDish = async (req: Request, res: Response): Promise<any> => {
 	try {
 		const { restaurantId, dishId } = req.params; // IDs do restaurante e do prato
-		const { name, description, price } = req.body;
+		const { name, description, price, image } = req.body;
 
 		// Verifica se o ID do prato foi fornecido
 		if (!dishId) {
@@ -45,7 +45,7 @@ export const updateDish = async (req: Request, res: Response): Promise<any> => {
 		}
 
 		// Verifica se todos os campos são vazios
-		if (!name && !description && !price) {
+		if (!name && !description && !price && !image) {
 			return res.status(400).json({
 				success: false,
 				message:
@@ -70,6 +70,7 @@ export const updateDish = async (req: Request, res: Response): Promise<any> => {
 				if (name) dish.name = name;
 				if (description) dish.description = description;
 				if (price) dish.price = price;
+				if (image) dish.image = image;
 				dishUpdated = true;
 			}
 			return dish;
@@ -145,7 +146,7 @@ export const deleteDish = async (req: Request, res: Response): Promise<any> => {
 
 export const createDish = async (req: Request, res: Response): Promise<any> => {
 	try {
-		const { name, description, price, restaurantId } = req.body;
+		const { name, description, price, image, restaurantId } = req.body;
 
 		const restaurant = await Restaurant.findById(restaurantId);
 		if (!restaurant) {
@@ -160,7 +161,7 @@ export const createDish = async (req: Request, res: Response): Promise<any> => {
 			description,
 			price,
 			ratings: [],
-			image: "",
+			image,
 		};
 
 		restaurant.dishes.push(newDish);
