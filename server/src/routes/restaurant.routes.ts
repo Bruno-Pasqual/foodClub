@@ -4,6 +4,7 @@ import {
 	getDishes,
 	getRestaurant,
 	getRestaurants,
+	ratingDish,
 	updateDish,
 } from "../controllers/restaurant.controller";
 import express from "express";
@@ -16,5 +17,6 @@ router.patch("/dish/:restaurantId/:dishId", updateDish);
 router.get("/dishes", getDishes);
 router.get("/list", getRestaurants);
 router.get("/:id", getRestaurant);
+router.post("/:restaurantId/:dishId/rating", ratingDish);
 
 export default router;

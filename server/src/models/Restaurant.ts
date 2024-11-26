@@ -3,15 +3,23 @@ import { User } from "./User";
 import { IRestaurant } from "./interfaces/interfaces";
 import { UserType } from "./enums/enums";
 
-// Schema para Pratos (Dishes) embutidos
+const DishRatingSchema = new Schema({
+	userId: { type: String, required: true },
+	rating: { type: Number, required: true, max: 5 },
+});
+
 const DishSchema = new Schema(
 	{
 		name: { type: String, required: true },
 		description: { type: String, required: true },
 		price: { type: Number, required: true },
 		image: { type: String, default: null },
+		ratings: {
+			type: [DishRatingSchema],
+			default: [],
+		},
 	},
-	{ _id: true } // Cada prato embutido terá um _id único
+	{ _id: true }
 );
 
 // Schema do Restaurante

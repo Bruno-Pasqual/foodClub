@@ -159,6 +159,8 @@ export const createDish = async (req: Request, res: Response): Promise<any> => {
 			name,
 			description,
 			price,
+			ratings: [],
+			image: "",
 		};
 
 		restaurant.dishes.push(newDish);
@@ -211,6 +213,38 @@ export const getRestaurant = async (
 		return res.status(500).json({
 			success: false,
 			message: "Algo deu errado ao buscar o restaurante",
+			error: error,
+		});
+	}
+};
+
+export const ratingDish = async (req: Request, res: Response): Promise<any> => {
+	try {
+		const { dishId, restaurantId } = req.params;
+		const { userId, rating } = req.body;
+		const restaurant = await Restaurant.findById(restaurantId);
+		if (!restaurant) {
+			return res
+				.status(404)
+				.json({ success: false, message: "Restaurante nao encontrado" });
+		}
+		const dish = restaurant.dishes.find((dish) => dish._id.toString() === dishId);
+		if (!dish) {
+			return res
+				.status(404)
+				.json({ success: false, message: "Prato nao encontrado" });
+		}
+
+		dish.ratings.push({ userId, rating });
+
+		await restaurant.save();
+		return res
+			.status(200)
+			.json({ success: true, message: "Avaliação enviada com sucesso" });
+	} catch (error) {
+		return res.status(500).json({
+			success: false,
+			message: "Algo deu errado ao avaliar o prato",
 			error: error,
 		});
 	}

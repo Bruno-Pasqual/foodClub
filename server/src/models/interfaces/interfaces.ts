@@ -31,6 +31,10 @@ export interface IDish {
 	name: string;
 	description: string;
 	price: number;
+	ratings: {
+		userId: Types.ObjectId;
+		rating: number;
+	}[];
 }
 
 // Interface para o restaurante
