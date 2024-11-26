@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getIsEmailAvailable = exports.checkAuth = exports.businessSignup = exports.employeeSignup = exports.login = exports.logout = void 0;
+exports.listUsers = exports.getIsEmailAvailable = exports.checkAuth = exports.businessSignup = exports.employeeSignup = exports.login = exports.logout = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const User_1 = require("../models/User");
@@ -162,3 +162,16 @@ const getIsEmailAvailable = async (req, res) => {
     }
 };
 exports.getIsEmailAvailable = getIsEmailAvailable;
+const listUsers = async (req, res) => {
+    try {
+        const users = await User_1.User.find();
+        return res.status(200).json({ success: true, data: users });
+    }
+    catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "algo deu errado ao listar os usuários." + error,
+        });
+    }
+};
+exports.listUsers = listUsers;

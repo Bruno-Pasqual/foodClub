@@ -11,6 +11,8 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const connectDb_1 = require("./db/connectDb");
 const auth_routes_1 = __importDefault(require("./routes/auth.routes"));
 const company_routes_1 = __importDefault(require("./routes/company.routes"));
+const restaurant_routes_1 = __importDefault(require("./routes/restaurant.routes"));
+const employee_routes_1 = __importDefault(require("./routes/employee.routes"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
@@ -36,7 +38,9 @@ app.use((0, cookie_parser_1.default)());
 const PORT = process.env.PORT || 3000;
 //Rotas
 app.use("/api/auth", auth_routes_1.default);
-app.use("/api/auth", company_routes_1.default);
+app.use("/api/company", company_routes_1.default);
+app.use("/api/restaurant", restaurant_routes_1.default);
+app.use("/api/employee", employee_routes_1.default);
 const startServer = async () => {
     try {
         await (0, connectDb_1.connectDB)();

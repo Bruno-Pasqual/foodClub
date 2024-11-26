@@ -14,4 +14,5 @@ router.post("/login", auth_controller_1.login);
 router.get("/check-auth", verifyToken_1.verifyToken, auth_controller_1.checkAuth);
 router.post("/logout", auth_controller_1.logout);
 router.post("/email", auth_controller_1.getIsEmailAvailable);
+router.get("/users", auth_controller_1.listUsers);
 exports.default = router;
