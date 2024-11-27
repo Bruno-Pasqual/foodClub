@@ -7,7 +7,8 @@ export interface IEmployee extends IUser {
 	password: string;
 	orders: string[]; // IDs das ordens associadas ao funcionário
 	company: string; // ID da empresa à qual o funcionário pertence
-	birthDate: Date;
+	image: string;
+
 	weeklyOrders: {
 		Monday: string | null;
 		Tuesday: string | null;

@@ -9,6 +9,7 @@ import {
 	logout,
 } from "../controllers/auth.controller";
 import { verifyToken } from "../middleware/verifyToken";
+import { getEmployees } from "../controllers/employee.controller";
 
 const router = express.Router();
 

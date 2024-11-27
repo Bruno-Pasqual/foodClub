@@ -5,6 +5,7 @@ import {
 	getCompany,
 	getCompanyOrders,
 	getCompanyOrdersByRestaurant,
+	getEmployeesByCompany,
 	nextOrderCode,
 } from "./../controllers/company.controller";
 
@@ -16,5 +17,6 @@ router.post("/companyorder", createCompanyOrder);
 router.get("/:companyId/orders", getCompanyOrders);
 router.get("/restaurant/:restaurantId/orders", getCompanyOrdersByRestaurant);
 router.get("/:companyId/", getCompany);
+router.get("/:companyId/employees/list/", getEmployeesByCompany);
 
 export default router;

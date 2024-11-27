@@ -1,10 +1,36 @@
 import { Request, Response } from "express";
 import { Company } from "../models/Company";
 import { UserType } from "../models/enums/enums";
-import { ICompany } from "../models/interfaces/interfaces";
 import { CompanyOrder } from "../models/CompanyOrder";
 import mongoose from "mongoose";
 import { Restaurant } from "../models/Restaurant";
+import { Employee } from "../models/Employee";
+
+export const getEmployeesByCompany = async (
+	req: Request,
+	res: Response
+): Promise<any> => {
+	const { companyId } = req.params;
+	try {
+		console.log(companyId);
+		const employees = await Employee.find({ company: companyId });
+		return res.status(200).json({ success: true, data: employees });
+	} catch (error) {
+		if (error instanceof Error) {
+			{
+				return res.status(404).json({
+					success: false,
+					message: "Empresa nao encontrada",
+				});
+			}
+		}
+		return res.status(500).json({
+			success: false,
+			message: "Algo deu errado ao buscar os colaboradores",
+			error: error,
+		});
+	}
+};
 
 export const getCompanies = async (
 	req: Request,

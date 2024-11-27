@@ -1,3 +1,4 @@
+import { IEmployee } from "./employee";
 import { IUser } from "./user";
 
 export interface ICompany extends IUser {
@@ -6,5 +7,5 @@ export interface ICompany extends IUser {
 	cep: string;
 	number: string;
 	affiliateRestaurants: string[]; // IDs dos restaurantes afiliados
-	employeesId: string[]; // IDs dos funcionários
+	employees: IEmployee[]; // IDs dos funcionários
 }

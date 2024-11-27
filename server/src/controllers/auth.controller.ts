@@ -40,7 +40,7 @@ export const login = async (req: Request, res: Response): Promise<any> => {
 				.json({ success: false, message: "Email e senha são obrigatórios." });
 		}
 
-		const user = await User.findOne({ email });
+		const user = await User.findOne({ email }).populate("employees");
 
 		if (!user) {
 			return res
@@ -79,6 +79,8 @@ export const employeeSignup = async (
 ): Promise<any> => {
 	const userData: IEmployee = req.body;
 
+	userData.cpf = userData.cpf ? userData.cpf.replace(/\D/g, "") : "00000000000";
+
 	try {
 		const invalidField = await validateEmployeeData(userData);
 		if (invalidField) {
@@ -104,7 +106,6 @@ export const employeeSignup = async (
 
 		await company.save();
 		await user.save();
-		generateTokenAndSetCookie(res, user._id.toString());
 
 		return res
 			.status(201)

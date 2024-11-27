@@ -13,15 +13,24 @@ const formatCPF = (cpf: string) => {
 
 const FuncionarioForm = () => {
 	const { employeeDTO, setEmployeeDTO } = useAuthStore();
-
 	const [error, setError] = useState<string | null>(null);
-	const [password2, setPassword2] = useState<string>("");
+
+	console.log(employeeDTO);
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
 
 		if (name === "cpf") {
 			const formattedCPF = formatCPF(value);
+			const onlyNumbers = formattedCPF.replace(/\D/g, "");
+
+			// Valida se o CPF tem exatamente 11 dígitos
+			if (onlyNumbers.length !== 11) {
+				setError("O CPF deve ter exatamente 11 dígitos.");
+			} else {
+				setError(null); // Remove o erro se válido
+			}
+
 			setEmployeeDTO({
 				...employeeDTO,
 				[name]: formattedCPF,
@@ -79,6 +88,7 @@ const FuncionarioForm = () => {
 				value={employeeDTO.cpf}
 				onChange={handleInputChange}
 				maxLength={14}
+				minLength={11}
 			/>
 			<GenericInput
 				type="text"
@@ -96,14 +106,7 @@ const FuncionarioForm = () => {
 				value={employeeDTO.password}
 				onChange={handleInputChange}
 			/>
-			<GenericInput
-				type="password"
-				placeholder="Confirmar senha"
-				labelText="Confirmar senha"
-				name="password2"
-				value={password2}
-				onChange={(e) => setPassword2(e.target.value)}
-			/>
+
 			{error && <p className="error-message">{error}</p>}
 		</div>
 	);

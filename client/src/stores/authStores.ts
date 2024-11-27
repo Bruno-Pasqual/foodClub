@@ -46,6 +46,7 @@ interface iAuthStore {
 	createEmployee: (employeeDTO: iEmployeeDTO) => Promise<void>;
 	setBusinessDTO: (businessDTO: IBusinessDTO) => void;
 	setEmployeeDTO: (employeeDTO: iEmployeeDTO) => void;
+	getRestaurant: (id: string) => Promise<void>;
 }
 
 export const useAuthStore = create<iAuthStore>((set) => ({
@@ -77,6 +78,25 @@ export const useAuthStore = create<iAuthStore>((set) => ({
 		birthDate: new Date(),
 		company: "",
 		userType: UserType.EMPLOYEE,
+	},
+
+	getRestaurant: async (id: string) => {
+		try {
+			const response = await axios.get(API_URL + id, {
+				withCredentials: true,
+			});
+
+			if (!response.data.success) {
+				set({ error: response.data.message, isLoading: false });
+				return;
+			}
+
+			console.log("response", response);
+
+			set({ user: response.data.data, isLoading: false });
+		} catch (error) {
+			handleAxiosError(error, set);
+		}
 	},
 
 	setEmployeeDTO: (employeeDTO: iEmployeeDTO) => {

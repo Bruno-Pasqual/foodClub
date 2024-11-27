@@ -7,7 +7,8 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { useRestaurantStore } from "../stores/restaurantStore";
 
 type Props = {
-	buttonText?: string;
+	trigger?: React.ReactNode; // Elemento HTML personalizado para abrir o modal
+	buttonText?: string; // Texto do botão padrão (caso não passe `trigger`)
 	confirmText?: string;
 	cancelText?: string;
 	titleText?: string; // Propriedade para o título
@@ -17,6 +18,7 @@ type Props = {
 };
 
 export default function FormDialog({
+	trigger,
 	buttonText = "Open modal",
 	confirmText = "Criar",
 	cancelText = "Cancelar",
@@ -28,7 +30,7 @@ export default function FormDialog({
 	const [open, setOpen] = React.useState(false);
 	const { dishDTO, cleanDishDTO } = useRestaurantStore();
 
-	titleText = dishDTO.name != "" ? dishDTO.name : titleText;
+	titleText = dishDTO.name !== "" ? dishDTO.name : titleText;
 
 	const handleClickOpen = () => {
 		setOpen(true);
@@ -47,9 +49,16 @@ export default function FormDialog({
 
 	return (
 		<>
-			<Button variant="contained" onClick={handleClickOpen}>
-				{buttonText}
-			</Button>
+			{/* Renderiza o trigger ou o botão padrão */}
+			{trigger ? (
+				React.cloneElement(trigger as React.ReactElement, {
+					onClick: handleClickOpen,
+				})
+			) : (
+				<Button variant="contained" onClick={handleClickOpen}>
+					{buttonText}
+				</Button>
+			)}
 			<Dialog
 				open={open}
 				onClose={handleClose}
@@ -58,7 +67,7 @@ export default function FormDialog({
 					onSubmit: handleSubmit,
 				}}
 			>
-				<DialogTitle style={{ fontWeight: " bold" }}>{titleText}</DialogTitle>
+				<DialogTitle style={{ fontWeight: "bold" }}>{titleText}</DialogTitle>
 				<DialogContent style={{ height, paddingTop: "0.5rem" }}>
 					{children}
 				</DialogContent>

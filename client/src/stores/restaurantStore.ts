@@ -3,24 +3,11 @@ import { IRestaurant } from "../interfaces/restaurant";
 import { IDishDTO } from "../DTO/dish.dto";
 import axios from "axios";
 import { IDish } from "../interfaces/dish";
+import { handleAxiosError } from "../utils/utils";
 
 const API_URL = "http://localhost:5000/api/restaurant/";
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-function handleAxiosError(error: unknown, set: Function) {
-	//Função criada para cuidar dos erros que podem ser tanto em relação ao back-end, rede ou qualquer outro erro
-	if (axios.isAxiosError(error) && error.response) {
-		set({
-			error: error.response.data.message || "Erro desconhecido.",
-			isLoading: false,
-		});
-	} else {
-		set({
-			error: "Erro de conexão. Tente novamente mais tarde.",
-			isLoading: false,
-		});
-	}
-}
 
 interface iRestaurantStore {
 	restaurant: IRestaurant | null;
