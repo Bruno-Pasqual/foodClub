@@ -4,8 +4,8 @@ export interface iEmployeeDTO {
 	email: string;
 	password: string;
 	cpf: string;
+	image: string;
 	name: string;
 	company: string;
-	birthDate: Date;
 	userType: UserType;
 }

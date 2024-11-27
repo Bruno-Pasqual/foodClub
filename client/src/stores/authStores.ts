@@ -45,6 +45,7 @@ interface iAuthStore {
 	createBusiness: (businessDTO: IBusinessDTO) => Promise<void>;
 	createEmployee: (employeeDTO: iEmployeeDTO) => Promise<void>;
 	setBusinessDTO: (businessDTO: IBusinessDTO) => void;
+	setEmployeeDTO: (employeeDTO: iEmployeeDTO) => void;
 }
 
 export const useAuthStore = create<iAuthStore>((set) => ({
@@ -72,9 +73,14 @@ export const useAuthStore = create<iAuthStore>((set) => ({
 		cpf: "",
 		email: "",
 		password: "",
+		image: "",
 		birthDate: new Date(),
 		company: "",
 		userType: UserType.EMPLOYEE,
+	},
+
+	setEmployeeDTO: (employeeDTO: iEmployeeDTO) => {
+		set({ employeeDTO: employeeDTO });
 	},
 
 	createEmployee: async (employeeDTO: iEmployeeDTO) => {
@@ -152,8 +158,8 @@ export const useAuthStore = create<iAuthStore>((set) => ({
 				name: "",
 				cpf: "",
 				email: "",
+				image: "",
 				password: "",
-				birthDate: new Date(),
 				company: "",
 				userType: UserType.EMPLOYEE,
 			},

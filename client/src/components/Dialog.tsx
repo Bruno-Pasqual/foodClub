@@ -58,7 +58,7 @@ export default function FormDialog({
 					onSubmit: handleSubmit,
 				}}
 			>
-				<DialogTitle>{titleText}</DialogTitle>
+				<DialogTitle style={{ fontWeight: " bold" }}>{titleText}</DialogTitle>
 				<DialogContent style={{ height, paddingTop: "0.5rem" }}>
 					{children}
 				</DialogContent>

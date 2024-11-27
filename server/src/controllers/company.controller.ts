@@ -26,7 +26,7 @@ export const getCompany = async (req: Request, res: Response): Promise<any> => {
 	const { companyId } = req.params;
 
 	try {
-		const company = await Company.findById(companyId);
+		const company = await Company.findById(companyId).populate("employees");
 		return res.status(200).json({ success: true, data: company });
 	} catch (error) {
 		if (error instanceof Error) {
