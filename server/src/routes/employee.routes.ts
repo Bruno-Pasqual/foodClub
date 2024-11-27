@@ -7,7 +7,7 @@ import {
 
 const router = express.Router();
 
-router.post("/:employeeId/order/:companyOrderId", createIndividualOrder);
+router.post("/individualorder", createIndividualOrder);
 router.get("/list", getEmployees);
 router.get(
 	"/:companyOrderId/individualorders",

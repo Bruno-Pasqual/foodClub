@@ -4,6 +4,7 @@ import { UserType } from "../models/enums/enums";
 import { ICompany } from "../models/interfaces/interfaces";
 import { CompanyOrder } from "../models/CompanyOrder";
 import mongoose from "mongoose";
+import { Restaurant } from "../models/Restaurant";
 
 export const getCompanies = async (
 	req: Request,
@@ -18,6 +19,24 @@ export const getCompanies = async (
 			message: "Algo deu errado ao buscar as empresas",
 			error: error,
 		});
+	}
+};
+
+export const getCompany = async (req: Request, res: Response): Promise<any> => {
+	const { companyId } = req.params;
+
+	try {
+		const company = await Company.findById(companyId);
+		return res.status(200).json({ success: true, data: company });
+	} catch (error) {
+		if (error instanceof Error) {
+			if (error.name === "CastError") {
+				return res.status(404).json({
+					success: false,
+					message: "Empresa nao encontrada",
+				});
+			}
+		}
 	}
 };
 
@@ -42,7 +61,7 @@ export const createCompanyOrder = async (
 	res: Response
 ): Promise<any> => {
 	try {
-		const { companyId, restaurantId } = req.params;
+		const { companyId, restaurantId } = req.body;
 		const code = await nextOrderCode(req, res);
 
 		if (!companyId || !code || !restaurantId) {
@@ -66,7 +85,20 @@ export const createCompanyOrder = async (
 			code,
 			restaurant: restaurantId,
 		});
+
+		const restaurant = await Restaurant.findById(restaurantId);
+		if (!restaurant) {
+			return res.status(404).json({
+				success: false,
+				message: "Restaurante nao encontrado",
+			});
+		}
+
+		restaurant.companyOrders.push(companyOrder.id);
+
+		await restaurant.save();
 		await companyOrder.save();
+
 		return res.status(200).json({ success: true, data: companyOrder });
 	} catch (error) {
 		return res.status(500).json({

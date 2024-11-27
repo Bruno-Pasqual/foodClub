@@ -1,4 +1,5 @@
 import { UserType } from "../enums/enums";
+import { ICompanyOrder } from "./CompanyOrder";
 import { IUser } from "./user";
 
 export interface IRestaurant extends IUser {
@@ -14,6 +15,6 @@ export interface IRestaurant extends IUser {
 		image: string;
 		ratings: { userId: string; rating: number }[];
 	}[]; // Array de pratos com ID
-	companyOrders: string[]; // IDs dos pedidos da empresa (referências para CompanyOrder)
-	userType: UserType; // O tipo de usuário (deve ser 'RESTAURANT')
+	companyOrders: ICompanyOrder[];
+	userType: UserType;
 }

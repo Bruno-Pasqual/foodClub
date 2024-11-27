@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { IRestaurant } from "../interfaces/restaurant";
 import { IDishDTO } from "../DTO/dish.dto";
 import axios from "axios";
+import { IDish } from "../interfaces/dish";
 
 const API_URL = "http://localhost:5000/api/restaurant/";
 
@@ -27,10 +28,12 @@ interface iRestaurantStore {
 	error: string;
 	dishDTO: IDishDTO;
 	message: string;
+	dishes: IDish[];
 	updateDishDTO: (dishDTO: IDishDTO) => void;
 	createDish: (dishDTO: IDishDTO) => Promise<void>;
 	cleanDishDTO: () => void;
 	listDishes: (restaurantId: string) => Promise<void>;
+	getRestaurant: (id: string) => Promise<void>;
 }
 
 export const useRestaurantStore = create<iRestaurantStore>((set) => ({
@@ -44,6 +47,22 @@ export const useRestaurantStore = create<iRestaurantStore>((set) => ({
 		price: 0,
 		image: "",
 		restaurantId: "",
+	},
+	dishes: [],
+
+	getRestaurant: async (id: string) => {
+		try {
+			const response = await axios.get(API_URL + id);
+
+			if (!response.data.success) {
+				set({ error: response.data.message });
+				return;
+			}
+
+			set({ restaurant: response.data.data });
+		} catch (error) {
+			handleAxiosError(error, set);
+		}
 	},
 
 	updateDishDTO: (dishDTO: IDishDTO) => set({ dishDTO }),
@@ -90,7 +109,13 @@ export const useRestaurantStore = create<iRestaurantStore>((set) => ({
 			const response = await axios.get(API_URL + restaurantId + "/dishes", {
 				withCredentials: true,
 			});
-			return response.data.dishes;
+
+			if (!response.data.success) {
+				set({ error: response.data.message, isLoading: false });
+				return;
+			}
+
+			set({ dishes: response.data.data, isLoading: false });
 		} catch (error) {
 			handleAxiosError(error, set);
 		}

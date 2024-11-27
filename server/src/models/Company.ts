@@ -13,7 +13,7 @@ const CompanySchema = new mongoose.Schema({
 			ref: "Restaurant",
 		},
 	],
-	employeesId: [
+	employees: [
 		{
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "Employee",

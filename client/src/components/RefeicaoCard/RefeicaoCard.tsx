@@ -1,14 +1,6 @@
 import { Rating } from "@mui/material";
 import "./RefeicaoCard.css";
-
-type Props = {
-	id: string;
-	name: string;
-	description: string;
-	price: number;
-	image: string;
-	ratings: { userId: string; rating: number }[];
-};
+import { IDish } from "../../interfaces/dish";
 
 const mediaRatings = (ratings: { userId: string; rating: number }[]) => {
 	let sum = 0;
@@ -18,7 +10,7 @@ const mediaRatings = (ratings: { userId: string; rating: number }[]) => {
 	return sum / ratings.length;
 };
 
-const RefeicaoCard = (props: Props) => {
+const RefeicaoCard = (props: IDish) => {
 	return (
 		<div className="refeicao-card-container">
 			<div
@@ -32,7 +24,7 @@ const RefeicaoCard = (props: Props) => {
 				<p className="r-title">{props.name}</p>
 				<p className="r-description">{props.description}</p>
 				<div className="r-price-container">
-					<p className="r-price">R$ {props.price}</p>
+					<p className="r-price">R$ {props.price.toFixed(2)}</p>
 					<div className="r-rating-container">
 						<Rating
 							name="half-rating"

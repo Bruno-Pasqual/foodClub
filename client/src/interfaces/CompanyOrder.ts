@@ -1,8 +1,10 @@
 import { OrderStatus } from "../enums/enums";
+import { IDish } from "./dish";
 import { IIndividualOrder } from "./IndividualOrder";
 
 export interface ICompanyOrder {
-	dishes: any;
+	id: string;
+	dishes: IDish[];
 	company: string;
 	collaboratorsOrders: IIndividualOrder[];
 	createdAt: string;

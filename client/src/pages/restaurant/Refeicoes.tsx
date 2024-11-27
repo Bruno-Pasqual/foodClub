@@ -6,11 +6,18 @@ import "./Refeicoes.css";
 import FormDialog from "../../components/Dialog";
 import PratoForm from "../../components/PratoForm/PratoForm";
 import { useRestaurantStore } from "../../stores/restaurantStore";
+import { useEffect } from "react";
 
 const Refeicoes = () => {
 	let { user } = useAuthStore();
 	user = user as IRestaurant;
-	const { dishDTO, createDish } = useRestaurantStore();
+
+	const { dishDTO, createDish, restaurant, getRestaurant } =
+		useRestaurantStore();
+
+	useEffect(() => {
+		getRestaurant(user?._id.toString());
+	}, []);
 
 	const handleSubmit = () => {
 		if (
@@ -37,15 +44,15 @@ const Refeicoes = () => {
 				</FormDialog>
 			</div>
 			<div className="cards-container">
-				{user?.dishes.map((dish) => (
+				{restaurant?.dishes.map((dish) => (
 					<RefeicaoCard
-						id={dish.id}
 						key={nanoid()}
-						image={dish.image}
 						name={dish.name}
 						description={dish.description}
+						image={dish.image}
 						price={dish.price}
 						ratings={dish.ratings}
+						_id={dish.id}
 					/>
 				))}
 			</div>

@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { Employee } from "../models/Employee";
 import { CompanyOrder } from "../models/CompanyOrder";
 import IndividualOrder from "../models/IndividualOrder";
+import { Restaurant } from "../models/Restaurant";
 
 export const getEmployeesByCompany = async (
 	req: Request,
@@ -33,9 +34,9 @@ export const createIndividualOrder = async (
 	res: Response
 ): Promise<any> => {
 	try {
-		const { employeeId, companyOrderId } = req.params;
-		const { dishes } = req.body;
+		const { dishes, employeeId, companyOrderId, restaurantId } = req.body;
 
+		// Validação de pratos
 		if (dishes.length === 0) {
 			return res.status(400).json({
 				success: false,
@@ -43,6 +44,7 @@ export const createIndividualOrder = async (
 			});
 		}
 
+		// Validação de parâmetros obrigatórios
 		if (!employeeId || !companyOrderId) {
 			return res.status(400).json({
 				success: false,
@@ -50,8 +52,8 @@ export const createIndividualOrder = async (
 			});
 		}
 
+		// Verificando se o funcionário existe
 		const employee = await Employee.findById(employeeId);
-
 		if (!employee) {
 			return res.status(400).json({
 				success: false,
@@ -59,32 +61,51 @@ export const createIndividualOrder = async (
 			});
 		}
 
+		// Verificando se o pedido existe
 		const companyOrder = await CompanyOrder.findById(companyOrderId);
-
 		if (!companyOrder) {
 			return res.status(400).json({
 				success: false,
-				message: "Pedido nao encontrado",
+				message: "Pedido da empresa não encontrado",
 			});
 		}
 
+		// Verificando se o funcionário pertence à empresa do pedido
 		if (employee.company.toString() !== companyOrder.company.toString()) {
 			return res.status(400).json({
 				success: false,
-				message: "Funcionário nao pertence a empresa do pedido",
+				message: "Funcionário não pertence a empresa do pedido",
 			});
 		}
 
+		// Criando o pedido individual
 		const individualOrder = new IndividualOrder({
 			employee: employeeId,
 			companyOrder: companyOrderId,
-			dishes,
 		});
 
-		console.log(individualOrder);
+		// Buscando o restaurante
+		const restaurant = await Restaurant.findById(restaurantId);
+		if (!restaurant) {
+			return res.status(400).json({
+				success: false,
+				message: "Restaurante não encontrado",
+			});
+		}
 
+		// Adicionando os pratos ao pedido individual
+		const validDishes = restaurant.dishes.filter((dish) =>
+			dishes.includes(dish._id.toString())
+		);
+
+		validDishes.forEach((dish) => {
+			individualOrder.dishes.push(dish);
+		});
+
+		// Salvando o pedido individual no pedido da empresa
 		companyOrder.collaboratorsOrders.push(individualOrder._id);
 
+		// Salvando o pedido da empresa e o pedido individual
 		await companyOrder.save();
 		await individualOrder.save();
 

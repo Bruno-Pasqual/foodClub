@@ -78,6 +78,8 @@ export const employeeSignup = async (
 ): Promise<any> => {
 	const userData: IEmployee = req.body;
 
+	console.log(userData);
+
 	try {
 		const invalidField = await validateEmployeeData(userData);
 		if (invalidField) {
@@ -89,6 +91,21 @@ export const employeeSignup = async (
 
 		setInitialUserToken(userData);
 		const user = new Employee(userData);
+
+		const company = await Company.findOne({ _id: userData.company });
+
+		if (!company) {
+			return res.status(404).json({
+				success: false,
+				message: "Empresa informada nao encontrada.",
+			});
+		}
+
+		console.log(company);
+
+		company.employees.push(user._id);
+
+		await company.save();
 		await user.save();
 		generateTokenAndSetCookie(res, user._id.toString());
 
@@ -96,10 +113,11 @@ export const employeeSignup = async (
 			.status(201)
 			.json({ success: true, message: "Funcionário Cadastrado." });
 	} catch (error) {
-		return res.status(500).json({
-			success: false,
-			message: "algo deu errado ao criar o funcionário." + error,
-		});
+		if (error instanceof Error)
+			return res.status(500).json({
+				success: false,
+				message: "algo deu errado ao criar o funcionário." + error.message,
+			});
 	}
 };
 

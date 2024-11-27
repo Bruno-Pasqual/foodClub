@@ -2,8 +2,8 @@ import mongoose, { Schema } from "mongoose";
 import { User } from "./User";
 import { IRestaurant } from "./interfaces/interfaces";
 import { UserType } from "./enums/enums";
-import Dish from "./Dish";
 
+// Definição do esquema para Restaurant
 const RestaurantSchema = new Schema({
 	name: { type: String, required: true },
 	cnpj: { type: String, required: true },
@@ -13,6 +13,7 @@ const RestaurantSchema = new Schema({
 		{
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "Dish",
+			default: [],
 		},
 	],
 	companyOrders: [

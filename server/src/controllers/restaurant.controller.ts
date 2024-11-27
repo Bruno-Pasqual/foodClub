@@ -200,12 +200,25 @@ export const getRestaurant = async (
 ): Promise<any> => {
 	try {
 		const { id } = req.params;
-		const restaurant = await Restaurant.findById(id);
+
+		const restaurant = await Restaurant.findById(id)
+			.populate("dishes") // Popula os pratos do restaurante
+			.populate({
+				path: "companyOrders",
+				populate: {
+					path: "collaboratorsOrders", // Popula os pedidos de colaboradores
+					populate: {
+						path: "dishes.dishId", // Popula os detalhes de cada prato dentro dos colaboradores
+					},
+				},
+			});
+
 		if (!restaurant) {
 			return res
 				.status(404)
-				.json({ success: false, message: "Restaurante nao encontrado" });
+				.json({ success: false, message: "Restaurante não encontrado" });
 		}
+
 		return res.status(200).json({ success: true, data: restaurant });
 	} catch (error) {
 		return res.status(500).json({
