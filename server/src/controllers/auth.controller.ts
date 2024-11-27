@@ -12,20 +12,27 @@ import {
 import { Restaurant } from "../models/Restaurant";
 import { validateEmployeeData, validateUserData } from "../utils/validations";
 import { UserType } from "../models/enums/enums";
-import { Company } from "../models/Company";
 import { Employee } from "../models/Employee";
 import { initialUSerToken as setInitialUserToken } from "../middleware/verifyToken";
 import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie";
+import { Company } from "../models/Company";
+import { mapUserTypeToEnum } from "../utils/helpers";
 
 //#endregion
 
 export const logout = async (req: Request, res: Response): Promise<any> => {
-	res.clearCookie("fctoken");
+	res.clearCookie("fctoken", {
+		httpOnly: true,
+		secure: process.env.NODE_ENV === "production",
+		sameSite: "strict",
+		path: "/",
+	});
 	return res.status(200).json({ success: true, message: "Logout efetuado." });
 };
 
 export const login = async (req: Request, res: Response): Promise<any> => {
 	const { email, password } = req.body;
+
 	try {
 		if (!email || !password) {
 			return res
@@ -33,15 +40,13 @@ export const login = async (req: Request, res: Response): Promise<any> => {
 				.json({ success: false, message: "Email e senha são obrigatórios." });
 		}
 
-		const user = await User.findOne({ email });
+		const user = await User.findOne({ email }).populate("employees");
 
 		if (!user) {
 			return res
 				.status(404)
 				.json({ success: false, message: "Email ou senha inválido." });
 		}
-
-		console.log(user);
 
 		const isPasswordValid = await bcrypt.compare(password, user.password);
 
@@ -74,6 +79,8 @@ export const employeeSignup = async (
 ): Promise<any> => {
 	const userData: IEmployee = req.body;
 
+	userData.cpf = userData.cpf ? userData.cpf.replace(/\D/g, "") : "00000000000";
+
 	try {
 		const invalidField = await validateEmployeeData(userData);
 		if (invalidField) {
@@ -85,17 +92,30 @@ export const employeeSignup = async (
 
 		setInitialUserToken(userData);
 		const user = new Employee(userData);
+
+		const company = await Company.findOne({ _id: userData.company });
+
+		if (!company) {
+			return res.status(404).json({
+				success: false,
+				message: "Empresa informada nao encontrada.",
+			});
+		}
+
+		company.employees.push(user._id);
+
+		await company.save();
 		await user.save();
-		generateTokenAndSetCookie(res, user._id.toString());
 
 		return res
 			.status(201)
 			.json({ success: true, message: "Funcionário Cadastrado." });
 	} catch (error) {
-		return res.status(500).json({
-			success: false,
-			message: "algo deu errado ao criar o funcionário." + error,
-		});
+		if (error instanceof Error)
+			return res.status(500).json({
+				success: false,
+				message: "algo deu errado ao criar o funcionário." + error.message,
+			});
 	}
 };
 
@@ -104,6 +124,12 @@ export const businessSignup = async (
 	res: Response
 ): Promise<any> => {
 	const userData: IRestaurant | ICompany = req.body;
+
+	userData.userType = mapUserTypeToEnum(userData.userType);
+
+	//TODO - Por que está dando esse problema aqui?
+	userData.number = userData.number || "200";
+	userData.cep = userData.cep.length > 8 ? userData.cep : "00000-000";
 
 	try {
 		const invalidField = await validateUserData(userData);
@@ -116,6 +142,7 @@ export const businessSignup = async (
 
 		if (userData.userType === UserType.RESTAURANT) {
 			const user = new Restaurant(userData);
+
 			await user.save();
 			generateTokenAndSetCookie(res, user._id.toString());
 
@@ -123,7 +150,7 @@ export const businessSignup = async (
 				.status(201)
 				.json({ success: true, message: "Restaurante Cadastrado." });
 		} else if (userData.userType === UserType.COMPANY) {
-			const user = new Restaurant(userData);
+			const user = new Company(userData);
 			await user.save();
 			generateTokenAndSetCookie(res, user._id.toString());
 
@@ -157,13 +184,16 @@ export const checkAuth = async (req: Request, res: Response) => {
 	const user = await User.findById(decoded.userId);
 
 	if (!user) {
-		res.status(401).json({ message: "Unauthorized - invalid token" });
+		res.clearCookie("fctoken");
+		res
+			.status(401)
+			.json({ success: false, message: "Unauthorized - invalid token" });
 		return;
 	}
 
 	user.password = "";
 
-	res.status(200).json({ message: "Authorized", user });
+	res.status(200).json({ success: true, message: "Authorized", user: user });
 	return;
 };
 
@@ -187,5 +217,18 @@ export const getIsEmailAvailable = async (
 			.status(500)
 			.json({ available: false, message: "Erro interno do servidor." });
 		return;
+	}
+};
+
+export const listUsers = async (req: Request, res: Response): Promise<any> => {
+	try {
+		const users = await User.find();
+
+		return res.status(200).json({ success: true, data: users });
+	} catch (error) {
+		return res.status(500).json({
+			success: false,
+			message: "algo deu errado ao listar os usuários." + error,
+		});
 	}
 };

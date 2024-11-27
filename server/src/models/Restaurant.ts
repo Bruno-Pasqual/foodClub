@@ -3,6 +3,7 @@ import { User } from "./User";
 import { IRestaurant } from "./interfaces/interfaces";
 import { UserType } from "./enums/enums";
 
+// Definição do esquema para Restaurant
 const RestaurantSchema = new Schema({
 	name: { type: String, required: true },
 	cnpj: { type: String, required: true },

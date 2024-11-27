@@ -1,19 +1,22 @@
 import { Types } from "mongoose";
 import { Request } from "express";
 import { OrderStatus, UserType } from "../enums/enums";
+import Dish from "./../Dish";
 
 export interface ICompanyOrder {
 	company: Types.ObjectId;
 	collaboratorsOrders: Types.ObjectId[];
 	createdAt: Date;
 	status: OrderStatus;
+	restaurant: Types.ObjectId;
 }
-
-export interface IIndividualOrder {
-	quantity: number;
-	dish: Types.ObjectId;
-	employee: Types.ObjectId;
-	companyOrder: Types.ObjectId;
+export interface IIndividualOrder extends Document {
+	companyOrder: Types.ObjectId | ICompanyOrder; // Referência ao CompanyOrder
+	employee: Types.ObjectId | IEmployee; // Referência ao Employee
+	order: {
+		dishId: Types.ObjectId | IDish; // Referência ao Dish
+		quantity: number; // Quantidade do prato
+	}[]; // Lista de pratos pedidos
 }
 
 export interface IUser extends Document {
@@ -26,20 +29,26 @@ export interface IUser extends Document {
 	//todo - keep or not ?
 }
 
+export interface IDish {
+	id: Types.ObjectId;
+	name: string;
+	description: string;
+	price: number;
+	image: string;
+	ratings: {
+		userId: Types.ObjectId;
+		rating: number;
+	}[];
+}
+
+// Interface para o restaurante
 export interface IRestaurant extends IUser {
 	name: string;
 	cnpj: string;
 	cep: string;
 	number: string;
-	dishes: IDish[];
+	dishes: Types.ObjectId[];
 	companyOrders: Types.ObjectId[];
-}
-
-export interface IDish {
-	name: string;
-	description: string; // 80 characters min
-	price: number; //	> 0 and not null
-	restaurant: Types.ObjectId;
 }
 
 export interface IEmployee extends IUser {

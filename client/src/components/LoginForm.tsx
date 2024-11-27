@@ -1,19 +1,24 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
 import "./LoginForm.css";
 import { Button } from "@mui/material";
 import GenericInput from "./GenericInput";
 import EmailInput from "./EmailInput";
 import imagemFundo from "../assets/eating a variety of foods-bro.svg";
-// import axios from "axios";
+import { useAuthStore } from "../stores/authStores";
+import { useNavigate } from "react-router-dom";
 
-interface IProps{
-	screenSize:number;
+interface IProps {
+	screenSize: number;
 }
 
-const LoginForm = ({screenSize}:IProps) => {
+const LoginForm = ({ screenSize }: IProps) => {
 	const [password, setPassword] = useState<string>("");
+	const { login, user, isAuthenticated } = useAuthStore();
+	const navigate = useNavigate();
 
+	//#region Métodos
+
+	// Função para mudar a senha
 	function handlePasswordChange(
 		setPassword: React.Dispatch<React.SetStateAction<string>>
 	) {
@@ -22,6 +27,7 @@ const LoginForm = ({screenSize}:IProps) => {
 			setPassword(value);
 		};
 	}
+
 	async function handleSubmit(
 		event: React.FormEvent<HTMLFormElement>
 	): Promise<void> {
@@ -33,17 +39,19 @@ const LoginForm = ({screenSize}:IProps) => {
 			password: formData.get("password"),
 		};
 
-		// const response = await axios.get("http://localhost:5000/api/auth/check-auth", {
-		// 	withCredentials: true,
-		// });
-
-		console.log(data);
+		await login(data.email as string, data.password as string);
 	}
 
+	//#endregion
+
+	useEffect(() => {
+		if (isAuthenticated && user) {
+			navigate("/inicio");
+		}
+	}, [isAuthenticated, user, navigate]);
 	return (
 		<div className="form-img">
 			<div id="loginForm">
-			
 				<form onSubmit={handleSubmit} className="form-principal">
 					<div className="tittle">
 						<h1>Bem vindo de volta</h1>
@@ -56,7 +64,8 @@ const LoginForm = ({screenSize}:IProps) => {
 							labelText="Email"
 							required
 						/>
-						<span className="error-message" >Error message</span>
+						{/* TODO - Criar mensagem de erro */}
+						{/* <span className="error-message">Error message</span> */}
 					</div>
 					<div className="form-group">
 						<GenericInput
@@ -68,25 +77,24 @@ const LoginForm = ({screenSize}:IProps) => {
 							value={password}
 							onChange={handlePasswordChange(setPassword)}
 						/>
-						<span className="error-message" >Error message</span>
+						{/* TODO - Criar mensagem de erro */}
+						{/* <span className="error-message">Error message</span> */}
 					</div>
 					<Button variant="contained" color="primary" type="submit">
 						Entrar
 					</Button>
 
-					<span className="link-cadastro" >Não tem conta? <a href="/cadastro">Cadastre-se agora</a></span>
-
+					<span className="link-cadastro">
+						Não tem conta? <a href="/cadastro">Cadastre-se agora</a>
+					</span>
 				</form>
+			</div>
 
-			
-		</div>
-
-			{ screenSize > 800 && (
+			{screenSize > 800 && (
 				<div className="imagem-fundo">
 					<img src={imagemFundo} alt="logo da empresa" />
 				</div>
-			) }
-
+			)}
 		</div>
 	);
 };

@@ -7,13 +7,14 @@ const CompanySchema = new mongoose.Schema({
 	cnpj: { type: String, required: true },
 	cep: { type: String, required: true },
 	number: { type: String, required: true },
+	rating: { type: Number, default: 5 },
 	affiliateRestaurants: [
 		{
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "Restaurant",
 		},
 	],
-	employeesId: [
+	employees: [
 		{
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "Employee",
