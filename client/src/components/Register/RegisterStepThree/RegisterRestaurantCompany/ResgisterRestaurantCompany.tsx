@@ -33,6 +33,7 @@ export const RegisterRestaurantCompany = ({
 		complement: (formData as ICompanyRestaurant).complement || "",
 		number: (formData as ICompanyRestaurant).number || "",
 		role: (formData as ICompanyRestaurant).role || "",
+		image: (formData as ICompanyRestaurant).image || "",
 	});
 
 	const [isLoadingCep, setIsLoadingCep] = useState(false);
@@ -211,6 +212,15 @@ export const RegisterRestaurantCompany = ({
 							onChange={handleInputChange}
 						/>
 					</div>
+
+					<GenericInput
+							type="text"
+							placeholder="Endereço da imagem"
+							labelText="Imagem"
+							name="image"
+							value={formState.image}
+							onChange={handleInputChange}
+					/>
 				</div>
 
 				<Button variant="contained" color="primary" type="submit">
