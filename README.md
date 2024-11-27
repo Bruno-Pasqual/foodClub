@@ -29,7 +29,9 @@ https://food-club-9b38.vercel.app/
 As documentações importantes, como fluxos de dados, diagramas de classes e casos de uso, modelagem do banco de dados e arquitetura do sistema, foram reunidas em um guia PDF disponibilizado a baixo, para facilitar o entendimento geral do projeto.
 
 [Projeto Interdisciplinar - FoodClub.pdf](https://github.com/user-attachments/files/17894084/Projeto.Interdisciplinar.-.FoodClub.pdf)
-<br>
+
+Documentação com a descrição dos sprints do projeto realizado no Jira
+
 [Repositório - Food Club - Sprints](https://github.com/alinnecardoso/DocumentacaoFoodClub)
 
 
