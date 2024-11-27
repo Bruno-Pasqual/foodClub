@@ -6,7 +6,9 @@ export interface IRestaurant extends IUser {
 	name: string;
 	cnpj: string;
 	cep: string;
+	image: string;
 	number: string;
+	rating: number;
 	dishes: {
 		id: string; // Agora, cada prato tem um ID
 		name: string;

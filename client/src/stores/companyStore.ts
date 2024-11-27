@@ -10,6 +10,7 @@ interface ICompanyStore {
 	setCompany: (company: ICompany) => void;
 	isLoading: boolean;
 	error: string;
+	chooseRestaurant: (companyId: string, restaurantId: string) => Promise<void>;
 	getCompany: (id: string) => Promise<void>;
 }
 
@@ -17,6 +18,27 @@ export const useCompanyStore = create<ICompanyStore>((set) => ({
 	company: null,
 	isLoading: false,
 	error: "",
+
+	chooseRestaurant: async (companyId: string, restaurantId: string) => {
+		try {
+			// Enviar o restaurantId dentro de um objeto para o backend
+			const response = await axios.patch(
+				API_URL + "/" + companyId + "/restaurant/select",
+				{ restaurantId }, // Envolvendo restaurantId em um objeto
+				{ withCredentials: true }
+			);
+
+			if (!response.data.success) {
+				set({ error: response.data.message });
+				return;
+			}
+
+			set({ company: response.data.data });
+		} catch (error) {
+			handleAxiosError(error, set);
+		}
+	},
+
 	setCompany: (company: ICompany) => set({ company }),
 	getCompany: async (id: string) => {
 		try {

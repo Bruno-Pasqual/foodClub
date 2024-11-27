@@ -245,7 +245,10 @@ export const getRestaurants = async (
 	res: Response
 ): Promise<any> => {
 	try {
-		const restaurants = await Restaurant.find({}).populate("dishes");
+		const restaurants = await Restaurant.find({})
+			.select("-companyOrders") // Exclui o campo companyOrders
+			.populate("dishes");
+
 		return res.status(200).json({ success: true, data: restaurants });
 	} catch (error) {
 		return res.status(500).json({

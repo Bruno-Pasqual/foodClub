@@ -1,5 +1,6 @@
 import express from "express";
 import {
+	chooseRestaurant,
 	createCompanyOrder,
 	getCompanies,
 	getCompany,
@@ -18,5 +19,6 @@ router.get("/:companyId/orders", getCompanyOrders);
 router.get("/restaurant/:restaurantId/orders", getCompanyOrdersByRestaurant);
 router.get("/:companyId/", getCompany);
 router.get("/:companyId/employees/list/", getEmployeesByCompany);
+router.patch("/:companyId/restaurant/select", chooseRestaurant);
 
 export default router;

@@ -6,7 +6,7 @@ import { useAuthStore } from "../../stores/authStores";
 import "./Colaboradores.css";
 import { useCompanyStore } from "../../stores/companyStore";
 import { FaRegTrashCan } from "react-icons/fa6";
-import { MdEdit } from "react-icons/md";
+import { nanoid } from "nanoid";
 
 const Colaboradores = () => {
 	useCheckAuth("/login");
@@ -38,7 +38,7 @@ const Colaboradores = () => {
 			<div className="colaboradores-card">
 				{company?.employees?.map((employee) => {
 					return (
-						<div className="colaborador-card">
+						<div key={nanoid()} className="colaborador-card">
 							<img
 								src={employee.image}
 								alt="Foto do funcionário"
@@ -54,8 +54,14 @@ const Colaboradores = () => {
 								<p className="colaborador-email">{employee.email}</p>
 							</div>
 							<div className="actions-container">
-								<FaRegTrashCan fontSize={20} color="red" />
-								<MdEdit fontSize={20} />
+								<FormDialog
+									titleText="Deletar colaborador"
+									buttonText="Deletar"
+									confirmText="Deletar"
+									trigger={<FaRegTrashCan fontSize={20} color="red" />}
+								>
+									<p>Tem certeza que deseja remover este colaborador?</p>
+								</FormDialog>
 							</div>
 						</div>
 					);

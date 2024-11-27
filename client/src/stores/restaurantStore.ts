@@ -7,10 +7,9 @@ import { handleAxiosError } from "../utils/utils";
 
 const API_URL = "http://localhost:5000/api/restaurant/";
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-
 interface iRestaurantStore {
 	restaurant: IRestaurant | null;
+	restaurants: IRestaurant[];
 	isLoading: boolean;
 	error: string;
 	dishDTO: IDishDTO;
@@ -22,12 +21,14 @@ interface iRestaurantStore {
 	listDishes: (restaurantId: string) => Promise<void>;
 	getRestaurant: (id: string) => Promise<void>;
 	updateCompanyOrderStatus: (id: string, status: string) => Promise<void>;
+	getRestaurants: () => Promise<void>;
 }
 
 export const useRestaurantStore = create<iRestaurantStore>((set) => ({
 	restaurant: null,
 	isLoading: false,
 	message: "",
+	restaurants: [],
 	error: "",
 	dishDTO: {
 		name: "",
@@ -37,6 +38,23 @@ export const useRestaurantStore = create<iRestaurantStore>((set) => ({
 		restaurantId: "",
 	},
 	dishes: [],
+
+	getRestaurants: async () => {
+		try {
+			const response = await axios.get(API_URL + "list", {
+				withCredentials: true,
+			});
+
+			if (!response.data.success) {
+				set({ error: response.data.message });
+				return;
+			}
+
+			set({ restaurants: response.data.data });
+		} catch (error) {
+			handleAxiosError(error, set);
+		}
+	},
 
 	updateCompanyOrderStatus: async (companyOrderId: string, status: string) => {
 		try {

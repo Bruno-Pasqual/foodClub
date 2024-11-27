@@ -48,6 +48,38 @@ export const getCompanies = async (
 	}
 };
 
+export const chooseRestaurant = async (
+	req: Request,
+	res: Response
+): Promise<any> => {
+	try {
+		const { restaurantId } = req.body;
+		const { companyId } = req.params;
+
+		console.log(restaurantId, companyId);
+
+		const company = await Company.findById(companyId);
+
+		if (!company) {
+			return res.status(404).json({
+				success: false,
+				message: "Empresa não encontrada",
+			});
+		}
+
+		company.affiliateRestaurants.push(restaurantId);
+		await company?.save();
+
+		return res.status(200).json({ success: true, data: company });
+	} catch (error) {
+		return res.status(500).json({
+			success: false,
+			message: "Algo deu errado ao buscar os restaurantes",
+			error: error,
+		});
+	}
+};
+
 export const getCompany = async (req: Request, res: Response): Promise<any> => {
 	const { companyId } = req.params;
 
