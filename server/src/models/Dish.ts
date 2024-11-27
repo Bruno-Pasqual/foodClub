@@ -16,6 +16,6 @@ const dishSchema = new Schema({
 	},
 });
 
-const Dish = mongoose.model("Dish", dishSchema);
+const Dish = mongoose.model("Dish", dishSchema); // O nome "Dish" deve ser o mesmo que você está usando no populate
 
 export default Dish;

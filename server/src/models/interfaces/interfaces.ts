@@ -1,6 +1,7 @@
 import { Types } from "mongoose";
 import { Request } from "express";
 import { OrderStatus, UserType } from "../enums/enums";
+import Dish from "./../Dish";
 
 export interface ICompanyOrder {
 	company: Types.ObjectId;
@@ -47,7 +48,7 @@ export interface IRestaurant extends IUser {
 	cnpj: string;
 	cep: string;
 	number: string;
-	dishes: IDish[];
+	dishes: Types.ObjectId[];
 	companyOrders: Types.ObjectId[];
 }
 

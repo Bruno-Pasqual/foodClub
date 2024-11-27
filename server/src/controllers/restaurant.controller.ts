@@ -2,10 +2,11 @@ import { Request, Response } from "express";
 import { Restaurant } from "../models/Restaurant";
 import { IRestaurant } from "../models/interfaces/interfaces";
 import mongoose from "mongoose";
+import Dish from "../models/Dish";
 
 export const getDishes = async (req: Request, res: Response): Promise<any> => {
 	try {
-		const { restaurantId } = req.body;
+		const { restaurantId } = req.params;
 
 		if (!restaurantId) {
 			return res
@@ -15,7 +16,7 @@ export const getDishes = async (req: Request, res: Response): Promise<any> => {
 
 		const restaurant: IRestaurant | null = await Restaurant.findById(
 			restaurantId
-		);
+		).populate("dishes");
 
 		if (!restaurant) {
 			return res
@@ -33,7 +34,7 @@ export const getDishes = async (req: Request, res: Response): Promise<any> => {
 
 export const updateDish = async (req: Request, res: Response): Promise<any> => {
 	try {
-		const { restaurantId, dishId } = req.params; // IDs do restaurante e do prato
+		const { dishId } = req.params; // IDs do restaurante e do prato
 		const { name, description, price, image } = req.body;
 
 		// Verifica se o ID do prato foi fornecido
@@ -53,48 +54,37 @@ export const updateDish = async (req: Request, res: Response): Promise<any> => {
 			});
 		}
 
-		// Busca o restaurante pelo ID
-		const restaurant = await Restaurant.findById(restaurantId);
-
-		if (!restaurant) {
+		// Busca o prato pelo ID
+		const dish = await Dish.findById(dishId);
+		if (!dish) {
 			return res.status(404).json({
 				success: false,
-				message: "Restaurante não encontrado",
+				message: "Prato não encontrado",
 			});
 		}
 
-		// Atualiza o prato dentro do array `dishes`
-		let dishUpdated = false;
-		restaurant.dishes = restaurant.dishes.map((dish) => {
-			if (dish._id.toString() === dishId) {
-				if (name) dish.name = name;
-				if (description) dish.description = description;
-				if (price) dish.price = price;
-				if (image) dish.image = image;
-				dishUpdated = true;
-			}
-			return dish;
-		});
+		// Converte dishId para ObjectId para comparar com os IDs de pratos no restaurante
 
-		// Verifica se o prato foi encontrado
-		if (!dishUpdated) {
-			return res.status(404).json({
-				success: false,
-				message: "Prato não encontrado no restaurante",
-			});
-		}
+		// Atualiza o prato com os novos dados
+		if (name) dish.name = name;
+		if (description) dish.description = description;
+		if (price) dish.price = price;
+		if (image) dish.image = image;
 
-		// Salva as mudanças no restaurante
-		await restaurant.save();
+		// Salva as mudanças no prato
+		await dish.save();
 
 		return res.status(200).json({
 			success: true,
 			message: "Prato atualizado com sucesso",
+			dish,
 		});
 	} catch (error) {
+		console.error(error);
 		return res.status(500).json({
 			success: false,
-			message: "Algo deu errado ao atualizar o prato: " + error,
+			message: "Algo deu errado ao atualizar o prato",
+			error: error instanceof Error ? error.message : error,
 		});
 	}
 };
@@ -148,6 +138,7 @@ export const createDish = async (req: Request, res: Response): Promise<any> => {
 	try {
 		const { name, description, price, image, restaurantId } = req.body;
 
+		// Verificar se o restaurante existe
 		const restaurant = await Restaurant.findById(restaurantId);
 		if (!restaurant) {
 			return res
@@ -155,19 +146,23 @@ export const createDish = async (req: Request, res: Response): Promise<any> => {
 				.json({ success: false, message: "Restaurante não encontrado" });
 		}
 
-		const newDish = {
-			_id: new mongoose.Types.ObjectId(),
+		// Criação do novo prato
+		const newDish = new Dish({
 			name,
 			description,
 			price,
-			ratings: [],
 			image,
-		};
+			ratings: [], // Caso queira um array vazio para ratings
+		});
 
-		restaurant.dishes.push(newDish);
+		// Salvar o prato na coleção 'Dish'
+		await newDish.save();
 
+		// Adicionar a referência ao prato no restaurante
+		restaurant.dishes.push(newDish._id);
 		await restaurant.save();
 
+		// Retornar sucesso com os dados do prato
 		return res.status(201).json({
 			success: true,
 			message: "Prato adicionado com sucesso",
@@ -175,9 +170,11 @@ export const createDish = async (req: Request, res: Response): Promise<any> => {
 		});
 	} catch (error) {
 		console.error(error);
-		return res
-			.status(500)
-			.json({ success: false, message: "Erro ao adicionar o prato" });
+		return res.status(500).json({
+			success: false,
+			message: "Erro ao adicionar o prato",
+			error: error instanceof Error ? error.message : error,
+		});
 	}
 };
 
@@ -186,7 +183,7 @@ export const getRestaurants = async (
 	res: Response
 ): Promise<any> => {
 	try {
-		const restaurants = await Restaurant.find({});
+		const restaurants = await Restaurant.find({}).populate("dishes");
 		return res.status(200).json({ success: true, data: restaurants });
 	} catch (error) {
 		return res.status(500).json({
@@ -221,27 +218,34 @@ export const getRestaurant = async (
 
 export const ratingDish = async (req: Request, res: Response): Promise<any> => {
 	try {
-		const { dishId, restaurantId } = req.params;
+		const { dishId } = req.params;
 		const { userId, rating } = req.body;
-		const restaurant = await Restaurant.findById(restaurantId);
-		if (!restaurant) {
+
+		if (!rating || !userId) {
 			return res
-				.status(404)
-				.json({ success: false, message: "Restaurante nao encontrado" });
+				.status(400)
+				.json({ success: false, message: "Informações faltando" });
 		}
-		const dish = restaurant.dishes.find((dish) => dish._id.toString() === dishId);
+
+		const dish = await Dish.findById(dishId);
 		if (!dish) {
 			return res
 				.status(404)
 				.json({ success: false, message: "Prato nao encontrado" });
 		}
 
-		dish.ratings.push({ userId, rating });
+		const alreadyRated = dish.ratings.some((r) => r.userId === userId);
+		if (alreadyRated) {
+			return res
+				.status(400)
+				.json({ success: false, message: "Prato já avaliado" });
+		}
 
-		await restaurant.save();
+		dish.ratings.push(rating);
+		await dish.save();
 		return res
 			.status(200)
-			.json({ success: true, message: "Avaliação enviada com sucesso" });
+			.json({ success: true, message: "Avaliação feita com sucesso" });
 	} catch (error) {
 		return res.status(500).json({
 			success: false,

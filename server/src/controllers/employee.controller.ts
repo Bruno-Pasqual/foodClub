@@ -81,6 +81,8 @@ export const createIndividualOrder = async (
 			dishes,
 		});
 
+		console.log(individualOrder);
+
 		companyOrder.collaboratorsOrders.push(individualOrder._id);
 
 		await companyOrder.save();
@@ -122,12 +124,12 @@ export const getIndividualOrdersByCompanyOrder = async (
 ): Promise<any> => {
 	try {
 		const { companyOrderId } = req.params;
+
+		// Busca os pedidos individuais e popula apenas os pratos (dishes.dishId)
 		const individualOrders = await IndividualOrder.find({
 			companyOrder: companyOrderId,
-		}).populate({
-			path: "dishes.dishId",
-			select: "-__v",
-		});
+		}).populate("dishes.dishId"); // Popula apenas o campo dishId dentro de dishes
+
 		return res.status(200).json({ success: true, data: individualOrders });
 	} catch (error) {
 		if (error instanceof Error) {
