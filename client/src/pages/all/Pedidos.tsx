@@ -1,12 +1,13 @@
 import { nanoid } from "nanoid";
 import CompanyOrder from "../../components/CompanyOrder/CompanyOrder";
 import { useRestaurantStore } from "../../stores/restaurantStore";
+import "./Pedidos.css";
 
 const Pedidos = () => {
 	const { restaurant } = useRestaurantStore();
 
 	return (
-		<div>
+		<div className="pedidos-container">
 			<div className="pedidos-header">
 				<h1>Pedidos</h1>
 			</div>

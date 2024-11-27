@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid";
 import { ICompanyOrder } from "../../interfaces/CompanyOrder";
 import { useRestaurantStore } from "../../stores/restaurantStore";
 import { calcularTempoDecorrido } from "../../utils/utils";
@@ -12,7 +13,7 @@ const CompanyOrder = (props: ICompanyOrder) => {
 		0
 	);
 
-	const { updateCompanyOrderStatus } = useRestaurantStore();
+	const { updateCompanyOrderStatus, getRestaurant } = useRestaurantStore();
 
 	return (
 		<div className="company-order-container">
@@ -27,7 +28,7 @@ const CompanyOrder = (props: ICompanyOrder) => {
 				<div>
 					{props.collaboratorsOrders.map(({ order }) => {
 						return (
-							<p>
+							<p key={nanoid()}>
 								{order.quantity} x {order.dishId.name}
 							</p>
 						);
@@ -41,12 +42,13 @@ const CompanyOrder = (props: ICompanyOrder) => {
 					{" "}
 					<select
 						className="select-container"
-						onChange={(e) =>
+						onChange={(e) => {
 							updateCompanyOrderStatus(
 								props?.collaboratorsOrders[0].companyOrder,
 								e.target.value
-							)
-						}
+							);
+							getRestaurant(props.restaurant);
+						}}
 					>
 						<option value="Pendente">Pendente</option>
 						<option value="Confirmado">Confirmado</option>

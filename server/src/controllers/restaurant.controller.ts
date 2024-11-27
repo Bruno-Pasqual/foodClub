@@ -39,8 +39,6 @@ export const updateStatusCompanyOrder = async (
 
 		order.status = status;
 
-		console.log(order);
-
 		await order.save();
 
 		// Retorna o pedido atualizado

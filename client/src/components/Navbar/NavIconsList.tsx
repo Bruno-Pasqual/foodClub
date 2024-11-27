@@ -5,6 +5,7 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { IoPeopleOutline } from "react-icons/io5";
 import { IoPersonOutline } from "react-icons/io5";
 import { IoIosSearch } from "react-icons/io";
+import { CiLogout } from "react-icons/ci";
 
 interface iNavIcon {
 	id: number;
@@ -52,16 +53,9 @@ export const navIconsList: iNavIcon[] = [
 	},
 	{
 		id: 4,
-		element: <IoSettingsOutline />,
-		link: "/gerenciar",
-		label: "Gerenciar",
-		iconFor: ["restaurant", "company"],
-	},
-	{
-		id: 7,
-		element: <IoPersonOutline />,
-		link: "/perfil",
-		label: "Perfil",
-		iconFor: ["employee"],
+		element: <CiLogout />,
+		link: "/login",
+		label: "Sair",
+		iconFor: ["restaurant", "company", "employee"],
 	},
 ];
