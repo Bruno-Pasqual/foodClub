@@ -30,6 +30,10 @@ As documentações importantes, como fluxos de dados, diagramas de classes e cas
 
 [Projeto Interdisciplinar - FoodClub.pdf](https://github.com/user-attachments/files/17894084/Projeto.Interdisciplinar.-.FoodClub.pdf)
 
+Documentação com a descrição dos sprints do projeto realizado no Jira
+
+[Repositório - Food Club - Sprints](https://github.com/alinnecardoso/DocumentacaoFoodClub)
+
 
 
 ### 📋 **Backlog e User Stories**
