@@ -1,8 +1,9 @@
-import { IDish } from "./dish";
-
 export interface IIndividualOrder {
 	_id: string;
-	dishes: IDish[];
+	order: {
+		dishId: string;
+		quantity: number;
+	};
 	employee: string;
 	companyOrder: string;
 }

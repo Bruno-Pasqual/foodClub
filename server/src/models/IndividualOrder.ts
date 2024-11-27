@@ -1,7 +1,5 @@
-import mongoose, { Schema, Document } from "mongoose";
-import Dish from "./Dish"; // Importando o modelo Dish
+import mongoose, { Schema } from "mongoose";
 
-// Definindo o schema do IndividualOrder
 const individualOrderSchema = new Schema({
 	companyOrder: {
 		type: mongoose.Schema.Types.ObjectId,
@@ -13,16 +11,17 @@ const individualOrderSchema = new Schema({
 		ref: "Employee",
 		required: true,
 	},
-	dishes: [
-		{
-			dishId: {
-				type: mongoose.Schema.Types.ObjectId,
-				ref: "Dish",
-				required: true,
-			},
-			quantity: { type: Number, required: true },
+	order: {
+		dishId: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Dish",
+			required: true,
 		},
-	],
+		quantity: {
+			type: Number,
+			required: true,
+		},
+	},
 });
 
 const IndividualOrder = mongoose.model(

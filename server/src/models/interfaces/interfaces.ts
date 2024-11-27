@@ -10,14 +10,13 @@ export interface ICompanyOrder {
 	status: OrderStatus;
 	restaurant: Types.ObjectId;
 }
-
-export interface IIndividualOrder {
-	dishes: {
-		dishId: Types.ObjectId; // ID do prato (referência para o modelo Dish)
+export interface IIndividualOrder extends Document {
+	companyOrder: Types.ObjectId | ICompanyOrder; // Referência ao CompanyOrder
+	employee: Types.ObjectId | IEmployee; // Referência ao Employee
+	order: {
+		dishId: Types.ObjectId | IDish; // Referência ao Dish
 		quantity: number; // Quantidade do prato
-	}[];
-	employee: Types.ObjectId; // Referência para o Employee (quem fez o pedido)
-	companyOrder: Types.ObjectId; // Referência para o CompanyOrder (o pedido da empresa)
+	}[]; // Lista de pratos pedidos
 }
 
 export interface IUser extends Document {
@@ -31,7 +30,7 @@ export interface IUser extends Document {
 }
 
 export interface IDish {
-	_id: Types.ObjectId;
+	id: Types.ObjectId;
 	name: string;
 	description: string;
 	price: number;

@@ -5,7 +5,9 @@ export enum UserType {
 }
 
 export enum OrderStatus {
-	PENDING = "PENDING",
-	COMPLETED = "COMPLETED",
-	CANCELLED = "CANCELLED",
+	Pendente = "Pendente",
+	Completado = "Completado",
+	Cancelado = "Cancelado",
+	Confirmado = "Confirmado",
+	Preparando = "Preparando",
 }

@@ -16,3 +16,19 @@
 	font-weight: 700;
 	color: lightgrey;
 }
+
+.quantidade-pratos {
+	font-weight: 700;
+	margin: 1rem 0;
+}
+
+.info-container {
+	display: flex;
+	justify-content: space-between;
+	color: #c2c2c2;
+}
+
+.select-container {
+	width: 80%;
+	font-size: 1.2rem;
+}

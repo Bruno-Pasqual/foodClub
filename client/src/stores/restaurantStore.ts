@@ -34,6 +34,7 @@ interface iRestaurantStore {
 	cleanDishDTO: () => void;
 	listDishes: (restaurantId: string) => Promise<void>;
 	getRestaurant: (id: string) => Promise<void>;
+	updateCompanyOrderStatus: (id: string, status: string) => Promise<void>;
 }
 
 export const useRestaurantStore = create<iRestaurantStore>((set) => ({
@@ -50,6 +51,26 @@ export const useRestaurantStore = create<iRestaurantStore>((set) => ({
 	},
 	dishes: [],
 
+	updateCompanyOrderStatus: async (companyOrderId: string, status: string) => {
+		try {
+			const response = await axios.patch(
+				API_URL + "companyorder",
+				{ status, companyOrderId },
+				{
+					withCredentials: true,
+				}
+			);
+
+			if (!response.data.success) {
+				set({ error: response.data.message });
+				return;
+			}
+
+			set({ message: response.data.message });
+		} catch (error) {
+			handleAxiosError(error, set);
+		}
+	},
 	getRestaurant: async (id: string) => {
 		try {
 			const response = await axios.get(API_URL + id);

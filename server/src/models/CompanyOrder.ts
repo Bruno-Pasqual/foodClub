@@ -11,7 +11,7 @@ const CompanyOrderSchema = new mongoose.Schema({
 	status: {
 		type: String,
 		enum: Object.values(OrderStatus),
-		default: OrderStatus.PENDING,
+		default: OrderStatus.Pendente,
 	},
 	restaurant: {
 		type: mongoose.Schema.Types.ObjectId,

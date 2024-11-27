@@ -3,6 +3,8 @@ import { Employee } from "../models/Employee";
 import { CompanyOrder } from "../models/CompanyOrder";
 import IndividualOrder from "../models/IndividualOrder";
 import { Restaurant } from "../models/Restaurant";
+import Dish from "./../models/Dish";
+import { IDish } from "../models/interfaces/interfaces";
 
 export const getEmployeesByCompany = async (
 	req: Request,
@@ -34,21 +36,21 @@ export const createIndividualOrder = async (
 	res: Response
 ): Promise<any> => {
 	try {
-		const { dishes, employeeId, companyOrderId, restaurantId } = req.body;
-
-		// Validação de pratos
-		if (dishes.length === 0) {
-			return res.status(400).json({
-				success: false,
-				message: "O pedido individual precisa de pelo menos um prato",
-			});
-		}
+		// Extraindo parâmetros da requisição
+		const { order, employeeId, companyOrderId, restaurantId } = req.body;
 
 		// Validação de parâmetros obrigatórios
-		if (!employeeId || !companyOrderId) {
+		if (
+			!employeeId ||
+			!companyOrderId ||
+			!order ||
+			!order.dishId ||
+			!order.quantity
+		) {
 			return res.status(400).json({
 				success: false,
-				message: "Funcionário e pedido obrigatórios",
+				message:
+					"Funcionário, pedido da empresa, prato e quantidade são obrigatórios",
 			});
 		}
 
@@ -61,7 +63,7 @@ export const createIndividualOrder = async (
 			});
 		}
 
-		// Verificando se o pedido existe
+		// Verificando se o pedido da empresa existe
 		const companyOrder = await CompanyOrder.findById(companyOrderId);
 		if (!companyOrder) {
 			return res.status(400).json({
@@ -74,15 +76,9 @@ export const createIndividualOrder = async (
 		if (employee.company.toString() !== companyOrder.company.toString()) {
 			return res.status(400).json({
 				success: false,
-				message: "Funcionário não pertence a empresa do pedido",
+				message: "Funcionário não pertence à empresa do pedido",
 			});
 		}
-
-		// Criando o pedido individual
-		const individualOrder = new IndividualOrder({
-			employee: employeeId,
-			companyOrder: companyOrderId,
-		});
 
 		// Buscando o restaurante
 		const restaurant = await Restaurant.findById(restaurantId);
@@ -93,13 +89,14 @@ export const createIndividualOrder = async (
 			});
 		}
 
-		// Adicionando os pratos ao pedido individual
-		const validDishes = restaurant.dishes.filter((dish) =>
-			dishes.includes(dish._id.toString())
-		);
-
-		validDishes.forEach((dish) => {
-			individualOrder.dishes.push(dish);
+		// Criando o pedido individual
+		const individualOrder = new IndividualOrder({
+			employee: employeeId,
+			companyOrder: companyOrderId,
+			order: {
+				dishId: order.dishId,
+				quantity: order.quantity,
+			},
 		});
 
 		// Salvando o pedido individual no pedido da empresa
@@ -115,10 +112,18 @@ export const createIndividualOrder = async (
 			data: individualOrder,
 		});
 	} catch (error) {
+		// Tratando erros de forma mais genérica e informativa
+		if (error instanceof Error) {
+			return res.status(500).json({
+				success: false,
+				message: "Algo deu errado ao criar o pedido individual",
+				error: error.message,
+			});
+		}
+		// Caso o erro não seja do tipo Error
 		return res.status(500).json({
 			success: false,
-			message: "Algo deu errado ao criar o pedido individual",
-			error,
+			message: "Erro desconhecido ao criar o pedido individual",
 		});
 	}
 };

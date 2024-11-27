@@ -3,7 +3,67 @@ import { Restaurant } from "../models/Restaurant";
 import { IRestaurant } from "../models/interfaces/interfaces";
 import mongoose from "mongoose";
 import Dish from "../models/Dish";
+import { CompanyOrder } from "../models/CompanyOrder";
 
+export const updateStatusCompanyOrder = async (
+	req: Request,
+	res: Response
+): Promise<any> => {
+	try {
+		const { companyOrderId, status } = req.body;
+
+		// Verifica se o ID foi enviado
+		if (!companyOrderId) {
+			return res.status(400).json({
+				success: false,
+				message: "É necessário informar o ID do pedido",
+			});
+		}
+
+		// Verifica se o status foi enviado
+		if (!status) {
+			return res.status(400).json({
+				success: false,
+				message: "É necessário informar o status do pedido",
+			});
+		}
+
+		const order = await CompanyOrder.findById(companyOrderId);
+
+		if (!order) {
+			return res.status(404).json({
+				success: false,
+				message: "Pedido não encontrado",
+			});
+		}
+
+		order.status = status;
+
+		console.log(order);
+
+		await order.save();
+
+		// Retorna o pedido atualizado
+		return res.status(200).json({
+			success: true,
+			data: order,
+		});
+	} catch (error) {
+		// Trata erro de conversão ou outros erros
+		if (error instanceof mongoose.Error.CastError) {
+			return res.status(404).json({
+				success: false,
+				error: "Pedido não encontrado",
+				message: error.message,
+			});
+		}
+
+		return res.status(500).json({
+			success: false,
+			message: "Erro ao atualizar o pedido",
+		});
+	}
+};
 export const getDishes = async (req: Request, res: Response): Promise<any> => {
 	try {
 		const { restaurantId } = req.params;
@@ -26,9 +86,13 @@ export const getDishes = async (req: Request, res: Response): Promise<any> => {
 
 		return res.status(200).json({ success: true, data: restaurant.dishes });
 	} catch (error) {
-		return res
-			.status(500)
-			.json({ success: false, message: "Algo deu errado ao buscar os pratos" });
+		if (error instanceof mongoose.Error.CastError) {
+			return res.status(404).json({
+				success: false,
+				error: "Restaurante nao encontrado",
+				message: error.message,
+			});
+		}
 	}
 };
 
@@ -206,9 +270,10 @@ export const getRestaurant = async (
 			.populate({
 				path: "companyOrders",
 				populate: {
-					path: "collaboratorsOrders", // Popula os pedidos de colaboradores
+					path: "collaboratorsOrders",
 					populate: {
-						path: "dishes.dishId", // Popula os detalhes de cada prato dentro dos colaboradores
+						path: "order.dishId",
+						model: "Dish",
 					},
 				},
 			});
