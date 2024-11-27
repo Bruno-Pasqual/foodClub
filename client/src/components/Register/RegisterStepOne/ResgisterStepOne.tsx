@@ -7,7 +7,6 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import "./RegisterStepOne.css";
-import imgColaborador from "../../../assets/colaborador.png";
 import imgEmpresa from "../../../assets/empresa.png";
 import imgRestaurante from "../../../assets/restaurante.png";
 import { ICompanyRestaurant } from "../RegisterForm";
@@ -116,7 +115,6 @@ export const RegisterStepOne = ({
 							value={role}
 						>
 							{[
-								{ value: "colaborador", label: "Colaborador", img: imgColaborador },
 								{ value: "empresa", label: "Empresa", img: imgEmpresa },
 								{ value: "restaurante", label: "Restaurante", img: imgRestaurante },
 							].map(({ value, label, img }) => (

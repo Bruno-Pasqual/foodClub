@@ -16,6 +16,7 @@ import { Employee } from "../models/Employee";
 import { initialUSerToken as setInitialUserToken } from "../middleware/verifyToken";
 import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie";
 import { Company } from "../models/Company";
+import { mapUserTypeToEnum } from "../utils/helpers";
 
 //#endregion
 
@@ -78,8 +79,6 @@ export const employeeSignup = async (
 ): Promise<any> => {
 	const userData: IEmployee = req.body;
 
-	console.log(userData);
-
 	try {
 		const invalidField = await validateEmployeeData(userData);
 		if (invalidField) {
@@ -100,8 +99,6 @@ export const employeeSignup = async (
 				message: "Empresa informada nao encontrada.",
 			});
 		}
-
-		console.log(company);
 
 		company.employees.push(user._id);
 
@@ -127,6 +124,12 @@ export const businessSignup = async (
 ): Promise<any> => {
 	const userData: IRestaurant | ICompany = req.body;
 
+	userData.userType = mapUserTypeToEnum(userData.userType);
+
+	//TODO - Por que está dando esse problema aqui?
+	userData.number = userData.number || "200";
+	userData.cep = userData.cep.length > 8 ? userData.cep : "00000-000";
+
 	try {
 		const invalidField = await validateUserData(userData);
 		if (invalidField)
@@ -138,6 +141,7 @@ export const businessSignup = async (
 
 		if (userData.userType === UserType.RESTAURANT) {
 			const user = new Restaurant(userData);
+
 			await user.save();
 			generateTokenAndSetCookie(res, user._id.toString());
 
@@ -177,8 +181,6 @@ export const checkAuth = async (req: Request, res: Response) => {
 	) as jwt.JwtPayload;
 
 	const user = await User.findById(decoded.userId);
-
-	console.log(user);
 
 	if (!user) {
 		res.clearCookie("fctoken");

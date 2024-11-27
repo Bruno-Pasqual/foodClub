@@ -44,6 +44,7 @@ interface iAuthStore {
 	cleanEmployeeDto: () => void;
 	createBusiness: (businessDTO: IBusinessDTO) => Promise<void>;
 	createEmployee: (employeeDTO: iEmployeeDTO) => Promise<void>;
+	setBusinessDTO: (businessDTO: IBusinessDTO) => void;
 }
 
 export const useAuthStore = create<iAuthStore>((set) => ({
@@ -61,6 +62,7 @@ export const useAuthStore = create<iAuthStore>((set) => ({
 		password: "",
 		cep: "",
 		number: "",
+		image: "",
 		userType: "",
 		verificationToken: "",
 		verificationTokenExpireAt: new Date(),
@@ -103,7 +105,13 @@ export const useAuthStore = create<iAuthStore>((set) => ({
 				return;
 			}
 
-			set({ isLoading: false, message: response.data.message });
+			set({
+				isLoading: false,
+				message: response.data.message,
+				user: response.data.user,
+				isAuthenticated: true,
+			});
+			return;
 		} catch (error) {
 			handleAxiosError(error, set);
 		}
@@ -124,6 +132,7 @@ export const useAuthStore = create<iAuthStore>((set) => ({
 				cnpj: "",
 				email: "",
 				password: "",
+				image: "",
 				cep: "",
 				number: "",
 				userType: "",
@@ -131,6 +140,10 @@ export const useAuthStore = create<iAuthStore>((set) => ({
 				verificationTokenExpireAt: new Date(),
 			},
 		});
+	},
+
+	setBusinessDTO: (businessDTO: IBusinessDTO) => {
+		set({ businessDTO });
 	},
 
 	cleanEmployeeDto: () => {
