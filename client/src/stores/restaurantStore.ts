@@ -79,7 +79,6 @@ export const useRestaurantStore = create<iRestaurantStore>((set) => ({
 	getRestaurant: async (id: string) => {
 		try {
 			const response = await axios.get(API_URL + id);
-			console.log(response);
 
 			if (!response.data.success) {
 				set({ error: response.data.message });

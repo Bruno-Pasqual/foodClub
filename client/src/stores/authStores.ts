@@ -91,8 +91,6 @@ export const useAuthStore = create<iAuthStore>((set) => ({
 				return;
 			}
 
-			console.log("response", response);
-
 			set({ user: response.data.data, isLoading: false });
 		} catch (error) {
 			handleAxiosError(error, set);

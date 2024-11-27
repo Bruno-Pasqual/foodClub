@@ -6,14 +6,12 @@ import { Rating } from "@mui/material";
 import RefeicaoCard from "../../components/RefeicaoCard/RefeicaoCard";
 import { useAuthStore } from "../../stores/authStores";
 import { useCompanyStore } from "../../stores/companyStore";
+import { nanoid } from "nanoid";
 
 const HomePage = () => {
 	const { restaurants, getRestaurants } = useRestaurantStore();
 	const { user } = useAuthStore();
-	const { company, chooseRestaurant } = useCompanyStore();
-
-	console.log("user", user);
-	console.log(restaurants);
+	const { chooseRestaurant } = useCompanyStore();
 
 	useEffect(() => {
 		getRestaurants();
@@ -33,6 +31,7 @@ const HomePage = () => {
 					<div className="restaurantes-cards-container">
 						{restaurants?.map((r) => (
 							<FormDialog
+								key={nanoid()}
 								titleText={"Cardápio " + r.name + ""}
 								onConfirm={() => handleSelecionar(r._id, user!._id)}
 								confirmText="Selecionar"
@@ -61,6 +60,7 @@ const HomePage = () => {
 								<div className="container-refeicoes-cardapio">
 									{r.dishes.map((d) => (
 										<RefeicaoCard
+											key={nanoid()}
 											_id={d.id}
 											name={d.name}
 											description={d.description}

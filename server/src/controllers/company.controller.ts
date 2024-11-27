@@ -84,14 +84,21 @@ export const getCompany = async (req: Request, res: Response): Promise<any> => {
 	const { companyId } = req.params;
 
 	try {
-		const company = await Company.findById(companyId).populate("employees");
+		const company = await Company.findById(companyId)
+			.populate("employees")
+			.populate({
+				path: "affiliateRestaurants",
+				populate: {
+					path: "dishes",
+				},
+			});
 		return res.status(200).json({ success: true, data: company });
 	} catch (error) {
 		if (error instanceof Error) {
 			if (error.name === "CastError") {
 				return res.status(404).json({
 					success: false,
-					message: "Empresa nao encontrada",
+					message: "Empresa não encontrada",
 				});
 			}
 		}

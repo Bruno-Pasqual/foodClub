@@ -1,9 +1,7 @@
 import { PiHouseLight } from "react-icons/pi";
 import { IoFastFoodOutline } from "react-icons/io5";
 import { PiNewspaperClipping } from "react-icons/pi";
-import { IoSettingsOutline } from "react-icons/io5";
 import { IoPeopleOutline } from "react-icons/io5";
-import { IoPersonOutline } from "react-icons/io5";
 import { IoIosSearch } from "react-icons/io";
 import { CiLogout } from "react-icons/ci";
 
